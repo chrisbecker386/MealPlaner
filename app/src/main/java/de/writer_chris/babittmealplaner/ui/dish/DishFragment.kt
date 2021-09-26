@@ -46,7 +46,6 @@ class DishFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addDishButton.apply {
             setOnClickListener {
-
                 this.findNavController().navigate(R.id.editDishFragment)
             }
         }
