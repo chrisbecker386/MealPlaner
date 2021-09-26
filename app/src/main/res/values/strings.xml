@@ -4,6 +4,8 @@
     <string name="title_dish">Dish</string>
     <string name="title_settings">Settings</string>
     <string name="title_shopping">Shopping List</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_dish_fragment">Hello EditDishFragment</string>
     <string name="add_dish">Add dish</string>
+    <string name="new_dish_name">New Dish name</string>
+    <string name="save">save</string>
 </resources>

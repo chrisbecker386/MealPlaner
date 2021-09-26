@@ -3,19 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_meal">
+    app:startDestination="@id/navigation_dish">
 
     <fragment
         android:id="@+id/navigation_dish"
         android:name="de.writer_chris.babittmealplaner.ui.dish.DishFragment"
         android:label="@string/title_dish"
-        tools:layout="@layout/fragment_meal" />
+        tools:layout="@layout/fragment_meal">
+        <action
+            android:id="@+id/action_navigation_dish_to_editDishFragment"
+            app:destination="@id/editDishFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_meal"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.MealFragment"
         android:label="@string/title_meal"
-        tools:layout="@layout/fragment_dish" />
+        tools:layout="@layout/fragment_dish">
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_shopping"
@@ -28,5 +34,23 @@
         android:name="de.writer_chris.babittmealplaner.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/editDishFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.EditDishFragment"
+        android:label="fragment_edit_dish"
+        tools:layout="@layout/fragment_edit_dish">
+        <argument
+            android:name="dishName"
+            app:argType="string" />
+        <argument
+            android:name="dish_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_editDishFragment_to_navigation_dish"
+            app:destination="@id/navigation_dish"
+            app:popUpTo="@id/navigation_dish"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

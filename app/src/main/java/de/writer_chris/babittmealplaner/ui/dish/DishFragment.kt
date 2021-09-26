@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import de.writer_chris.babittmealplaner.BabittMealPlanerApplication
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 
 class DishFragment : Fragment() {
@@ -37,6 +40,16 @@ class DishFragment : Fragment() {
             it.also { textView.text = it }
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.addDishButton.apply {
+            setOnClickListener {
+
+                this.findNavController().navigate(R.id.editDishFragment)
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -28,6 +28,24 @@ class DishViewModel(private val dishDao: DishDao) : ViewModel() {
         viewModelScope.launch { dishDao.delete(dish) }
     }
 
+    private fun getNewDishEntry(dishName: String): Dish {
+        return Dish(dishName = dishName)
+    }
+
+    fun addDish(dishName: String) {
+        val newDish = getNewDishEntry(dishName)
+        insertDish(newDish)
+    }
+
+    fun editDish(dishId: Int, dishName: String) {
+        val toUpdateDish: Dish = Dish(dishId, dishName)
+        updateDish(toUpdateDish)
+    }
+
+    fun retrieve(id: Int): LiveData<Dish> {
+        return dishDao.getDish(id).asLiveData()
+    }
+
 }
 
 class DishViewModelFactory(private val dishDao: DishDao) : ViewModelProvider.Factory {
