@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import de.writer_chris.babittmealplaner.BabittMealPlanerApplication
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 
 class DishFragment : Fragment() {
 
-    private lateinit var dishViewModel: DishViewModel
+
+    private val dishViewModel: DishViewModel by viewModels { DishViewModelFactory((activity?.application as BabittMealPlanerApplication).database.dishDao()) }
     private var _binding: FragmentDishBinding? = null
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,15 +28,13 @@ class DishFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dishViewModel =
-            ViewModelProvider(this).get(DishViewModel::class.java)
 
         _binding = FragmentDishBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDish
         dishViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            it.also { textView.text = it }
         })
         return root
     }
