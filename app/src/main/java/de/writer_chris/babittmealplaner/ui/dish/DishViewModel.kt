@@ -42,6 +42,12 @@ class DishViewModel(private val dishDao: DishDao) : ViewModel() {
         updateDish(toUpdateDish)
     }
 
+    fun eraseDish(dishId: Int){
+
+        val dish:Dish = Dish(dishId, "")
+        deleteDish(dish)
+    }
+
     fun retrieve(id: Int): LiveData<Dish> {
         return dishDao.getDish(id).asLiveData()
     }

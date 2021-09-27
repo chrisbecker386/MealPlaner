@@ -25,6 +25,15 @@
         android:text="@string/save"
         app:layout_constraintTop_toBottomOf="@+id/dish_name" />
 
+    <Button
+        android:id="@+id/btn_dish_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/delete"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dish_save" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

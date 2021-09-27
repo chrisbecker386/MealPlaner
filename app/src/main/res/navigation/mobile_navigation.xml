@@ -37,10 +37,10 @@
     <fragment
         android:id="@+id/editDishFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.EditDishFragment"
-        android:label="fragment_edit_dish"
+        android:label="{title}"
         tools:layout="@layout/fragment_edit_dish">
         <argument
-            android:name="dishName"
+            android:name="title"
             app:argType="string" />
         <argument
             android:name="dish_id"

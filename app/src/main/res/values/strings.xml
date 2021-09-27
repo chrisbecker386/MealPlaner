@@ -8,4 +8,7 @@
     <string name="add_dish">Add dish</string>
     <string name="new_dish_name">New Dish name</string>
     <string name="save">save</string>
+    <string name="edit_dish">Edit Dish</string>
+    <string name="delete">delete</string>
+
 </resources>
