@@ -10,7 +10,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.BabittMealPlanerApplication
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Dish
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 
@@ -53,7 +55,7 @@ class EditDishFragment : Fragment() {
             dishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
             btnDishSave.setOnClickListener { updateDish() }
             btnDishDelete.isVisible = true
-            btnDishDelete.setOnClickListener { deleteDish() }
+            btnDishDelete.setOnClickListener { showConfirmationDialog() }
         }
     }
 
@@ -83,6 +85,16 @@ class EditDishFragment : Fragment() {
         viewModel.eraseDish(this.navigationArgs.dishId)
         val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
         findNavController().navigate(action)
+    }
+
+    private fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.dialog_alert_title))
+            .setMessage(getString(R.string.delete_dish_question))
+            .setCancelable(false)
+            .setNegativeButton(getString(R.string.no)) { _, _ -> }
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> deleteDish() }
+            .show()
     }
 
 }

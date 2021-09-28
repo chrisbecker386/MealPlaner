@@ -10,5 +10,8 @@
     <string name="save">save</string>
     <string name="edit_dish">Edit Dish</string>
     <string name="delete">delete</string>
-
+    <string name="dialog_alert_title">Attention</string>
+    <string name="delete_dish_question">You want to delete this Dish?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
