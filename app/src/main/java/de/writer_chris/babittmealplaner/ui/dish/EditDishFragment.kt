@@ -18,7 +18,7 @@ import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 
 class EditDishFragment : Fragment() {
     lateinit var dish: Dish
-    private val viewModel: DishViewModel by activityViewModels() {
+    private val viewModel: DishViewModel by activityViewModels {
         DishViewModelFactory((activity?.application as BabittMealPlanerApplication).database.dishDao())
     }
     private val navigationArgs: EditDishFragmentArgs by navArgs()
@@ -51,7 +51,7 @@ class EditDishFragment : Fragment() {
     }
 
     private fun bind(dish: Dish) {
-        binding?.apply {
+        binding.apply {
             dishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
             btnDishSave.setOnClickListener { updateDish() }
             btnDishDelete.isVisible = true

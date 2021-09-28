@@ -49,7 +49,8 @@ class DishFragment : Fragment() {
             }
         }
         binding.dishRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        binding.addDishButton.apply {
+
+        binding.btnAddDish.apply {
             setOnClickListener {
                 val action =
                     DishFragmentDirections.actionNavigationDishToEditDishFragment(getString(R.string.add_dish),-1)
