@@ -12,7 +12,7 @@
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_shopping_basket_24.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dish.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_edit_dish.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_meal.xml" value="0.21197916666666666" />
