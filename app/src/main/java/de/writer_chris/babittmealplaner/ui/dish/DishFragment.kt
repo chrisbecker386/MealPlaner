@@ -11,16 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.BabittMealPlanerApplication
 import de.writer_chris.babittmealplaner.R
+import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 
 class DishFragment : Fragment() {
 
 
     private val viewModel: DishViewModel by viewModels {
-        DishViewModelFactory(
-            (activity?.application as BabittMealPlanerApplication)
-                .database.dishDao()
-        )
+        DishViewModelFactory(Repository(requireContext()))
     }
 
     private var _binding: FragmentDishBinding? = null
@@ -39,7 +37,10 @@ class DishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = DishListAdapter {
-            val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(getString(R.string.edit_dish),it.id)
+            val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(
+                getString(R.string.edit_dish),
+                it.id
+            )
             this.findNavController().navigate(action)
         }
         binding.dishRecyclerView.adapter = adapter
@@ -53,7 +54,10 @@ class DishFragment : Fragment() {
         binding.btnAddDish.apply {
             setOnClickListener {
                 val action =
-                    DishFragmentDirections.actionNavigationDishToEditDishFragment(getString(R.string.add_dish),-1)
+                    DishFragmentDirections.actionNavigationDishToEditDishFragment(
+                        getString(R.string.add_dish),
+                        -1
+                    )
                 this.findNavController().navigate(action)
             }
         }

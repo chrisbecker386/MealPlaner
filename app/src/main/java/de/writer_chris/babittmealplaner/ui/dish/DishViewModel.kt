@@ -3,29 +3,30 @@ package de.writer_chris.babittmealplaner.ui.dish
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Dish
 import de.writer_chris.babittmealplaner.data.DishDao
+import de.writer_chris.babittmealplaner.data.Repository
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 
-class DishViewModel(private val dishDao: DishDao) : ViewModel() {
+class DishViewModel(private val repository: Repository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dish Fragment"
     }
     val text: LiveData<String> = _text
 
-    val allDishes: LiveData<List<Dish>> = dishDao.getAllDishes().asLiveData()
+    val allDishes: LiveData<List<Dish>> = repository.getAllDishes().asLiveData()
 
     private fun insertDish(dish: Dish) {
-        viewModelScope.launch { dishDao.insert(dish) }
+        viewModelScope.launch { repository.insert(dish) }
     }
 
     private fun updateDish(dish: Dish) {
-        viewModelScope.launch { dishDao.update(dish) }
+        viewModelScope.launch { repository.update(dish) }
     }
 
     private fun deleteDish(dish: Dish) {
-        viewModelScope.launch { dishDao.delete(dish) }
+        viewModelScope.launch { repository.delete(dish) }
     }
 
     private fun getNewDishEntry(dishName: String): Dish {
@@ -48,7 +49,7 @@ class DishViewModel(private val dishDao: DishDao) : ViewModel() {
     }
 
     fun retrieve(id: Int): LiveData<Dish> {
-        return dishDao.getDish(id).asLiveData()
+        return repository.getDish(id).asLiveData()
     }
 
     fun isEntryValid(value:String):Boolean{
@@ -57,11 +58,11 @@ class DishViewModel(private val dishDao: DishDao) : ViewModel() {
 
 }
 
-class DishViewModelFactory(private val dishDao: DishDao) : ViewModelProvider.Factory {
+class DishViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DishViewModel::class.java)) {
-            @Suppress("UNCHECK_CAST")
-            return DishViewModel(dishDao) as T
+            @Suppress("UNCHECKED_CAST")
+            return DishViewModel(repository) as T
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }
