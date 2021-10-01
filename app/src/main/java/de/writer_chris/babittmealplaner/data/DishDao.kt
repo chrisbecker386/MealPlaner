@@ -20,4 +20,7 @@ interface DishDao {
 
     @Query("SELECT * FROM DISH WHERE id=:dishId")
     fun getDish(dishId: Int): Flow<Dish>
+
+    @Query("SELECT * FROM DISH WHERE dish_name=:dishName")
+    suspend fun getDishWithoutFlow(dishName: String): Dish
 }

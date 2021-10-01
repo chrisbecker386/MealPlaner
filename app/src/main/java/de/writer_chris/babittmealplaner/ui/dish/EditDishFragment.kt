@@ -61,7 +61,7 @@ class EditDishFragment : Fragment() {
 
 
     private fun isEntryValid(): Boolean {
-        return binding.dishName.text.toString().isNotBlank()
+        return viewModel.isEntryValid(binding.dishName.text.toString())
     }
 
     private fun addNewDish() {
