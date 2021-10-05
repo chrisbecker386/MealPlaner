@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.writer_chris.babittmealplaner.data.Dish
+import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.databinding.ItemDishBinding
 
 class DishListAdapter(private val onItemClick: (Dish) -> Unit) :
@@ -14,7 +14,7 @@ class DishListAdapter(private val onItemClick: (Dish) -> Unit) :
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Dish>() {
             override fun areItemsTheSame(oldItem: Dish, newItem: Dish): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.dishId == newItem.dishId
             }
 
             override fun areContentsTheSame(oldItem: Dish, newItem: Dish): Boolean {

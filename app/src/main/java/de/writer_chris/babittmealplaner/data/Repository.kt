@@ -1,6 +1,7 @@
 package de.writer_chris.babittmealplaner.data
 
 import android.content.Context
+import de.writer_chris.babittmealplaner.data.entities.Dish
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -13,21 +14,22 @@ class Repository(context: Context) {
         dishDao = db.dishDao()
     }
 
-    suspend fun insert(dish: Dish) {
+    //Dish
+    suspend fun insertDish(dish: Dish) {
         withContext(Dispatchers.IO) {
-            dishDao.insert(dish)
+            dishDao.insertDish(dish)
         }
     }
 
-    suspend fun update(dish: Dish) {
+    suspend fun updateDish(dish: Dish) {
         withContext(Dispatchers.IO) {
-            dishDao.update(dish)
+            dishDao.updateDish(dish)
         }
     }
 
-    suspend fun delete(dish: Dish) {
+    suspend fun deleteDish(dish: Dish) {
         withContext(Dispatchers.IO) {
-            dishDao.delete(dish)
+            dishDao.deleteDish(dish)
         }
     }
 
@@ -40,4 +42,7 @@ class Repository(context: Context) {
         }
         return dish
     }
+
+
+
 }

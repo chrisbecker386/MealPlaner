@@ -4,8 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import de.writer_chris.babittmealplaner.data.entities.*
 
-@Database (entities = [Dish::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        Dish::class,
+        Ingredient::class,
+        DishIngredientCrossRef::class,
+        Meal::class,
+        MealType::class,
+        UnitType::class
+               ],
+    version = 3,
+    exportSchema = false
+)
 abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun dishDao(): DishDao

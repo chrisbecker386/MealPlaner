@@ -39,7 +39,7 @@ class DishFragment : Fragment() {
         val adapter = DishListAdapter {
             val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(
                 getString(R.string.edit_dish),
-                it.id
+                it.dishId
             )
             this.findNavController().navigate(action)
         }
