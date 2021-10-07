@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "de.writer_chris.babittmealplaner"
-        minSdk 21
+        minSdk 26
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -46,7 +46,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$life_cycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$life_cycle_version"
    // implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
+    //card view
+    implementation "androidx.cardview:cardview:1.0.0"
     //room lib
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
