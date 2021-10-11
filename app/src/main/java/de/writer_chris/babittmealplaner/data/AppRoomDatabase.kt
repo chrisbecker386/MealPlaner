@@ -13,9 +13,10 @@ import de.writer_chris.babittmealplaner.data.entities.*
         DishIngredientCrossRef::class,
         Meal::class,
         MealType::class,
-        UnitType::class
+        UnitType::class,
+        Period::class
                ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class AppRoomDatabase : RoomDatabase() {
