@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentMealBinding
@@ -37,6 +36,12 @@ class MealFragment : Fragment() {
         binding.mealRecyclerView.adapter = adapter
         adapter.submitList(viewModel.mealSchedule)
 
+        binding.btnAddSchedulePeriod.apply {
+            setOnClickListener {
+                val action = MealFragmentDirections.actionNavigationMealToDatePickerFragment()
+                this.findNavController().navigate(action)
+            }
+        }
 
     }
 

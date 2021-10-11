@@ -9,7 +9,8 @@ import java.lang.IllegalArgumentException
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
-import java.util.*
+import android.icu.util.Calendar
+
 
 enum class typeOfMeal(val type: String) { BREAKFAST("breakfast"), LUNCH("lunch"), DINNER("dinner") }
 class MealViewModel(private val repository: Repository) : ViewModel() {

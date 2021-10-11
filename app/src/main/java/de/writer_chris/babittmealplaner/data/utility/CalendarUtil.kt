@@ -4,7 +4,7 @@ import android.util.Log
 import de.writer_chris.babittmealplaner.R
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
+import android.icu.util.Calendar
 
 class CalendarUtil {
     companion object {
