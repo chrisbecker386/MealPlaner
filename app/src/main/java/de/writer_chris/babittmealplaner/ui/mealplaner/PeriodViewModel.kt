@@ -10,20 +10,21 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 import android.icu.util.Calendar
+import de.writer_chris.babittmealplaner.data.entities.Period
 
 
 enum class typeOfMeal(val type: String) { BREAKFAST("breakfast"), LUNCH("lunch"), DINNER("dinner") }
-class MealViewModel(private val repository: Repository) : ViewModel() {
+class PeriodViewModel(private val repository: Repository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is meal Fragment"
     }
     val text: LiveData<String> = _text
+
+    val periods: LiveData<List<Period>> = repository.getAllPeriods().asLiveData()
+
     lateinit var mealSchedule: MutableList<List<MealWithDish>>
 
-    init {
-        mealSchedule = getScheduleWithDefaultData()
-    }
 
     //generate a list for every day this and the next week without db data
     private fun getScheduleWithDefaultData(): MutableList<List<MealWithDish>> {
@@ -60,11 +61,11 @@ class MealViewModel(private val repository: Repository) : ViewModel() {
 }
 
 
-class MealViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+class PeriodViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MealViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(PeriodViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MealViewModel(repository) as T
+            return PeriodViewModel(repository) as T
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
 

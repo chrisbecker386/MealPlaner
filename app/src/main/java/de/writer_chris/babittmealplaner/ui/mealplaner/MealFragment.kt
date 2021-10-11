@@ -13,8 +13,8 @@ import de.writer_chris.babittmealplaner.databinding.FragmentMealBinding
 
 class MealFragment : Fragment() {
 
-    private val viewModel: MealViewModel by viewModels {
-        MealViewModelFactory(Repository(requireContext()))
+    private val viewModel: PeriodViewModel by viewModels {
+        PeriodViewModelFactory(Repository(requireContext()))
     }
     private var _binding: FragmentMealBinding? = null
     private val binding get() = _binding!!
@@ -30,11 +30,20 @@ class MealFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.txtDevText.text = viewModel.mealSchedule.toString()
-        val adapter = MealListAdapter()
-        binding.mealRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.mealRecyclerView.adapter = adapter
-        adapter.submitList(viewModel.mealSchedule)
+        val adapter = PeriodListAdapter {
+            //TODO add direction to edit Period
+            /* val action = direction....
+            ...
+            this.findNavController().navigate(action)
+            * */
+
+        }
+        binding.periodRecyclerView.adapter = adapter
+        viewModel.periods.observe(this.viewLifecycleOwner) { periods ->
+            periods.let { adapter.submitList(it) }
+        }
+        binding.periodRecyclerView.layoutManager = LinearLayoutManager(this.context)
+
 
         binding.btnAddSchedulePeriod.apply {
             setOnClickListener {
