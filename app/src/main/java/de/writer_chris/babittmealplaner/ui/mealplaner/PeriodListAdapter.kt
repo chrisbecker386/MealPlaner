@@ -27,8 +27,7 @@ class PeriodListAdapter(private val onItemClick: (Period) -> Unit) :
                 oldItem: Period,
                 newItem: Period
             ): Boolean {
-                return oldItem.startDate == newItem.startDate &&
-                        oldItem.endDate == newItem.endDate
+                return (oldItem.startDate == newItem.startDate && oldItem.endDate == newItem.endDate)
             }
         }
     }

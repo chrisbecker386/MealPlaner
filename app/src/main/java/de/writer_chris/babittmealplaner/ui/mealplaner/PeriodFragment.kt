@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentMealBinding
 
-class MealFragment : Fragment() {
+class PeriodFragment : Fragment() {
 
     private val viewModel: PeriodViewModel by viewModels {
         PeriodViewModelFactory(Repository(requireContext()))
@@ -47,7 +47,7 @@ class MealFragment : Fragment() {
 
         binding.btnAddSchedulePeriod.apply {
             setOnClickListener {
-                val action = MealFragmentDirections.actionNavigationMealToDatePickerFragment()
+                val action = PeriodFragmentDirections.actionNavigationMealToDatePickerFragment()
                 this.findNavController().navigate(action)
             }
         }
