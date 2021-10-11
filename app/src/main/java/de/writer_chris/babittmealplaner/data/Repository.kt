@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
+import de.writer_chris.babittmealplaner.data.entities.Period
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -75,5 +76,26 @@ class Repository(context: Context) {
     fun getMealsOfThisWeek(startOfWeek: Long, endOfWeek: Long): Flow<List<Meal>> =
         dishDao.getMealsOfThisWeek(startOfWeek, endOfWeek)
 
-    //
+    //Period
+    suspend fun insertPeriod(period: Period) {
+        withContext(Dispatchers.IO) {
+            dishDao.insertPeriod(period)
+        }
+    }
+
+    suspend fun updatePeriod(period: Period) {
+        withContext(Dispatchers.IO) {
+            dishDao.updatePeriod(period)
+        }
+    }
+
+    suspend fun deletePeriod(period: Period) {
+        withContext(Dispatchers.IO) {
+            dishDao.deletePeriod(period)
+        }
+    }
+
+    fun getAllPeriods(): Flow<List<Period>> = dishDao.getAllPeriods()
+
+    fun getPeriod(periodId: Int): Flow<Period> = dishDao.getPeriod(periodId)
 }

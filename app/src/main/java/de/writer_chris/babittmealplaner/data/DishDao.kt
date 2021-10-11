@@ -93,4 +93,22 @@ interface DishDao {
     @Transaction
     @Query("SELECT * FROM UnitType WHERE unitType=:unitType")
     fun getUnitType(unitType: String): Flow<UnitType>
+
+    //Period table
+    @Insert
+    suspend fun insertPeriod(period: Period)
+
+    @Update
+    suspend fun updatePeriod(period: Period)
+
+    @Delete
+    suspend fun deletePeriod(period: Period)
+
+    @Transaction
+    @Query("SELECT * FROM Period")
+    fun getAllPeriods(): Flow<List<Period>>
+
+    @Transaction
+    @Query("SELECT * FROM Period WHERE periodId =:periodId")
+    fun getPeriod(periodId: Int): Flow<Period>
 }
