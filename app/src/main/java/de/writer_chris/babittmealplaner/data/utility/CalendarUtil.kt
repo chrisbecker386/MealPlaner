@@ -10,7 +10,7 @@ class CalendarUtil {
     companion object {
         fun localDateToCalendar(localDate: LocalDate): Calendar {
             val cal = Calendar.getInstance()
-            cal.set(localDate.year, (localDate.monthValue-1), localDate.dayOfMonth, 0, 0, 0)
+            cal.set(localDate.year, (localDate.monthValue - 1), localDate.dayOfMonth, 0, 0, 0)
             val sdf = SimpleDateFormat("EEE yyyy-MM-dd ")
 //            Log.d("Date", "${sdf.format(cal.time)}")
 
@@ -29,8 +29,10 @@ class CalendarUtil {
 
         fun longToWeekdayResId(number: Long): Int {
             val cal = longToCalendar(number)
+            return calendarToWeekdayResId(cal)
+        }
 
-
+        fun calendarToWeekdayResId(cal: Calendar):Int{
             val weekday: Int = when (cal.get(Calendar.DAY_OF_WEEK)) {
                 2 -> R.string.monday
                 3 -> R.string.tuesday
@@ -42,9 +44,11 @@ class CalendarUtil {
             }
             return weekday
         }
-        fun longToGermanDate(number: Long):String{
+
+        fun longToGermanDate(number: Long): String {
             val sdf = SimpleDateFormat("dd.MM.yyyy")
             return sdf.format(longToCalendar(number).time)
         }
+
     }
 }

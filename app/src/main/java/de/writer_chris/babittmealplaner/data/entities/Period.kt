@@ -4,5 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Period(@PrimaryKey val periodId: Int, val startDate: Long, val endDate: Long) {
+data class Period(
+    @PrimaryKey(autoGenerate = true) val periodId: Int = 0,
+    val startDate: Long,
+    val endDate: Long
+) {
 }

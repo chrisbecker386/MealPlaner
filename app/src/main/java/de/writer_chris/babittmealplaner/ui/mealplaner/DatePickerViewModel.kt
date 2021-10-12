@@ -1,11 +1,11 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner
 
 import android.icu.util.Calendar
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
+import de.writer_chris.babittmealplaner.data.entities.Period
+import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class DatePickerViewModel(private val repository: Repository) : ViewModel() {
@@ -26,6 +26,26 @@ class DatePickerViewModel(private val repository: Repository) : ViewModel() {
         }
         return cal
     }
+
+    private fun insertPeriod(period: Period) {
+        viewModelScope.launch { repository.insertPeriod(period) }
+    }
+
+    fun addPeriod() {
+        val period = Period(
+            startDate = startDate.value!!.let { CalendarUtil.calendarToLong(it) },
+            endDate = endDate.value!!.let { CalendarUtil.calendarToLong(it) })
+        insertPeriod(period)
+    }
+
+    fun setStartDate(calendar: Calendar) {
+        _startDate.value = calendar
+    }
+
+    fun setEndDate(calendar: Calendar){
+        _endDate.value = calendar
+    }
+
 
 }
 

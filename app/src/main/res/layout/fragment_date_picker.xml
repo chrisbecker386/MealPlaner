@@ -7,7 +7,7 @@
     tools:context=".ui.mealplaner.DatePickerFragment">
 
     <TextView
-        android:id="@+id/txt_default"
+        android:id="@+id/txt_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="date picker Fragment"
@@ -23,8 +23,15 @@
         android:datePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_default" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_start" />
 
+    <TextView
+        android:id="@+id/txt_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date picker Fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_picker_start" />
     <DatePicker
         android:id="@+id/date_picker_end"
         android:layout_width="wrap_content"
@@ -34,7 +41,7 @@
         android:datePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_picker_start" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_end" />
 
     <Button
         android:id="@+id/btn_save_schedule_period"
