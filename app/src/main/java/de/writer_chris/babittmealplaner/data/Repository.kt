@@ -77,10 +77,12 @@ class Repository(context: Context) {
         dishDao.getMealsOfThisWeek(startOfWeek, endOfWeek)
 
     //Period
-    suspend fun insertPeriod(period: Period) {
+    suspend fun insertPeriod(period: Period): Int {
+        var periodId: Int
         withContext(Dispatchers.IO) {
-            dishDao.insertPeriod(period)
+            periodId = dishDao.insertPeriod(period).toInt()
         }
+        return periodId
     }
 
     suspend fun updatePeriod(period: Period) {
@@ -98,4 +100,16 @@ class Repository(context: Context) {
     fun getAllPeriods(): Flow<List<Period>> = dishDao.getAllPeriods()
 
     fun getPeriod(periodId: Int): Flow<Period> = dishDao.getPeriod(periodId)
+
+    suspend fun getPeriodId(startDate: Long, endDate: Long): Int {
+        var res: Int
+        withContext(Dispatchers.IO) {
+            res = dishDao.getPeriodId(startDate, endDate)
+        }
+        return res
+    }
+
+    fun getPeriodIdFlow(startDate: Long, endDate: Long) =dishDao.getPeriodIdFlow(startDate, endDate)
+
+    fun getLatestPeriodId() = dishDao.getLatestPeriodId()
 }

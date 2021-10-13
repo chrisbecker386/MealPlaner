@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mealplaner.DatePickerFragment">
+    tools:context=".ui.mealplaner.PeriodPickerFragment">
 
     <TextView
         android:id="@+id/txt_start"

@@ -1,8 +1,9 @@
 package de.writer_chris.babittmealplaner.data.utility
 
+import android.icu.text.SimpleDateFormat
 import android.util.Log
 import de.writer_chris.babittmealplaner.R
-import java.text.SimpleDateFormat
+
 import java.time.LocalDate
 import android.icu.util.Calendar
 

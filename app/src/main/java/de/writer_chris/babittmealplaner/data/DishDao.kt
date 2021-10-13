@@ -95,8 +95,8 @@ interface DishDao {
     fun getUnitType(unitType: String): Flow<UnitType>
 
     //Period table
-    @Insert
-    suspend fun insertPeriod(period: Period)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPeriod(period: Period): Long
 
     @Update
     suspend fun updatePeriod(period: Period)
@@ -111,4 +111,16 @@ interface DishDao {
     @Transaction
     @Query("SELECT * FROM Period WHERE periodId =:periodId")
     fun getPeriod(periodId: Int): Flow<Period>
+
+    @Transaction
+    @Query("SELECT periodId FROM Period WHERE startDate=:startDate AND endDate=:endDate")
+    suspend fun getPeriodId(startDate: Long, endDate: Long): Int
+
+    @Transaction
+    @Query("SELECT MAX(periodId) FROM Period ")
+    fun getLatestPeriodId(): Flow<Int>
+
+    @Transaction
+    @Query("SELECT periodId FROM Period WHERE startDate=:startDate AND endDate=:endDate LIMIT 1")
+    fun getPeriodIdFlow(startDate: Long, endDate: Long): Flow<Int>
 }

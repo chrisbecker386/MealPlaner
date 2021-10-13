@@ -10,16 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
-import de.writer_chris.babittmealplaner.databinding.FragmentDatePickerBinding
+import de.writer_chris.babittmealplaner.databinding.FragmentPeriodPickerBinding
 
 
-class DatePickerFragment : Fragment() {
+class PeriodPickerFragment : Fragment() {
 
-    private val viewModel: DatePickerViewModel by viewModels {
-        DatePickerViewModelFactory(Repository(requireContext()))
+    private val viewModel: PeriodPickerViewModel by viewModels {
+        PeriodPickerViewModelFactory(Repository(requireContext()))
     }
 
-    private var _binding: FragmentDatePickerBinding? = null
+    private var _binding: FragmentPeriodPickerBinding? = null
     private val binding get() = _binding!!
 
 
@@ -27,7 +27,7 @@ class DatePickerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDatePickerBinding.inflate(inflater, container, false)
+        _binding = FragmentPeriodPickerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,11 +46,11 @@ class DatePickerFragment : Fragment() {
             }
         }
 
-
         binding.btnSaveSchedulePeriod.apply {
             setOnClickListener {
                 addPeriod()
-                val action = DatePickerFragmentDirections.actionDatePickerFragmentToNavigationMeal()
+                val action =
+                    PeriodPickerFragmentDirections.actionDatePickerFragmentToNavigationMeal()
                 this.findNavController().navigate(action)
             }
         }
