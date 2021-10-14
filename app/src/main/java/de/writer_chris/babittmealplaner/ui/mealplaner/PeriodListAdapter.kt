@@ -11,7 +11,10 @@ import de.writer_chris.babittmealplaner.data.entities.Period
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.databinding.ItemPeriodBinding
 
-class PeriodListAdapter(private val onItemClick: (Period) -> Unit) :
+class PeriodListAdapter(
+    private val onItemClick: (Period) -> Unit,
+    private val onItemLongClick: (Period) -> Unit
+) :
     ListAdapter<Period, PeriodListAdapter.PeriodViewHolder>(DiffCallback) {
 
     companion object {
@@ -56,8 +59,12 @@ class PeriodListAdapter(private val onItemClick: (Period) -> Unit) :
 
     override fun onBindViewHolder(holder: PeriodViewHolder, position: Int) {
         val current = getItem(position)
-        val toast = Toast.makeText(holder.itemView.context, "dada", LENGTH_SHORT)
-        holder.itemView.setOnClickListener { toast.show() }
+        val toast = Toast.makeText(holder.itemView.context, "${current.periodId}", LENGTH_SHORT)
+        holder.itemView.setOnClickListener { onItemClick(current) }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick(current)
+            return@setOnLongClickListener true
+        }
         holder.bind(current)
     }
 

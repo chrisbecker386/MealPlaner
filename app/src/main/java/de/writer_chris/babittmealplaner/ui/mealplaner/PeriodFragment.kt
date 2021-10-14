@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
-import de.writer_chris.babittmealplaner.databinding.FragmentMealBinding
+import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
 
 class PeriodFragment : Fragment() {
 
     private val viewModel: PeriodViewModel by viewModels {
         PeriodViewModelFactory(Repository(requireContext()))
     }
-    private var _binding: FragmentMealBinding? = null
+    private var _binding: FragmentPeriodBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,20 +26,25 @@ class PeriodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMealBinding.inflate(inflater, container, false)
+        _binding = FragmentPeriodBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PeriodListAdapter {
-            //TODO add direction to edit Period
-            /* val action = direction....
-            ...
+        val adapter = PeriodListAdapter({
+            val action =
+                PeriodFragmentDirections.actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
             this.findNavController().navigate(action)
-            * */
+        }, {
+            /* Preparation for edit period to finished yet
+            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(it.periodId, "edit")
+            this.findNavController().navigate(action)
+            */
+            Toast.makeText(this.requireContext(), "PeriodId: ${it.periodId}", Toast.LENGTH_SHORT)
+                .show()
 
-        }
+        })
         binding.periodRecyclerView.adapter = adapter
         viewModel.periods.observe(this.viewLifecycleOwner) { periods ->
             periods.let { adapter.submitList(it) }
@@ -47,7 +54,7 @@ class PeriodFragment : Fragment() {
 
         binding.btnAddSchedulePeriod.apply {
             setOnClickListener {
-                val action = PeriodFragmentDirections.actionNavigationMealToDatePickerFragment()
+                val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment()
                 this.findNavController().navigate(action)
             }
         }
