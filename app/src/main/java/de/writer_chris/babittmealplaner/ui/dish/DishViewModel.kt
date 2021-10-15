@@ -9,11 +9,6 @@ import java.lang.IllegalArgumentException
 
 class DishViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dish Fragment"
-    }
-    val text: LiveData<String> = _text
-
     val allDishes: LiveData<List<Dish>> = repository.getAllDishes().asLiveData()
 
     private fun insertDish(dish: Dish) {
@@ -28,8 +23,12 @@ class DishViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch { repository.deleteDish(dish) }
     }
 
+    fun retrieve(id: Int): LiveData<Dish> {
+        return repository.getDish(id).asLiveData()
+    }
+
     private fun getNewDishEntry(dishName: String): Dish {
-        return Dish(dishName = dishName, description = "",duration = 0)
+        return Dish(dishName = dishName, description = "", duration = 0)
     }
 
     fun addDish(dishName: String) {
@@ -38,23 +37,18 @@ class DishViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun editDish(dishId: Int, dishName: String) {
-        val toUpdateDish: Dish = Dish(dishId, dishName,0,"")
+        val toUpdateDish: Dish = Dish(dishId, dishName, 0, "")
         updateDish(toUpdateDish)
     }
 
-    fun eraseDish(dishId: Int){
-        val dish: Dish = Dish(dishId, "", 0,"")
+    fun eraseDish(dishId: Int) {
+        val dish: Dish = Dish(dishId, "", 0, "")
         deleteDish(dish)
     }
 
-    fun retrieve(id: Int): LiveData<Dish> {
-        return repository.getDish(id).asLiveData()
-    }
-
-    fun isEntryValid(value:String):Boolean{
+    fun isEntryValid(value: String): Boolean {
         return value.isNotBlank()
     }
-
 }
 
 class DishViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {

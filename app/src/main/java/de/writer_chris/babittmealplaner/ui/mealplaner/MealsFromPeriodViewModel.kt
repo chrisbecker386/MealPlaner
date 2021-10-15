@@ -1,26 +1,59 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
-import java.lang.IllegalArgumentException
+import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMeals
 
-class MealsFromPeriodViewModel(private val repository: Repository) : ViewModel() {
+class MealsFromPeriodViewModel(
+    private val repository: Repository,
+    periodId: Int
+) :
+    ViewModel() {
 
-    //this is wrong it needs specified meals from the db,
-    // but for the first test is should be okay
-    val meals: LiveData<List<Meal>> = repository.getAllMeals().asLiveData()
+    private var _meals: LiveData<List<Meal>> = retrieveMeals(periodId)
+    val meals get() = _meals
+
+    private fun retrieveMeals(periodId: Int): LiveData<List<Meal>> {
+        return repository.getMealsFromPeriod(periodId).asLiveData()
+    }
+
+    fun getDayMeals(): List<DayMeals> {
+        val allMeals = meals.value ?: throw IllegalArgumentException("meals is null")
+        val dayMeals = mutableListOf<DayMeals>()
+
+        lateinit var breakfast: Meal
+        lateinit var lunch: Meal
+        lateinit var dinner: Meal
+        var counter = 0
+
+        for (i in allMeals) {
+            when (counter) {
+                0 -> breakfast = i
+                1 -> lunch = i
+                else -> dinner = i
+            }
+            if (counter >= 2) {
+
+                dayMeals.add(DayMeals(breakfast.date, breakfast, lunch, dinner))
+                counter = 0
+            } else {
+                counter++
+            }
+        }
+        return dayMeals
+    }
 }
 
-class MealsFromPeriodViewModelFactory(private val repository: Repository) :
+class MealsFromPeriodViewModelFactory(
+    private val repository: Repository,
+    private val periodId: Int
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MealsFromPeriodViewModel::class.java)) {
             @Suppress("UNCHECKED CAST")
-            return MealsFromPeriodViewModel(repository) as T
+            return MealsFromPeriodViewModel(repository, periodId) as T
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
     }

@@ -43,12 +43,13 @@ interface DishDao {
     fun getAllMeals(): Flow<List<Meal>>
 
     @Transaction
+    @Query("SELECT * FROM Meal WHERE periodId=:periodId ORDER BY Date DESC")
+    fun getMealsFromPeriod(periodId: Int): Flow<List<Meal>>
+
+    @Transaction
     @Query("SELECT * FROM Meal WHERE date =:day")
     fun getMealsOfDay(day: Long): Flow<List<Meal>>
 
-    @Transaction
-    @Query("SELECT * FROM Meal WHERE date BETWEEN :startOfWeek AND :endOfWeek")
-    fun getMealsOfThisWeek(startOfWeek: Long, endOfWeek: Long): Flow<List<Meal>>
 
     //MealType table
     @Insert
