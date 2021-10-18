@@ -14,8 +14,8 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodPickerBinding
-import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerViewModel
-import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModelFactory
 
 enum class PeriodState { START_DATE, END_DATE, SUMMARY }
 
