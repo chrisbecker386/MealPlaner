@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.adapter
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -7,21 +7,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.writer_chris.babittmealplaner.data.Repository
 
 import de.writer_chris.babittmealplaner.databinding.ItemMealDayBinding
-import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMeals
+import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMealsAndDish
 
 
-class DayMealsListAdapter(private val onItemClick: (DayMeals) -> Unit) :
-    ListAdapter<DayMeals, DayMealsListAdapter.MealViewHolder>(DiffCallback) {
+class DayMealsListAdapter(private val onItemClick: (DayMealsAndDish) -> Unit) :
+//    ListAdapter<DayMeals, DayMealsListAdapter.MealViewHolder>(DiffCallback) {
+
+    ListAdapter<DayMealsAndDish, DayMealsListAdapter.MealViewHolder>(DiffCallback) {
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<DayMeals>() {
-            override fun areItemsTheSame(oldItem: DayMeals, newItem: DayMeals): Boolean {
+        private val DiffCallback = object : DiffUtil.ItemCallback<DayMealsAndDish>() {
+            override fun areItemsTheSame(oldItem: DayMealsAndDish, newItem: DayMealsAndDish): Boolean {
                 return oldItem.date == newItem.date
             }
 
-            override fun areContentsTheSame(oldItem: DayMeals, newItem: DayMeals): Boolean {
+            override fun areContentsTheSame(oldItem: DayMealsAndDish, newItem: DayMealsAndDish): Boolean {
                 return (oldItem.date == newItem.date
                         && oldItem.breakfast == newItem.breakfast
                         && oldItem.lunch == newItem.lunch
@@ -33,16 +34,16 @@ class DayMealsListAdapter(private val onItemClick: (DayMeals) -> Unit) :
 
     class MealViewHolder(private var binding: ItemMealDayBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dayMeals: DayMeals) {
+        fun bind(dayMeals: DayMealsAndDish) {
             val sdf = SimpleDateFormat("EEE - dd.MM.yyyy")
             val cal = Calendar.getInstance()
             cal.timeInMillis = dayMeals.date
 
             binding.apply {
                 txtDate.text = sdf.format(cal).toString()
-                txtBreakfastDish.text = if(dayMeals.breakfast.dishId!=null){"*"}else{dayMeals.breakfast.dishId.toString()}
-                txtLunchDish.text = dayMeals.lunch.mealType
-                txtDinnerDish.text = dayMeals.dinner.mealType
+                txtBreakfastDish.text = if(dayMeals.breakfast.meal.dishId!=null){dayMeals.breakfast.dish?.dishName}else{dayMeals.breakfast.meal.mealType.toString()}
+                txtLunchDish.text = dayMeals.lunch.meal.mealType
+                txtDinnerDish.text = dayMeals.dinner.meal.mealType
             }
         }
     }

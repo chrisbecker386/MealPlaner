@@ -2,6 +2,9 @@ package de.writer_chris.babittmealplaner.data
 
 import androidx.room.*
 import de.writer_chris.babittmealplaner.data.entities.*
+import de.writer_chris.babittmealplaner.data.entities.relations.DishWithMeals
+import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -124,4 +127,17 @@ interface DishDao {
     @Transaction
     @Query("SELECT periodId FROM Period WHERE startDate=:startDate AND endDate=:endDate LIMIT 1")
     fun getPeriodIdFlow(startDate: Long, endDate: Long): Flow<Int>
+
+    //MealAndDish
+    @Transaction
+    @Query("SELECT * FROM Meal JOIN Dish ON Meal.dishId = Dish.dishId")
+    fun getMealAndDishAll(): Flow<List<MealAndDish>>
+
+//    @Transaction
+//    @Query("SELECT * FROM Meal JOIN DISH ON Meal.dishId =Dish.dishId WHERE mealId =:mealId")
+//    suspend fun getMealWithDish(mealId: Int): Flow<MealAndDish>
+
+    @Transaction
+    @Query("SELECT * FROM Meal LEFT JOIN DISH ON Meal.dishId =Dish.dishId WHERE periodId =:periodId")
+    fun retrieveMealsWithDishes(periodId: Int): Flow<List<MealAndDish>>
 }

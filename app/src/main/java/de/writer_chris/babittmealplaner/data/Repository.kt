@@ -1,12 +1,10 @@
 package de.writer_chris.babittmealplaner.data
 
 import android.content.Context
-import androidx.room.Delete
-import androidx.room.Query
-import androidx.room.Transaction
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
+import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -113,4 +111,10 @@ class Repository(context: Context) {
         dishDao.getPeriodIdFlow(startDate, endDate)
 
     fun getLatestPeriodId() = dishDao.getLatestPeriodId()
+
+    fun getMealAndDishAll() = dishDao.getMealAndDishAll()
+
+    fun retrieveMealsWithDishes(periodId: Int) = dishDao.retrieveMealsWithDishes(periodId)
+
+
 }

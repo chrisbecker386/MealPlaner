@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/navigation_meal"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.PeriodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodFragment"
         android:label="@string/title_meal"
         tools:layout="@layout/fragment_period">
 
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/datePickerFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodPickerFragment"
         android:label="fragment_date_picker"
         tools:layout="@layout/fragment_period_picker">
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealsFromPeriodFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.MealsFromPeriodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealsFromPeriodFragment"
         android:label="fragment_meals_from_period"
         tools:layout="@layout/fragment_meals_from_period">
         <argument

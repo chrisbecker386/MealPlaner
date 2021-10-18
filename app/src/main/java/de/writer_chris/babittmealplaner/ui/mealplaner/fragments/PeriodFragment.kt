@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
+import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.adapter.PeriodListAdapter
 
 class PeriodFragment : Fragment() {
 

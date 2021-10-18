@@ -1,6 +1,7 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
+import de.writer_chris.babittmealplaner.ui.mealplaner.MealsFromPeriodViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.MealsFromPeriodViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.adapter.DayMealsListAdapter
 
 class MealsFromPeriodFragment : Fragment() {
     private val navigationArgs: MealsFromPeriodFragmentArgs by navArgs()
@@ -35,12 +39,14 @@ class MealsFromPeriodFragment : Fragment() {
             Toast.makeText(this.context, "${it.date}", Toast.LENGTH_SHORT).show()
         }
         binding.recyclerViewMealsFromPeriod.adapter = adapter
-        viewModel.meals.observe(this.viewLifecycleOwner) {
-            adapter.submitList(viewModel.getDayMeals())
+
+        viewModel.mealsAndDishes.observe(this.viewLifecycleOwner) {
+            Log.d("LeftJoinRequest", "${viewModel.mealsAndDishes.value}")
+            adapter.submitList(viewModel.getDayMealsAndDish())
         }
+
         binding.recyclerViewMealsFromPeriod.layoutManager = LinearLayoutManager(this.context)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

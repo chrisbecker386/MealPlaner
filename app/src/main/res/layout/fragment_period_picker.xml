@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mealplaner.PeriodPickerFragment">
+    tools:context=".ui.mealplaner.fragments.PeriodPickerFragment">
 
     <TextView
         android:id="@+id/txt_start"
@@ -21,6 +21,7 @@
         android:layout_marginBottom="16dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
+        android:minDate=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_start" />

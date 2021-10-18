@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -11,6 +11,8 @@ import androidx.navigation.findNavController
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodPickerBinding
+import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerViewModelFactory
 
 
 class PeriodPickerFragment : Fragment() {
