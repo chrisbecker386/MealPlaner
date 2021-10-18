@@ -10,7 +10,7 @@
         android:id="@+id/txt_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="date picker Fragment"
+        android:text="today"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/txt_end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="date picker Fragment"
+        android:text="Anotherday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_picker_start" />
     <DatePicker
