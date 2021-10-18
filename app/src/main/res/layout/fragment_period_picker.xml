@@ -7,48 +7,53 @@
     tools:context=".ui.mealplaner.fragments.PeriodPickerFragment">
 
     <TextView
-        android:id="@+id/txt_start"
+        android:id="@+id/txt_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="today"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="StartDate" />
 
-    <DatePicker
-        android:id="@+id/date_picker_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:minDate=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_start" />
 
     <TextView
-        android:id="@+id/txt_end"
-        android:layout_width="match_parent"
+        android:id="@+id/txt_weekday"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anotherday"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_picker_start" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_info"
+        tools:text="today" />
+
     <DatePicker
-        android:id="@+id/date_picker_end"
+        android:id="@+id/date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_end" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_weekday" />
+
+    <TextView
+        android:id="@+id/txt_period_of_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_picker"
+        tools:text="From Mon 2. Jan - Sun 30. May 1984" />
 
     <Button
-        android:id="@+id/btn_save_schedule_period"
+        android:id="@+id/btn_set_changes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        app:layout_constraintTop_toBottomOf="@+id/date_picker_end" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_period_of_time" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

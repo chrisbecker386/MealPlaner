@@ -22,7 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_meals_from_period.xml" value="0.12968591691995948" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.296195652173913" />
         <entry key="app/src/main/res/layout/fragment_period.xml" value="0.13019250253292808" />
-        <entry key="app/src/main/res/layout/fragment_period_picker.xml" value="0.24630541871921183" />
+        <entry key="app/src/main/res/layout/fragment_period_picker.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_period_picker_end_date.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/layout/fragment_period_picker_start_date.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_period_picker_summary.xml" value="0.20520833333333333" />

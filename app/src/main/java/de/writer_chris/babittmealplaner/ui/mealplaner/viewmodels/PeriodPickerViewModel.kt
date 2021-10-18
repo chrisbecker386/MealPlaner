@@ -47,7 +47,6 @@ class PeriodPickerViewModel(
         while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             cal.add(Calendar.DAY_OF_YEAR, 1)
         }
-        Log.d(LOG, "${_startDate.value?.timeInMillis} ${cal.timeInMillis}")
         return cal
     }
 
