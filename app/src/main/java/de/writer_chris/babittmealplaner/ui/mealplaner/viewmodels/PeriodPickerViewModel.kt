@@ -1,6 +1,7 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner
 
 import android.icu.util.Calendar
+import android.util.Log
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
@@ -9,16 +10,36 @@ import kotlinx.coroutines.launch
 import kotlin.IllegalArgumentException
 
 const val LOG = "PeriodPickerViewModel"
-class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _startDate = MutableLiveData(Calendar.getInstance())
+class PeriodPickerViewModel(
+    private val repository: Repository,
+    private val initStartDate: Calendar?,
+    private val initEndDate: Calendar?
+) : ViewModel() {
+
+    private var _startDate = MutableLiveData<Calendar>()
     val startDate: LiveData<Calendar> get() = _startDate
-    private val _endDate = MutableLiveData<Calendar>()
+    private var _endDate = MutableLiveData<Calendar>()
     val endDate: LiveData<Calendar> get() = _endDate
     private val dayDish = listOf("breakfast", "lunch", "dinner")
 
     init {
-        _endDate.value = defaultEndDate()
+        if (initStartDate == null) {
+            _startDate.value = defaultStartDate()
+        } else {
+            _startDate.value = initStartDate
+        }
+        if (initEndDate == null) {
+            _endDate.value = defaultEndDate()
+        } else {
+            _endDate.value = initEndDate
+        }
+
+    }
+
+
+    private fun defaultStartDate(): Calendar {
+        return Calendar.getInstance()
     }
 
     private fun defaultEndDate(): Calendar {
@@ -26,6 +47,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             cal.add(Calendar.DAY_OF_YEAR, 1)
         }
+        Log.d(LOG, "${_startDate.value?.timeInMillis} ${cal.timeInMillis}")
         return cal
     }
 
@@ -92,11 +114,15 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     }
 }
 
-class PeriodPickerViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+class PeriodPickerViewModelFactory(
+    private val repository: Repository, private val initStartDate: Calendar?,
+    private val initEndDate: Calendar?
+) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PeriodPickerViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PeriodPickerViewModel(repository) as T
+            return PeriodPickerViewModel(repository, initStartDate, initEndDate) as T
         }
         throw  IllegalArgumentException("Unknown ViewModel class")
 

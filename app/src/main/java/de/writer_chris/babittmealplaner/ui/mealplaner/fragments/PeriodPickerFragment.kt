@@ -18,7 +18,7 @@ import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodPickerViewModelFacto
 class PeriodPickerFragment : Fragment() {
 
     private val viewModel: PeriodPickerViewModel by viewModels {
-        PeriodPickerViewModelFactory(Repository(requireContext()))
+        PeriodPickerViewModelFactory(Repository(requireContext()), null, null)
     }
 
     private var _binding: FragmentPeriodPickerBinding? = null
@@ -36,7 +36,8 @@ class PeriodPickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupPicker()
+
+
         viewModel.startDate.observe(this.viewLifecycleOwner) {
             it.let {
                 binding.txtStart.setText(CalendarUtil.calendarToWeekdayResId(it))
@@ -47,6 +48,7 @@ class PeriodPickerFragment : Fragment() {
                 binding.txtEnd.setText(CalendarUtil.calendarToWeekdayResId(it))
             }
         }
+        setupPicker()
 
         binding.btnSaveSchedulePeriod.apply {
             setOnClickListener {
@@ -61,19 +63,23 @@ class PeriodPickerFragment : Fragment() {
     private fun setupPicker() {
 
         binding.apply {
+            val start =
+                viewModel.startDate.value ?: throw IllegalArgumentException("startDate is null")
+
+            val end = viewModel.endDate.value ?: throw IllegalArgumentException("endDate is null")
             datePickerStart.updateDate(
-                viewModel.startDate.value!!.get(Calendar.YEAR),
-                viewModel.startDate.value!!.get(Calendar.MONTH),
-                viewModel.startDate.value!!.get(Calendar.DAY_OF_MONTH)
+                start.get(Calendar.YEAR),
+                start.get(Calendar.MONTH),
+                start.get(Calendar.DAY_OF_MONTH)
             )
             datePickerStart.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
                 startDateChanged(year, monthOfYear, dayOfMonth)
             }
 
             datePickerEnd.updateDate(
-                viewModel.endDate.value!!.get(Calendar.YEAR),
-                viewModel.endDate.value!!.get(Calendar.MONTH),
-                viewModel.endDate.value!!.get(Calendar.DAY_OF_MONTH)
+                end.get(Calendar.YEAR),
+                end.get(Calendar.MONTH),
+                end.get(Calendar.DAY_OF_MONTH)
             )
             datePickerEnd.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
                 setEndDateChanged(year, monthOfYear, dayOfMonth)
