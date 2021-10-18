@@ -1,18 +1,12 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
-import android.annotation.SuppressLint
 import android.content.res.Resources
-import android.hardware.SensorAdditionalInfo
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
-import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -87,7 +81,7 @@ class PeriodPickerFragment : Fragment() {
             val start =
                 viewModel.startDate.value ?: throw IllegalArgumentException("startDate is null")
 
-            datePickerMinMaxDate(start, 24)
+            datePickerMinMaxDate(start)
 
             datePicker.updateDate(
                 start.get(Calendar.YEAR),
@@ -115,7 +109,7 @@ class PeriodPickerFragment : Fragment() {
 
     private fun setupEnd() {
         val start =
-            viewModel.startDate?.value ?: throw IllegalArgumentException("startDate is null")
+            viewModel.startDate.value ?: throw IllegalArgumentException("startDate is null")
 
         viewModel.endDate.observe(this.viewLifecycleOwner) {
             it.let {
@@ -130,25 +124,18 @@ class PeriodPickerFragment : Fragment() {
 
         binding.apply {
             txtInfo.text = getString(R.string.end_date)
-
             val end =
                 viewModel.endDate.value ?: throw IllegalArgumentException("endDate is null")
-
-            datePickerMinMaxDate(start, 24)
-
+            datePickerMinMaxDate(start)
             datePicker.updateDate(
                 end.get(Calendar.YEAR),
                 end.get(Calendar.MONTH),
                 end.get(Calendar.DAY_OF_MONTH)
             )
-
             datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
                 setEndDateChanged(year, monthOfYear, dayOfMonth)
-                Log.d("date2:", "year:$year, month: $monthOfYear, dayOfMonth: $dayOfMonth")
             }
-
             btnSetChanges.text = getString(R.string.set_end_date)
-
             btnSetChanges.setOnClickListener {
                 datePicker.setOnDateChangedListener { _, _, _, _ -> }
                 periodPickerState.value = PeriodState.SUMMARY
@@ -158,7 +145,6 @@ class PeriodPickerFragment : Fragment() {
 
 
     private fun setupSummary() {
-
         binding.apply {
             txtInfo.text = getString(R.string.summary)
             val start = viewModel.startDate.value
@@ -170,9 +156,7 @@ class PeriodPickerFragment : Fragment() {
                 "From ${CalendarUtil.longToGermanDate(start.timeInMillis)} till ${
                     CalendarUtil.longToGermanDate(end.timeInMillis)
                 }"
-
             datePicker.visibility = View.GONE
-
             txtPeriodOfTime.text
             btnSetChanges.text = getString(R.string.save)
             btnSetChanges.setOnClickListener {
@@ -185,10 +169,10 @@ class PeriodPickerFragment : Fragment() {
 
     }
 
-    private fun datePickerMinMaxDate(minDate: Calendar, maxAdditionalDays: Int) {
+    private fun datePickerMinMaxDate(minDate: Calendar) {
         val tempDate = Calendar.getInstance()
         tempDate.timeInMillis = minDate.timeInMillis
-        tempDate.add(Calendar.DATE, maxAdditionalDays)
+        tempDate.add(Calendar.DATE, MAX_DAYS)
         binding.datePicker.maxDate = tempDate.timeInMillis
         binding.datePicker.minDate = minDate.timeInMillis
     }
