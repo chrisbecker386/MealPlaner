@@ -14,7 +14,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModelFactory
-import de.writer_chris.babittmealplaner.ui.mealplaner.adapter.PeriodListAdapter
+import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.PeriodListAdapter
 
 class PeriodFragment : Fragment() {
 

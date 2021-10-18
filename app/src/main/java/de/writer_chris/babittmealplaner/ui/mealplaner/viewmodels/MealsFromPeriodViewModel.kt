@@ -2,10 +2,8 @@ package de.writer_chris.babittmealplaner.ui.mealplaner
 
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
-import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
-import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMeals
-import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMealsAndDish
+import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
 
 class MealsFromPeriodViewModel(
     private val repository: Repository,

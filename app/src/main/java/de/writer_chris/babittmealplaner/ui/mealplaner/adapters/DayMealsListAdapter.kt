@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner.adapter
+package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 import de.writer_chris.babittmealplaner.databinding.ItemMealDayBinding
-import de.writer_chris.babittmealplaner.ui.mealplaner.model.DayMealsAndDish
+import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
 
 
 class DayMealsListAdapter(private val onItemClick: (DayMealsAndDish) -> Unit) :

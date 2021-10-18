@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner.model
+package de.writer_chris.babittmealplaner.ui.mealplaner.models
 
 
 import de.writer_chris.babittmealplaner.data.entities.Meal
