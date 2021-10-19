@@ -1,8 +1,9 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
-import android.content.res.Resources
+import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +11,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodPickerBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModelFactory
+import java.time.Year
 
-enum class PeriodState { START_DATE, END_DATE, SUMMARY }
 
-const val MAX_DAYS = 24
+enum class PeriodState { CREATE, EDIT }
+
 
 class PeriodPickerFragment : Fragment() {
-    private var periodPickerState = MutableLiveData(PeriodState.START_DATE)
+    private val MAX_DAYS = 30 // max days between start and end
+    private var periodPickerState = MutableLiveData(PeriodState.CREATE)
 
     private val viewModel: PeriodPickerViewModel by viewModels {
         PeriodPickerViewModelFactory(Repository(requireContext()), null, null)
@@ -37,18 +41,11 @@ class PeriodPickerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPeriodPickerBinding.inflate(inflater, container, false)
-        //Disabling Year View
-        val year = binding.datePicker.findViewById<View>(
-            Resources.getSystem().getIdentifier("android:id/year", null, null)
-        )
-        year.visibility = View.GONE
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         periodPickerState.observe(this.viewLifecycleOwner) {
             setupByPickerState()
         }
@@ -56,128 +53,116 @@ class PeriodPickerFragment : Fragment() {
 
     private fun setupByPickerState() = run {
         when (periodPickerState.value) {
-            PeriodState.START_DATE -> {
-                setupStart()
+            PeriodState.CREATE -> {
+                createPeriod()
             }
-            PeriodState.END_DATE -> {
-                setupEnd()
+            PeriodState.EDIT -> {
+                editPeriod()
             }
             else -> {
-                setupSummary()
+                createPeriod()
             }
         }
     }
 
-    private fun setupStart() {
-        viewModel.startDate.observe(this.viewLifecycleOwner) {
+    private fun createPeriod() {
+        //OBSERVERS
+        viewModel.startDate.observe(this.viewLifecycleOwner) { it ->
             it.let {
-                binding.txtWeekday.setText(CalendarUtil.calendarToWeekdayResId(it))
+                binding.apply {
+                    txtStartDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
+                    txtWeekdayStartDay.text = getString(CalendarUtil.calendarToWeekdayResId(it))
+                }
             }
         }
-
-        binding.apply {
-            txtInfo.text = getString(R.string.start_date)
-
-            val start =
-                viewModel.startDate.value ?: throw IllegalArgumentException("startDate is null")
-
-            datePickerMinMaxDate(start)
-
-            datePicker.updateDate(
-                start.get(Calendar.YEAR),
-                start.get(Calendar.MONTH),
-                start.get(Calendar.DAY_OF_MONTH)
-            )
-
-
-
-            datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
-                startDateChanged(year, monthOfYear, dayOfMonth)
-            }
-
-            btnSetChanges.text = getString(R.string.start_date)
-
-            btnSetChanges.setOnClickListener {
-                datePicker.setOnDateChangedListener { _, _, _, _ -> }
-                periodPickerState.value = PeriodState.END_DATE
-
-            }
-
-
-        }
-    }
-
-    private fun setupEnd() {
-        val start =
-            viewModel.startDate.value ?: throw IllegalArgumentException("startDate is null")
-
-        viewModel.endDate.observe(this.viewLifecycleOwner) {
+        viewModel.endDate.observe(this.viewLifecycleOwner) { it ->
             it.let {
-                binding.txtWeekday.setText(CalendarUtil.calendarToWeekdayResId(it))
-
-                binding.txtPeriodOfTime.text =
-                    "From ${CalendarUtil.longToGermanDate(start.timeInMillis)} till ${
-                        CalendarUtil.longToGermanDate(it.timeInMillis)
-                    }"
+                binding.apply {
+                    txtEndDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
+                    txtWeekdayEndDay.text = getString(CalendarUtil.calendarToWeekdayResId(it))
+                }
             }
         }
-
-        binding.apply {
-            txtInfo.text = getString(R.string.end_date)
-            val end =
-                viewModel.endDate.value ?: throw IllegalArgumentException("endDate is null")
-            datePickerMinMaxDate(start)
-            datePicker.updateDate(
-                end.get(Calendar.YEAR),
-                end.get(Calendar.MONTH),
-                end.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
-                setEndDateChanged(year, monthOfYear, dayOfMonth)
-            }
-            btnSetChanges.text = getString(R.string.set_end_date)
-            btnSetChanges.setOnClickListener {
-                datePicker.setOnDateChangedListener { _, _, _, _ -> }
-                periodPickerState.value = PeriodState.SUMMARY
+        viewModel.daysBetween.observe(this.viewLifecycleOwner) {
+            it.let {
+                binding.txtDaysBetween.text = resources.getQuantityString(R.plurals.days, it, it)
             }
         }
-    }
-
-
-    private fun setupSummary() {
+        //FUNCTIONALITY
         binding.apply {
-            txtInfo.text = getString(R.string.summary)
-            val start = viewModel.startDate.value
-                ?: throw IllegalArgumentException("PeriodPickerFragment shit happens")
-            val end = viewModel.endDate.value
-                ?: throw IllegalArgumentException("PeriodPickerFragment shit happens")
-
-            txtPeriodOfTime.text =
-                "From ${CalendarUtil.longToGermanDate(start.timeInMillis)} till ${
-                    CalendarUtil.longToGermanDate(end.timeInMillis)
-                }"
-            datePicker.visibility = View.GONE
-            txtPeriodOfTime.text
+            btnDelete.visibility = View.GONE
             btnSetChanges.text = getString(R.string.save)
+
+            //TODO add an date picker dialog
+            //also with the functionality of min max day
+            txtStartDate.setOnClickListener {
+                datePickerDialog(viewModel.startDate.value!!, true)
+            }
+            txtEndDate.setOnClickListener {
+                datePickerDialog(viewModel.endDate.value!!, false)
+            }
+            //TODO add functionality plus minus a day
+            fabPlusDay.setOnClickListener { addOneDay() }
+            fabMinusDay.setOnClickListener { minusOneDay() }
+
             btnSetChanges.setOnClickListener {
                 addPeriod()
                 val action =
                     PeriodPickerFragmentDirections.actionDatePickerFragmentToNavigationMeal()
-                this@PeriodPickerFragment.findNavController().navigate(action)
+                findNavController().navigate(action)
             }
         }
-
     }
 
-    private fun datePickerMinMaxDate(minDate: Calendar) {
+    private fun editPeriod() {}
+
+    //returns an list [min, max] as date boarders
+    private fun datePickerMinMaxDate(): List<Long> {
+        val today = Calendar.getInstance()
         val tempDate = Calendar.getInstance()
-        tempDate.timeInMillis = minDate.timeInMillis
         tempDate.add(Calendar.DATE, MAX_DAYS)
-        binding.datePicker.maxDate = tempDate.timeInMillis
-        binding.datePicker.minDate = minDate.timeInMillis
+        //first min second max
+        return listOf(today.timeInMillis, tempDate.timeInMillis)
     }
 
-    private fun startDateChanged(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    private fun datePickerDialog(targetDate: Calendar, isStartDate: Boolean) {
+        val c = targetDate
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val minMaxDate = datePickerMinMaxDate()
+
+        val dpd =
+            DatePickerDialog(
+                this.requireActivity(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    if (isStartDate) {
+                        setStartDateChanged(year, monthOfYear, dayOfMonth)
+                    } else {
+                        setEndDateChanged(year, monthOfYear, dayOfMonth)
+                    }
+                },
+                year,
+                month,
+                day
+            )
+
+
+        if (isStartDate) {
+            //startDate only needs an minDate
+            dpd.datePicker.minDate = minMaxDate[0]
+        } else {
+            //endDate depends from the start, that is why endDate has a min and max value
+            dpd.datePicker.minDate = minMaxDate[0]
+            dpd.datePicker.maxDate = minMaxDate[1]
+        }
+
+        dpd.show()
+    }
+
+
+    private fun setStartDateChanged(year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val cal = Calendar.getInstance()
         cal.set(year, monthOfYear, dayOfMonth)
         viewModel.setStartDate(cal)
@@ -189,6 +174,63 @@ class PeriodPickerFragment : Fragment() {
         viewModel.setEndDate(cal)
     }
 
+    private fun addOneDay() {
+        val start = Calendar.getInstance()
+        start.timeInMillis = viewModel.startDate.value?.timeInMillis
+            ?: throw IllegalArgumentException("startDate is null")
+
+        start.add(Calendar.DAY_OF_YEAR, MAX_DAYS)
+        val end = Calendar.getInstance()
+        end.timeInMillis = viewModel.endDate.value?.timeInMillis
+            ?: throw IllegalArgumentException("endDate is null")
+
+        end.add(Calendar.DAY_OF_YEAR, 1)
+
+
+        if (end.timeInMillis > start.timeInMillis) {
+            showInformationDialog()
+        } else {
+            setEndDateChanged(
+                end.get(Calendar.YEAR),
+                end.get(Calendar.MONTH),
+                end.get(Calendar.DAY_OF_MONTH)
+            )
+        }
+
+    }
+
+    private fun minusOneDay() {
+        val start = Calendar.getInstance()
+        start.timeInMillis = viewModel.startDate.value?.timeInMillis
+            ?: throw IllegalArgumentException("startDate is null")
+
+        val end = Calendar.getInstance()
+        end.timeInMillis = viewModel.endDate.value?.timeInMillis
+            ?: throw IllegalArgumentException("endDate is null")
+
+        end.add(Calendar.DAY_OF_YEAR, -1)
+
+
+        if (end.timeInMillis <= start.timeInMillis) {
+            showInformationDialog()
+        } else {
+            setEndDateChanged(
+                end.get(Calendar.YEAR),
+                end.get(Calendar.MONTH),
+                end.get(Calendar.DAY_OF_MONTH)
+            )
+        }
+    }
+
+    private fun showInformationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.dialog_inforamtion_title))
+            .setMessage(getString(R.string.information_text))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+            .show()
+    }
+
     private fun addPeriod() {
         viewModel.addPeriod()
     }
@@ -197,7 +239,6 @@ class PeriodPickerFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
 

@@ -31,6 +31,14 @@
     <string name="start_date">start date</string>
     <string name="end_date">end date</string>
     <string name="summary">summary</string>
-
+    <string name="till">till</string>
+    <string name="from">from</string>
+    <string name="dialog_inforamtion_title">Information</string>
+    <string name="information_text">A mealplan has minimal 1 day and maximal 31 days</string>
+    <string name="ok">ok</string>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 
 </resources>

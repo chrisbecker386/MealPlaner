@@ -7,53 +7,121 @@
     tools:context=".ui.mealplaner.fragments.PeriodPickerFragment">
 
     <TextView
-        android:id="@+id/txt_info"
-        android:layout_width="match_parent"
+        android:id="@+id/txt_headline_start_date"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/from"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="StartDate" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_headline_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/till"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_weekday_start_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_headline_start_date"
+        tools:text="@string/monday" />
+
+    <TextView
+        android:id="@+id/txt_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_weekday_start_day"
+        tools:text="2.1.1984" />
+
+    <TextView
+        android:id="@+id/txt_weekday_end_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_headline_end_date"
+        tools:text="@string/friday" />
 
 
     <TextView
-        android:id="@+id/txt_weekday"
+        android:id="@+id/txt_end_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_info"
-        tools:text="today" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_weekday_end_day"
+        tools:text="30.5.1984" />
 
-    <DatePicker
-        android:id="@+id/date_picker"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_plus_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Plus a day"
+        android:src="@drawable/ic_add_symb_24"
+        android:tint="@color/white"
+        app:backgroundTint="@color/black"
+        app:borderWidth="2dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toStartOf="@+id/txt_days_between"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_weekday" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_start_date" />
+
 
     <TextView
-        android:id="@+id/txt_period_of_time"
+        android:id="@+id/txt_days_between"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_set_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_picker"
-        tools:text="From Mon 2. Jan - Sun 30. May 1984" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_start_date"
+        tools:text="7 days" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_minus_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Minus a day"
+        android:src="@drawable/ic_minus_symb_24"
+        android:tint="@color/white"
+        app:backgroundTint="@color/black"
+        app:borderWidth="2dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_days_between"
+        app:layout_constraintTop_toBottomOf="@+id/txt_end_date" />
+
 
     <Button
         android:id="@+id/btn_set_changes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintTop_toBottomOf="@+id/txt_period_of_time" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fab_plus_day"
+        tools:text="@string/save" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btn_set_changes"
+        tools:text="@string/delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

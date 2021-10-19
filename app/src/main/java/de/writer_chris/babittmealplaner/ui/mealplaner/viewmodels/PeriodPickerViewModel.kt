@@ -1,6 +1,7 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels
 
 import android.icu.util.Calendar
+import android.util.Log
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
@@ -22,6 +23,20 @@ class PeriodPickerViewModel(
     val endDate: LiveData<Calendar> get() = _endDate
     private val dayDish = listOf("breakfast", "lunch", "dinner")
 
+    val daysBetween = PairMediatorLiveData(_startDate, _endDate).switchMap {
+        val startMillis = it.first?.timeInMillis
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - endMillis null")
+        val endMillis = it.second?.timeInMillis
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - endMillis null")
+
+        val diffMillis = endMillis.minus(startMillis)
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = diffMillis
+
+        return@switchMap liveData { emit(cal.get(Calendar.DAY_OF_YEAR)) }
+    }
+
+
     init {
         if (initStartDate == null) {
             _startDate.value = defaultStartDate()
@@ -33,7 +48,6 @@ class PeriodPickerViewModel(
         } else {
             _endDate.value = initEndDate
         }
-
     }
 
 
@@ -90,6 +104,10 @@ class PeriodPickerViewModel(
     }
 
 
+    private fun getDaysBetweenLive(): LiveData<Int> {
+        return liveData<Int> { emit(getDaysBetweenStartAndEnd()) }
+    }
+
     fun addPeriod() {
         val start: Long =
             startDate.value?.timeInMillis
@@ -104,10 +122,21 @@ class PeriodPickerViewModel(
     }
 
     fun setStartDate(calendar: Calendar) {
+        val end =
+            endDate.value ?: throw IllegalArgumentException("$LOG setStartDate - endDate is null")
+        if (calendar.timeInMillis >= end.timeInMillis) {
+            _endDate.value = calendar
+        }
         _startDate.value = calendar
+
     }
 
     fun setEndDate(calendar: Calendar) {
+        val start =
+            startDate.value ?: throw IllegalArgumentException("$LOG setEndDate - startDate is null")
+        if (calendar.timeInMillis <= start.timeInMillis) {
+            _startDate.value = calendar
+        }
         _endDate.value = calendar
     }
 }
@@ -127,3 +156,14 @@ class PeriodPickerViewModelFactory(
     }
 }
 
+class PairMediatorLiveData<F, S>(firstLiveData: LiveData<F>, secondLiveData: LiveData<S>) :
+    MediatorLiveData<Pair<F?, S?>>() {
+    init {
+        addSource(firstLiveData) { firstLiveDataValue: F ->
+            value = firstLiveDataValue to secondLiveData.value
+        }
+        addSource(secondLiveData) { secondLiveDataValue: S ->
+            value = firstLiveData.value to secondLiveDataValue
+        }
+    }
+}

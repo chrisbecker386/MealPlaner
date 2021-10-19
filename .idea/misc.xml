@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_book_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_calendar_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_minus_symb_24.xml" value="0.23333333333333334" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_shopping_basket_24.xml" value="0.1" />
@@ -22,7 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_meals_from_period.xml" value="0.12968591691995948" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.296195652173913" />
         <entry key="app/src/main/res/layout/fragment_period.xml" value="0.13019250253292808" />
-        <entry key="app/src/main/res/layout/fragment_period_picker.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_period_picker.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_period_picker_end_date.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/layout/fragment_period_picker_start_date.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/fragment_period_picker_summary.xml" value="0.20520833333333333" />
