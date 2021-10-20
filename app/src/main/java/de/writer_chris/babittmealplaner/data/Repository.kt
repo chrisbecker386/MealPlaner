@@ -67,6 +67,38 @@ class Repository(context: Context) {
         }
     }
 
+    suspend fun deleteMealsFromPeriod(periodId: Int) {
+        withContext(Dispatchers.IO) {
+            dishDao.deleteMealsFromPeriod(periodId)
+        }
+    }
+
+    suspend fun deleteMealsBeforeAndAfter(period: Period) {
+        val periodId = period.periodId
+        val startDate = period.startDate
+        val endDate = period.endDate
+        withContext(Dispatchers.IO) {
+            dishDao.deleteMealsBeforeAndAfter(periodId, startDate, endDate)
+        }
+    }
+
+    suspend fun getEarliestMealInPeriod(periodId: Int): Long {
+        var res: Long
+        withContext(Dispatchers.IO) {
+            res = dishDao.getEarliestMealInPeriod(periodId)
+        }
+        return res
+    }
+
+    suspend fun getLatestMealInPeriod(periodId: Int): Long {
+        var res: Long
+        withContext(Dispatchers.IO) {
+            res = dishDao.getLatestMealInPeriod(periodId)
+
+        }
+        return res
+    }
+
     fun getAllMeals(): Flow<List<Meal>> = dishDao.getAllMeals()
 
     fun getMealsFromPeriod(periodId: Int): Flow<List<Meal>> = dishDao.getMealsFromPeriod(periodId)

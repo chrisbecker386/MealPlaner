@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import de.writer_chris.babittmealplaner.BabittMealPlanerApplication
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding

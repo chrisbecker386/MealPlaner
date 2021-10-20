@@ -22,7 +22,7 @@
 
         <action
             android:id="@+id/action_navigation_period_to_datePickerFragment"
-            app:destination="@id/datePickerFragment" />
+            app:destination="@id/editPeriodFragment" />
         <action
             android:id="@+id/action_navigation_period_to_mealsFromPeriodFragment"
             app:destination="@id/mealsFromPeriodFragment" />
@@ -58,10 +58,17 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/datePickerFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodPickerFragment"
-        android:label="fragment_date_picker"
-        tools:layout="@layout/fragment_period_picker">
+        android:id="@+id/editPeriodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.EditPeriodFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_edit_period">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="period_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_datePickerFragment_to_navigation_meal"
             app:destination="@id/navigation_meal" />

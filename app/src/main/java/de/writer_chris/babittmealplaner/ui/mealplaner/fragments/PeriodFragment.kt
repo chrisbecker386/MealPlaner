@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModel
@@ -44,6 +45,12 @@ class PeriodFragment : Fragment() {
             val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(it.periodId, "edit")
             this.findNavController().navigate(action)
             */
+
+            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
+                getString(R.string.update_period),
+                it.periodId
+            )
+            this.findNavController().navigate(action)
             Toast.makeText(this.requireContext(), "PeriodId: ${it.periodId}", Toast.LENGTH_SHORT)
                 .show()
 
@@ -57,7 +64,10 @@ class PeriodFragment : Fragment() {
 
         binding.btnAddSchedulePeriod.apply {
             setOnClickListener {
-                val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment()
+                val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
+                    getString(R.string.add_period),
+                    -1
+                )
                 this.findNavController().navigate(action)
             }
         }

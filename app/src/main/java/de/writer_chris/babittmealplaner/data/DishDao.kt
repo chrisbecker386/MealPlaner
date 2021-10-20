@@ -50,9 +50,26 @@ interface DishDao {
     fun getMealsFromPeriod(periodId: Int): Flow<List<Meal>>
 
     @Transaction
+    @Query("SELECT date FROM Meal WHERE periodId=:periodId ORDER BY date ASC LIMIT 1")
+    suspend fun getEarliestMealInPeriod(periodId: Int): Long
+
+    @Transaction
+    @Query("SELECT date FROM Meal WHERE periodId=:periodId ORDER BY date DESC LIMIT 1")
+    suspend fun getLatestMealInPeriod(periodId: Int): Long
+
+
+    @Transaction
     @Query("SELECT * FROM Meal WHERE date =:day")
     fun getMealsOfDay(day: Long): Flow<List<Meal>>
 
+
+    @Transaction
+    @Query("DELETE FROM Meal WHERE periodId=:periodId")
+    fun deleteMealsFromPeriod(periodId: Int)
+
+    @Transaction
+    @Query("DELETE FROM Meal WHERE periodId =:periodId AND (date<:startDate OR date>:endDate)")
+    fun deleteMealsBeforeAndAfter(periodId: Int, startDate: Long, endDate: Long)
 
     //MealType table
     @Insert
@@ -138,6 +155,6 @@ interface DishDao {
 //    suspend fun getMealWithDish(mealId: Int): Flow<MealAndDish>
 
     @Transaction
-    @Query("SELECT * FROM Meal LEFT JOIN DISH ON Meal.dishId =Dish.dishId WHERE periodId =:periodId")
+    @Query("SELECT * FROM Meal LEFT JOIN DISH ON Meal.dishId =Dish.dishId WHERE periodId =:periodId ORDER BY date ASC")
     fun retrieveMealsWithDishes(periodId: Int): Flow<List<MealAndDish>>
 }
