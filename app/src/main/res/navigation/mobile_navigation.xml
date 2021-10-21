@@ -10,8 +10,11 @@
         android:label="@string/title_dish"
         tools:layout="@layout/fragment_dish">
         <action
-            android:id="@+id/action_navigation_dish_to_editDishFragment"
-            app:destination="@id/editDishFragment" />
+            android:id="@+id/action_navigation_dish_to_mealsFromPeriodFragment"
+            app:destination="@id/mealsFromPeriodFragment" />
+        <action
+            android:id="@+id/action_navigation_dish_to_dishDetailFragment"
+            app:destination="@id/dishDetailFragment" />
     </fragment>
 
     <fragment
@@ -82,6 +85,24 @@
             android:name="period_id"
             android:defaultValue="-1"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_mealsFromPeriodFragment_to_navigation_dish"
+            app:destination="@id/navigation_dish" />
+        <action
+            android:id="@+id/action_mealsFromPeriodFragment_to_dishDetailFragment"
+            app:destination="@id/dishDetailFragment" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/dishDetailFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.DishDetailFragment"
+        android:label="fragment_dish_detail"
+        tools:layout="@layout/fragment_dish_detail" >
+        <action
+            android:id="@+id/action_dishDetailFragment_to_editDishFragment"
+            app:destination="@id/editDishFragment" />
+        <action
+            android:id="@+id/action_dishDetailFragment_to_mealsFromPeriodFragment"
+            app:destination="@id/mealsFromPeriodFragment" />
     </fragment>
 </navigation>

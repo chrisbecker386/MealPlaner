@@ -14,7 +14,24 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 
 class DishFragment : Fragment() {
+    //TODO storyI
+    //TODO onClick -> DishDetails
+    //TODO DishDetails add editButton with conformation Quote
+    //TODO onLongClick -> EditDish
 
+    //TODO storyII
+    //TODO receiving mealId
+    //TODO onClick setting dishId on meal-entry and return to mealplaner
+    //TODO onLongPress see DishDetails
+    //
+
+    //TODO story III
+    //TODO add a searchbar
+    //
+    //TODO story IV
+    //TODO add ImageFunctionality with a search for Picture in editDish
+
+    //
 
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
