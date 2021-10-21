@@ -96,7 +96,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         _startDate.value = formatCalender(calendar)
     }
 
-
     fun setEndDate(calendar: Calendar) {
         val start =
             startDate.value ?: throw IllegalArgumentException("$LOG setEndDate - startDate is null")

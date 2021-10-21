@@ -107,26 +107,15 @@ class EditPeriodFragment : Fragment() {
     }
 
     private fun bindUpdate(period: Period) {
-        val cal: Calendar = Calendar.getInstance()
-        cal.timeInMillis = period.startDate
-        setStartDateChanged(
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
-        )
-        cal.timeInMillis = period.endDate
-        setEndDateChanged(
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
-        )
+        setStartChanged(period.startDate)
+        setEndChanged(period.endDate)
+
         binding.apply {
             btnSetChanges.text = getString(R.string.update)
             btnDelete.text = getString(R.string.delete)
             btnSetChanges.setOnClickListener {
                 updatePeriod()
                 navigateBack()
-
             }
             btnDelete.setOnClickListener {
                 deletePeriod()
@@ -165,9 +154,21 @@ class EditPeriodFragment : Fragment() {
         viewModel.setEndDate(dateToCalendar(year, monthOfYear, dayOfMonth))
     }
 
+    private fun setStartChanged(timeInMillis: Long) {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = timeInMillis
+        viewModel.setStartDate(cal)
+    }
+
+    private fun setEndChanged(timeInMillis: Long) {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = timeInMillis
+        viewModel.setEndDate(cal)
+    }
+
     private fun dateToCalendar(year: Int, monthOfYear: Int, dayOfMonth: Int): Calendar {
         val cal = Calendar.getInstance()
-        cal.set(year, monthOfYear, dayOfMonth, )
+        cal.set(year, monthOfYear, dayOfMonth)
         return cal
     }
 
@@ -233,8 +234,6 @@ class EditPeriodFragment : Fragment() {
     private fun deletePeriod() {
         viewModel.deletePeriod(period)
     }
-
-
 }
 
 
