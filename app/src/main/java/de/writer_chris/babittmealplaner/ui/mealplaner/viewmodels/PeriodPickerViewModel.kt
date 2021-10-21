@@ -21,35 +21,74 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     private val dayDish = listOf("breakfast", "lunch", "dinner")
 
     val daysBetween = PairMediatorLiveData(_startDate, _endDate).switchMap {
-        val startMillis = it.first?.timeInMillis
+        val start = it.first?.timeInMillis
             ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - endMillis null")
-        val endMillis = it.second?.timeInMillis
+        val end = it.second?.timeInMillis
             ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - endMillis null")
 
-        val diffMillis = endMillis.minus(startMillis)
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = diffMillis
-
-        return@switchMap liveData { emit(cal.get(Calendar.DAY_OF_YEAR)) }
+        return@switchMap liveData { emit(getDayDiff(start, end)) }
     }
 
     init {
-        _startDate.value = defaultStartDate()
-        _endDate.value = defaultEndDate()
+        _startDate.value = getCalendarDate(null, 0)
+        _endDate.value = getCalendarDate(null, 6)
     }
 
-    private fun defaultStartDate(): Calendar {
+    private fun getCalendarDate(timeInMillis: Long?, additionalDays: Int): Calendar {
         val cal = Calendar.getInstance()
-        return formatCalender(cal)
-    }
-
-    private fun defaultEndDate(): Calendar {
-        val cal = Calendar.getInstance()
-
-        while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-            cal.add(Calendar.DAY_OF_YEAR, 1)
+        if (timeInMillis != null) {
+            cal.timeInMillis = timeInMillis
         }
+        cal.add(Calendar.DAY_OF_YEAR, additionalDays)
         return formatCalender(cal)
+    }
+
+    private fun insertPeriodAndItsMeals(period: Period) {
+        val start = startDate.value
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
+        val end = endDate.value
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
+
+        val days = getDayDiff(start.timeInMillis, end.timeInMillis)
+        viewModelScope.launch {
+            val periodId = repository.insertPeriod(period)
+            addMeals(start, days, periodId)
+        }
+    }
+
+    private fun getDayDiff(lowerValue: Long, higherValue: Long): Int {
+        val diffMillis = higherValue.minus(lowerValue)
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = diffMillis
+        return cal.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun formatCalender(calendar: Calendar): Calendar {
+        calendar.set(Calendar.MILLISECOND, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        return calendar
+    }
+
+    private fun addMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = firstDayToInsert.timeInMillis
+        viewModelScope.launch {
+            repeat(numberOfDays) {
+                Log.d("mealDay", CalendarUtil.longToGermanDate(cal.timeInMillis))
+                dayDish.forEach {
+                    repository.insertMeal(
+                        Meal(
+                            dishId = null, date = cal.timeInMillis,
+                            mealType = it, periodId = periodId
+                        )
+                    )
+                }
+                cal.add(Calendar.DATE, 1)
+
+            }
+        }
     }
 
     fun setStartDate(calendar: Calendar) {
@@ -58,7 +97,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         if (calendar.timeInMillis >= end.timeInMillis) {
             _endDate.value = calendar
         }
-        _startDate.value = formatCalender(calendar)
+        _startDate.value = calendar
     }
 
     fun setEndDate(calendar: Calendar) {
@@ -67,45 +106,11 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         if (calendar.timeInMillis <= start.timeInMillis) {
             _startDate.value = calendar
         }
-        _endDate.value = formatCalender(calendar)
+        _endDate.value = calendar
     }
-
 
     fun retrievePeriod(id: Int): LiveData<Period> {
         return repository.getPeriod(id).asLiveData()
-    }
-
-    private fun insertPeriodAndItsMeals(period: Period) {
-        val actualDate = startDate.value
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
-        val days = getDayCountStartEnd()
-
-        viewModelScope.launch {
-            val periodId = repository.insertPeriod(period)
-            addMultipleMeals(actualDate, days, periodId)
-
-        }
-    }
-
-
-    private fun getDayCountStartEnd(): Int {
-        val startMillis = startDate.value?.timeInMillis
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
-        val endMillis = endDate.value?.timeInMillis
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - endMillis null")
-
-        val diffMillis = endMillis.minus(startMillis)
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = diffMillis
-
-        return cal.get(Calendar.DAY_OF_YEAR)
-    }
-
-    private fun getDayDiff(a: Long, b: Long): Int {
-        val diffMillis = b.minus(a)
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = diffMillis
-        return (cal.get(Calendar.DAY_OF_YEAR) - 1)
     }
 
     fun addPeriod() {
@@ -121,40 +126,43 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         insertPeriodAndItsMeals(period)
     }
 
-
     fun updatePeriod(period: Period) {
-        //TODO update period ->check
-        //TODO delete before and after new time -> check
-        //TODO add dayMeals for the other days
         val start =
             startDate.value ?: throw IllegalArgumentException("startDate is null")
         val end = endDate.value ?: throw IllegalArgumentException("endDate is null")
 
-        val updatedPeriod = Period(
-            periodId = period.periodId,
-            startDate = start.timeInMillis,
-            endDate = end.timeInMillis
-        )
+        val updatedPeriod = Period(period.periodId, start.timeInMillis, end.timeInMillis)
         viewModelScope.launch {
             //update in period
             repository.updatePeriod(updatedPeriod)
             //removing overhang in meal
             repository.deleteMealsBeforeAndAfter(updatedPeriod)
 
-            val latest = repository.getLatestMealInPeriod(updatedPeriod.periodId)
-            if (latest != end.timeInMillis) {
-                val days = getDayDiff(latest, end.timeInMillis)
-                val cal = Calendar.getInstance()
-                cal.timeInMillis = latest
-                cal.add(Calendar.DATE, 1)
-                addMultipleMeals(cal, days, updatedPeriod.periodId)
-            }
+            val numbOfEntries = repository.getCountOfMeals(updatedPeriod.periodId)
+            if (numbOfEntries == 0) {
+                insertPeriodAndItsMeals(updatedPeriod)
+            } else {
+                //adding entries on the end
+                viewModelScope.launch {
+                    val latest = repository.getLatestMealInPeriod(updatedPeriod.periodId)
+                    if (latest < end.timeInMillis) {
+                        val days = (getDayDiff(latest, end.timeInMillis) - 1)
+                        val cal = getCalendarDate(latest, 1)
+                        Log.d("latest", days.toString())
+                        addMeals(cal, days, updatedPeriod.periodId)
+                    }
+                }
+                // adding days on the begin
+                viewModelScope.launch {
+                    val earliest = repository.getEarliestMealInPeriod(updatedPeriod.periodId)
+                    if (earliest > start.timeInMillis) {
+                        val days = (getDayDiff(start.timeInMillis, earliest))
+                        val cal = getCalendarDate(start.timeInMillis, 0)
+                        Log.d("begin", days.toString())
+                        addMeals(cal, days, updatedPeriod.periodId)
 
-            //adding days on gaps on the beginning
-            val earliest = repository.getEarliestMealInPeriod(updatedPeriod.periodId)
-            if (earliest != start.timeInMillis) {
-                val days = getDayDiff(start.timeInMillis, earliest)
-                addMultipleMeals(start, days, updatedPeriod.periodId)
+                    }
+                }
             }
         }
     }
@@ -166,31 +174,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
 
         }
     }
-
-    private fun formatCalender(calendar: Calendar): Calendar {
-        calendar.set(Calendar.MILLISECOND, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        return calendar
-    }
-
-    private fun addMultipleMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
-        viewModelScope.launch {
-            repeat(numberOfDays) {
-                dayDish.forEach {
-                    repository.insertMeal(
-                        Meal(
-                            dishId = null, date = firstDayToInsert.timeInMillis,
-                            mealType = it, periodId = periodId
-                        )
-                    )
-                }
-                firstDayToInsert.add(Calendar.DATE, 1)
-            }
-        }
-    }
-
 }
 
 class PeriodPickerViewModelFactory(

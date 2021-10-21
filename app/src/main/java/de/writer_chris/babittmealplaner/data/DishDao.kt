@@ -57,11 +57,13 @@ interface DishDao {
     @Query("SELECT date FROM Meal WHERE periodId=:periodId ORDER BY date DESC LIMIT 1")
     suspend fun getLatestMealInPeriod(periodId: Int): Long
 
-
     @Transaction
     @Query("SELECT * FROM Meal WHERE date =:day")
     fun getMealsOfDay(day: Long): Flow<List<Meal>>
 
+    @Transaction
+    @Query("SELECT COUNT(date) FROM Meal WHERE periodId =:periodId")
+    suspend fun getCountOfMeals(periodId: Int):Int
 
     @Transaction
     @Query("DELETE FROM Meal WHERE periodId=:periodId")

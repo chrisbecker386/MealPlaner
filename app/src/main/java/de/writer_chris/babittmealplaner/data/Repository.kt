@@ -90,6 +90,14 @@ class Repository(context: Context) {
         return res
     }
 
+    suspend fun getCountOfMeals(periodId: Int): Int {
+        var res: Int
+        withContext(Dispatchers.IO) {
+            res = dishDao.getCountOfMeals(periodId)
+        }
+        return res
+    }
+
     suspend fun getLatestMealInPeriod(periodId: Int): Long {
         var res: Long
         withContext(Dispatchers.IO) {
