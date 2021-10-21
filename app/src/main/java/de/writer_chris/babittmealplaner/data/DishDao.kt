@@ -32,9 +32,11 @@ interface DishDao {
     suspend fun getDishWithoutFlow(dishName: String): Dish
 
     //Meal table
-    @Insert
-    suspend fun insertMeal(meal: Meal)
+    @Transaction
+    @Query("INSERT INTO Meal (date, mealType, periodId)  SELECT :date, :mealType, :periodId WHERE NOT EXISTS (SELECT date, mealType, periodID FROM MEAL WHERE date=:date AND mealType=:mealType AND periodId=:periodId)")
+    suspend fun insertMeal(date: Long, mealType: String, periodId: Int)
 
+    @Transaction
     @Update
     suspend fun updateMeal(meal: Meal)
 
@@ -63,7 +65,7 @@ interface DishDao {
 
     @Transaction
     @Query("SELECT COUNT(date) FROM Meal WHERE periodId =:periodId")
-    suspend fun getCountOfMeals(periodId: Int):Int
+    suspend fun getCountOfMeals(periodId: Int): Int
 
     @Transaction
     @Query("DELETE FROM Meal WHERE periodId=:periodId")

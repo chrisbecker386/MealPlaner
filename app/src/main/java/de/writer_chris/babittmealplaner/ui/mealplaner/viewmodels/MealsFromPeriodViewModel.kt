@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels
 
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository

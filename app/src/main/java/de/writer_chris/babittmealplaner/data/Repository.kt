@@ -4,7 +4,6 @@ import android.content.Context
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
-import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -49,9 +48,14 @@ class Repository(context: Context) {
     }
 
     //Meal
+
     suspend fun insertMeal(meal: Meal) {
+        val date: Long = meal.date
+        val mealType: String = meal.mealType
+        val periodId: Int = meal.periodId
+
         withContext(Dispatchers.IO) {
-            dishDao.insertMeal(meal)
+            dishDao.insertMeal(date, mealType, periodId)
         }
     }
 

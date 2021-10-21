@@ -19,8 +19,6 @@ import de.writer_chris.babittmealplaner.databinding.FragmentEditPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModelFactory
 
-
-
 class EditPeriodFragment : Fragment() {
     lateinit var period: Period
 
@@ -41,7 +39,28 @@ class EditPeriodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //OBSERVERS
+        bindBasic()
+        val id = navigationArgs.periodId
+        //edit period
+        if (id > 0) {
+            viewModel.retrievePeriod(id).observe(this.viewLifecycleOwner) {
+                period = it
+                bindUpdate(period)
+            }
+        }
+        //create period
+        else {
+            bindCreate()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun bindBasic() {
+        //observer
         viewModel.startDate.observe(this.viewLifecycleOwner) { it ->
             it.let {
                 binding.apply {
@@ -63,8 +82,7 @@ class EditPeriodFragment : Fragment() {
                 binding.txtDaysBetween.text = resources.getQuantityString(R.plurals.days, it, it)
             }
         }
-
-        //FUNCTIONALITY
+        //basic functionality
         binding.apply {
             txtStartDate.setOnClickListener {
                 datePickerDialog(viewModel.startDate.value!!, true)
@@ -75,34 +93,15 @@ class EditPeriodFragment : Fragment() {
             fabPlusDay.setOnClickListener { addOneDay() }
             fabMinusDay.setOnClickListener { minusOneDay() }
         }
-
-        val id = navigationArgs.periodId
-        //EDIT
-        if (id > 0) {
-            viewModel.retrievePeriod(id).observe(this.viewLifecycleOwner) {
-                period = it
-                bindUpdate(period)
-            }
-        }
-        //CREATE
-        else {
-            bindCreate()
-        }
-
-
     }
-
 
     private fun bindCreate() {
         binding.apply {
             btnDelete.visibility = View.GONE
             btnSetChanges.text = getString(R.string.save)
-
             btnSetChanges.setOnClickListener {
                 addPeriod()
-                val action =
-                    EditPeriodFragmentDirections.actionDatePickerFragmentToNavigationMeal()
-                findNavController().navigate(action)
+                navigateBack()
             }
         }
     }
@@ -126,24 +125,20 @@ class EditPeriodFragment : Fragment() {
             btnDelete.text = getString(R.string.delete)
             btnSetChanges.setOnClickListener {
                 updatePeriod()
-                val action = EditPeriodFragmentDirections.actionDatePickerFragmentToNavigationMeal()
-                findNavController().navigate(action)
+                navigateBack()
 
             }
             btnDelete.setOnClickListener {
                 deletePeriod()
-                val action = EditPeriodFragmentDirections.actionDatePickerFragmentToNavigationMeal()
-                findNavController().navigate(action)
+                navigateBack()
             }
         }
     }
 
-
-    private fun datePickerDialog(targetDate: Calendar, isStartDate: Boolean) {
-        val c = targetDate
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+    private fun datePickerDialog(calendar: Calendar, isStartDate: Boolean) {
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val dpd =
             DatePickerDialog(
@@ -163,15 +158,17 @@ class EditPeriodFragment : Fragment() {
     }
 
     private fun setStartDateChanged(year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val cal = Calendar.getInstance()
-        cal.set(year, monthOfYear, dayOfMonth)
-        viewModel.setStartDate(cal)
+        viewModel.setStartDate(dateToCalendar(year, monthOfYear, dayOfMonth))
     }
 
     private fun setEndDateChanged(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        viewModel.setEndDate(dateToCalendar(year, monthOfYear, dayOfMonth))
+    }
+
+    private fun dateToCalendar(year: Int, monthOfYear: Int, dayOfMonth: Int): Calendar {
         val cal = Calendar.getInstance()
-        cal.set(year, monthOfYear, dayOfMonth)
-        viewModel.setEndDate(cal)
+        cal.set(year, monthOfYear, dayOfMonth, )
+        return cal
     }
 
     private fun addOneDay() {
@@ -211,6 +208,11 @@ class EditPeriodFragment : Fragment() {
         }
     }
 
+    private fun navigateBack() {
+        val action = EditPeriodFragmentDirections.actionDatePickerFragmentToNavigationMeal()
+        findNavController().navigate(action)
+    }
+
     private fun showInformationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.dialog_information_title))
@@ -232,10 +234,6 @@ class EditPeriodFragment : Fragment() {
         viewModel.deletePeriod(period)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
 }
 

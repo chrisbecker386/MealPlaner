@@ -12,8 +12,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
-import de.writer_chris.babittmealplaner.ui.mealplaner.MealsFromPeriodViewModel
-import de.writer_chris.babittmealplaner.ui.mealplaner.MealsFromPeriodViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModelFactory
 import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.DayMealsListAdapter
 
 class MealsFromPeriodFragment : Fragment() {
