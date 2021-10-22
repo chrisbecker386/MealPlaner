@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
@@ -15,9 +16,9 @@ import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 
 class DishFragment : Fragment() {
     //TODO storyI
-    //TODO onClick -> DishDetails
+    //TODO onClick -> DishDetails check
+    //TODO onLongClick -> EditDish check
     //TODO DishDetails add editButton with conformation Quote
-    //TODO onLongClick -> EditDish
 
     //TODO storyII
     //TODO receiving mealId
@@ -32,6 +33,8 @@ class DishFragment : Fragment() {
     //TODO add ImageFunctionality with a search for Picture in editDish
 
     //
+    private val navigationArgs: DishFragmentArgs by navArgs()
+
 
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
@@ -52,13 +55,26 @@ class DishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DishListAdapter {
+        var mealId = -1
+        navigationArgs.mealId?.let {
+            mealId = it
+        }
+
+        val adapter = DishListAdapter({
+            val action = DishFragmentDirections.actionNavigationDishToDishDetailFragment(
+                getString(R.string.details_dish),
+                it.dishId, mealId
+            )
+            this.findNavController().navigate(action)
+        }, {
             val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(
                 getString(R.string.edit_dish),
                 it.dishId
             )
             this.findNavController().navigate(action)
-        }
+        })
+
+
         binding.dishRecyclerView.adapter = adapter
         viewModel.allDishes.observe(this.viewLifecycleOwner) { dishes ->
             dishes.let {

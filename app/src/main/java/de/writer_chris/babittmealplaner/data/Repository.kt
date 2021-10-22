@@ -71,6 +71,8 @@ class Repository(context: Context) {
         }
     }
 
+    fun getMeal(mealId: Int): Flow<Meal> = dishDao.getMeal(mealId)
+
     suspend fun deleteMealsFromPeriod(periodId: Int) {
         withContext(Dispatchers.IO) {
             dishDao.deleteMealsFromPeriod(periodId)

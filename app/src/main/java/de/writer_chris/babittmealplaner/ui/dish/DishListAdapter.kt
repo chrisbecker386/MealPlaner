@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.databinding.ItemDishBinding
 
-class DishListAdapter(private val onItemClick: (Dish) -> Unit) :
+class DishListAdapter(
+    private val onItemClick: (Dish) -> Unit,
+    private val onItemLongClick: (Dish) -> Unit
+) :
     ListAdapter<Dish, DishListAdapter.DishViewHolder>(DiffCallback) {
 
     companion object {
@@ -39,8 +42,14 @@ class DishListAdapter(private val onItemClick: (Dish) -> Unit) :
 
     override fun onBindViewHolder(holder: DishViewHolder, position: Int) {
         val current = getItem(position)
-        holder.itemView.setOnClickListener { onItemClick(current) }
-        holder.bind(current)
+        holder.apply {
+            itemView.setOnClickListener { onItemClick(current) }
+            itemView.setOnLongClickListener {
+                onItemLongClick(current)
+                return@setOnLongClickListener true
+            }
+            bind(current)
+        }
     }
 
 

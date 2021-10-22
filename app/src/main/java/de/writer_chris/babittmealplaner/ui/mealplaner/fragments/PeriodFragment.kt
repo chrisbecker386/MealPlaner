@@ -41,11 +41,6 @@ class PeriodFragment : Fragment() {
                 PeriodFragmentDirections.actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
             this.findNavController().navigate(action)
         }, {
-            /* Preparation for edit period to finished yet
-            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(it.periodId, "edit")
-            this.findNavController().navigate(action)
-            */
-
             val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
                 getString(R.string.update_period),
                 it.periodId

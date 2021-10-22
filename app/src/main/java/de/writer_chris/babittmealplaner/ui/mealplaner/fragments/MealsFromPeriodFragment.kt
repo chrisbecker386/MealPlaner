@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.data.Repository
@@ -36,7 +37,9 @@ class MealsFromPeriodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = DayMealsListAdapter {
-            Toast.makeText(this.context, "${it.date}", Toast.LENGTH_SHORT).show()
+            val action =
+                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToNavigationDish(it)
+            findNavController().navigate(action)
         }
         binding.recyclerViewMealsFromPeriod.adapter = adapter
 

@@ -44,6 +44,11 @@ interface DishDao {
     suspend fun deleteMeal(meal: Meal)
 
     @Transaction
+    @Query("SELECT * FROM Meal WHERE mealId =:mealId")
+    fun getMeal(mealId: Int): Flow<Meal>
+
+
+    @Transaction
     @Query("SELECT * FROM Meal")
     fun getAllMeals(): Flow<List<Meal>>
 
@@ -153,10 +158,6 @@ interface DishDao {
     @Transaction
     @Query("SELECT * FROM Meal JOIN Dish ON Meal.dishId = Dish.dishId")
     fun getMealAndDishAll(): Flow<List<MealAndDish>>
-
-//    @Transaction
-//    @Query("SELECT * FROM Meal JOIN DISH ON Meal.dishId =Dish.dishId WHERE mealId =:mealId")
-//    suspend fun getMealWithDish(mealId: Int): Flow<MealAndDish>
 
     @Transaction
     @Query("SELECT * FROM Meal LEFT JOIN DISH ON Meal.dishId =Dish.dishId WHERE periodId =:periodId ORDER BY date ASC")
