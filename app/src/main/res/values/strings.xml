@@ -46,6 +46,8 @@
     <string name="recipe">recipe</string>
     <string name="unselect">unselect</string>
     <string name="reselect">reselect</string>
+    <string name="duration_hint">cooking time</string>
+    <string name="description_hint">Describe how to cook the dish</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

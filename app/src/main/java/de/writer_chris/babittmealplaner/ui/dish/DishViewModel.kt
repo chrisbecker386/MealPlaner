@@ -5,6 +5,7 @@ import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.Repository
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import java.time.Duration
 
 
 class DishViewModel(private val repository: Repository) : ViewModel() {
@@ -27,17 +28,19 @@ class DishViewModel(private val repository: Repository) : ViewModel() {
         return repository.getDish(id).asLiveData()
     }
 
-    private fun getNewDishEntry(dishName: String): Dish {
-        return Dish(dishName = dishName, description = "", duration = 0)
+    private fun getNewDishEntry(dishName: String, description: String?, duration: Long?): Dish {
+        val des = description ?: ""
+        val dur = duration ?: 0
+        return Dish(dishName = dishName, description = des, duration = dur)
     }
 
-    fun addDish(dishName: String) {
-        val newDish = getNewDishEntry(dishName)
+    fun addDish(dishName: String, description: String?, duration: Long?) {
+        val newDish = getNewDishEntry(dishName, description, duration)
         insertDish(newDish)
     }
 
-    fun editDish(dishId: Int, dishName: String) {
-        val toUpdateDish: Dish = Dish(dishId, dishName, 0, "")
+    fun editDish(dishId: Int, dishName: String, description: String?, duration: Long?) {
+        val toUpdateDish: Dish = Dish(dishId, dishName, duration ?: 0, description ?: "")
         updateDish(toUpdateDish)
     }
 

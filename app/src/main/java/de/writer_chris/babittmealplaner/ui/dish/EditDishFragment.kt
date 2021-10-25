@@ -17,6 +17,15 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 
 class EditDishFragment : Fragment() {
+    //TODO renew edit Dish
+    //TODO  *** add ingredient
+    //TODO  if ingredient not exists add it with a unitType
+    //TODO  show a list of all ingredients
+
+    //TODO
+    //TODO add ImageFunctionality with a search for Picture in editDish
+
+
     lateinit var dish: Dish
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
@@ -52,7 +61,12 @@ class EditDishFragment : Fragment() {
 
     private fun bind(dish: Dish) {
         binding.apply {
-            dishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
+            txtInputEditDishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
+            txtInputEditDishDuration.setText(
+                dish.duration.toInt().toString(),
+                TextView.BufferType.SPANNABLE
+            )
+            txtInputEditDishDescription.setText(dish.description, TextView.BufferType.SPANNABLE)
             btnDishSave.setOnClickListener { updateDish() }
             btnDishDelete.isVisible = true
             btnDishDelete.setOnClickListener { showConfirmationDialog() }
@@ -61,12 +75,16 @@ class EditDishFragment : Fragment() {
 
 
     private fun isEntryValid(): Boolean {
-        return viewModel.isEntryValid(binding.dishName.text.toString())
+        return viewModel.isEntryValid(binding.txtInputEditDishName.text.toString())
     }
 
     private fun addNewDish() {
         if (isEntryValid()) {
-            viewModel.addDish(binding.dishName.text.toString())
+            viewModel.addDish(
+                binding.txtInputEditDishName.text.toString(),
+                this.binding.txtInputEditDishDescription.text.toString(),
+                this.binding.txtInputEditDishDuration.text.toString().toLong()
+            )
             val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
             findNavController().navigate(action)
         }
@@ -74,7 +92,12 @@ class EditDishFragment : Fragment() {
 
     private fun updateDish() {
         if (isEntryValid()) {
-            viewModel.editDish(this.navigationArgs.dishId, this.binding.dishName.text.toString())
+            viewModel.editDish(
+                this.navigationArgs.dishId,
+                this.binding.txtInputEditDishName.text.toString(),
+                this.binding.txtInputEditDishDescription.text.toString(),
+                this.binding.txtInputEditDishDuration.text.toString().toLong()
+            )
             val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
             findNavController().navigate(action)
         }

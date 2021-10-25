@@ -31,7 +31,7 @@ class DishListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(dish: Dish) {
             binding.apply {
-                dishName.text = dish.dishName
+                txtInputEditDishName.text = dish.dishName
             }
         }
     }
