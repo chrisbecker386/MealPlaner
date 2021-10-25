@@ -1,6 +1,7 @@
 package de.writer_chris.babittmealplaner.ui.dish
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,19 +43,54 @@ class DishDetailFragment : Fragment() {
         viewModel.retrieveDish(dishId).observe(this.viewLifecycleOwner) { it ->
             dish = it
             bindBasic()
-            if (mealId > 0) {
+            if (mealId == -1) {
+                bindRead()
+            } else {
                 viewModel.retrieveMeal(mealId).observe(this.viewLifecycleOwner) {
                     meal = it
-                    bindSelection()
+                    if (meal.dishId == null) {
+                        bindSelection()
+                    } else {
+                        bindEditSelection()
+                    }
                 }
-            } else {
-                bindRead()
             }
+        }
+    }
+
+    private fun bindEditSelection() {
+        binding.apply {
+            btnDishSetChanges.text = getString(R.string.ok)
+            btnDishSetChanges.setOnClickListener {
+                val action =
+                    DishDetailFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
+                        meal.periodId
+                    )
+                findNavController().navigate(action)
+            }
+            btnDishUnselect.setOnClickListener {
+                viewModel.updateMealWithDishId(meal, null)
+                val action =
+                    DishDetailFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
+                        meal.periodId
+                    )
+                findNavController().navigate(action)
+            }
+            btnDishReselect.setOnClickListener {
+                viewModel.updateMealWithDishId(meal, null)
+                val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish(
+                    meal.mealId
+                )
+                findNavController().navigate(action)
+            }
+
         }
     }
 
     private fun bindRead() {
         binding.apply {
+            btnDishReselect.visibility = View.GONE
+            btnDishUnselect.visibility = View.GONE
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
                 val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish()
@@ -65,6 +101,8 @@ class DishDetailFragment : Fragment() {
 
     private fun bindSelection() {
         binding.apply {
+            btnDishReselect.visibility = View.GONE
+            btnDishUnselect.visibility = View.GONE
             btnDishSetChanges.text = getString(R.string.select)
             btnDishSetChanges.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, dish)

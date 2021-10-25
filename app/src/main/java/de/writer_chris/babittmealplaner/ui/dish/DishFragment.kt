@@ -35,7 +35,6 @@ class DishFragment : Fragment() {
     //
     private val navigationArgs: DishFragmentArgs by navArgs()
 
-
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
     }
@@ -56,7 +55,8 @@ class DishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var mealId = -1
-        navigationArgs.mealId?.let {
+
+        navigationArgs?.mealId?.let {
             mealId = it
         }
 

@@ -62,4 +62,23 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_dish_description"
         tools:text="@string/select" />
 
+    <Button
+        android:id="@+id/btn_dish_unselect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/unselect"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dish_reselect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dish_set_changes" />
+
+    <Button
+        android:id="@+id/btn_dish_reselect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/reselect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_dish_unselect"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dish_set_changes" />
 </androidx.constraintlayout.widget.ConstraintLayout>

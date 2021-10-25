@@ -16,9 +16,10 @@ class DishDetailsViewModel(private val repository: Repository) : ViewModel() {
         return repository.getMeal(mealId).asLiveData()
     }
 
-    fun updateMealWithDishId(meal: Meal, dish: Dish) {
+    fun updateMealWithDishId(meal: Meal, dish: Dish?) {
+
         val updatedMeal = Meal(
-            mealId = meal.mealId, dishId = dish.dishId,
+            mealId = meal.mealId, dishId = dish?.dishId ?: null,
             date = meal.date, mealType = meal.mealType,
             periodId = meal.periodId
         )

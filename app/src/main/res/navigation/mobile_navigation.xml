@@ -15,7 +15,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_navigation_dish_to_dishDetailFragment"
-            app:destination="@id/dishDetailFragment" />
+            app:destination="@id/dishDetailFragment"
+            app:launchSingleTop="false" />
         <action
             android:id="@+id/action_navigation_dish_to_editDishFragment"
             app:destination="@id/editDishFragment" />
@@ -100,7 +101,7 @@
     <fragment
         android:id="@+id/dishDetailFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.DishDetailFragment"
-        android:label="fragment_dish_detail"
+        android:label="{title}"
         tools:layout="@layout/fragment_dish_detail">
         <argument
             android:name="title"
@@ -120,4 +121,5 @@
             android:id="@+id/action_dishDetailFragment_to_navigation_dish"
             app:destination="@id/navigation_dish" />
     </fragment>
+
 </navigation>
