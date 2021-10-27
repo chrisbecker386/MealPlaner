@@ -69,17 +69,21 @@ class DishFragment : Fragment() {
             }
         }
         binding.dishRecyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        binding.btnAddDish.apply {
-            setOnClickListener {
-                val action =
-                    DishFragmentDirections.actionNavigationDishToEditDishFragment(
-                        getString(R.string.add_dish),
-                        -1
-                    )
-                this.findNavController().navigate(action)
+        if (mealId == -1) {
+            binding.btnAddDish.apply {
+                setOnClickListener {
+                    val action =
+                        DishFragmentDirections.actionNavigationDishToEditDishFragment(
+                            getString(R.string.add_dish),
+                            -1
+                        )
+                    this.findNavController().navigate(action)
+                }
             }
+        } else {
+            binding.btnAddDish.visibility = View.GONE
         }
+
     }
 
     override fun onDestroyView() {
