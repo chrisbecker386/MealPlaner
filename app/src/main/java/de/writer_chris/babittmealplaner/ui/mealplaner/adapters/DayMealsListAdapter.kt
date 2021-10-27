@@ -2,14 +2,12 @@ package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.writer_chris.babittmealplaner.R
-
 import de.writer_chris.babittmealplaner.databinding.ItemMealDayBinding
 
 import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish

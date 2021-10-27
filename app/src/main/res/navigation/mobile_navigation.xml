@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_dish">
+    app:startDestination="@id/dishImageSelectorFragment">
 
     <fragment
         android:id="@+id/navigation_dish"
@@ -125,5 +125,10 @@
             android:id="@+id/action_dishDetailFragment_to_navigation_dish"
             app:destination="@id/navigation_dish" />
     </fragment>
+    <fragment
+        android:id="@+id/dishImageSelectorFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorFragment"
+        android:label="fragment_dish_image_selector"
+        tools:layout="@layout/fragment_dish_image_selector" />
 
 </navigation>

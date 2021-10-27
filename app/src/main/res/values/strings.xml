@@ -48,6 +48,12 @@
     <string name="reselect">reselect</string>
     <string name="duration_hint">cooking time</string>
     <string name="description_hint">Describe how to cook the dish</string>
+    <string name="search">search</string>
+    <string name="null_or_empty_title">Input is empty</string>
+    <string name="null_or_empty">image search need minimun 1 character</string>
+    <string name="forbidden_symbols_title">Contains forbidden Characters</string>
+    <string name="warning">Warning</string>
+    <string name="forbidden_symbols_text">contains forbidden Characters</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

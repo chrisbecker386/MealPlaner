@@ -49,17 +49,14 @@ class EditDishFragment : Fragment() {
         if (id > 0) {
             viewModel.retrieve(id).observe(this.viewLifecycleOwner) {
                 dish = it
-                bind(dish)
+                bindUpdate(dish)
             }
         } else {
-            binding.apply {
-                btnDishSave.setOnClickListener { addNewDish() }
-                btnDishDelete.isVisible = false
-            }
+            bindAdd()
         }
     }
 
-    private fun bind(dish: Dish) {
+    private fun bindUpdate(dish: Dish) {
         binding.apply {
             txtInputEditDishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
             txtInputEditDishDuration.setText(
@@ -70,6 +67,15 @@ class EditDishFragment : Fragment() {
             btnDishSave.setOnClickListener { updateDish() }
             btnDishDelete.isVisible = true
             btnDishDelete.setOnClickListener { showConfirmationDialog() }
+            imgViewEditDish.setImageResource(R.drawable.ic_broken_image_96)
+        }
+    }
+
+    private fun bindAdd() {
+        binding.apply {
+            imgViewEditDish.setImageResource(R.drawable.ic_img_search_96)
+            btnDishSave.setOnClickListener { addNewDish() }
+            btnDishDelete.isVisible = false
         }
     }
 
