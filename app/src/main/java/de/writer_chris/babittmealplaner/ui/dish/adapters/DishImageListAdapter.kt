@@ -1,9 +1,8 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
-import androidx.leanback.widget.DiffCallback
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,6 @@ import coil.load
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.databinding.ItemDishImageBinding
 import de.writer_chris.babittmealplaner.network.DishPhoto
-import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
 
 class DishImageListAdapter :
     ListAdapter<DishPhoto, DishImageListAdapter.DishPhotoViewHolder>(DiffCallback) {

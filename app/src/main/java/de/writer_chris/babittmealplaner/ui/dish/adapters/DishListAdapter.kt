@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

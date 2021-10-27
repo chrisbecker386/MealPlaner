@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/navigation_dish"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.DishFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishFragment"
         android:label="@string/title_dish"
         tools:layout="@layout/fragment_dish">
         <argument
@@ -49,7 +49,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/editDishFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.EditDishFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.EditDishFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_edit_dish">
         <argument
@@ -64,6 +64,9 @@
             app:destination="@id/navigation_dish"
             app:popUpTo="@id/navigation_dish"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_editDishFragment_to_dishImageSelectorFragment"
+            app:destination="@id/dishImageSelectorFragment" />
     </fragment>
     <fragment
         android:id="@+id/editPeriodFragment"
@@ -102,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/dishDetailFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.DishDetailFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_dish_detail">
         <argument
@@ -127,8 +130,14 @@
     </fragment>
     <fragment
         android:id="@+id/dishImageSelectorFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishImageSelectorFragment"
         android:label="fragment_dish_image_selector"
-        tools:layout="@layout/fragment_dish_image_selector" />
+        tools:layout="@layout/fragment_dish_image_selector" >
+        <action
+            android:id="@+id/action_dishImageSelectorFragment_to_editDishFragment"
+            app:destination="@id/editDishFragment"
+            app:popUpTo="@id/editDishFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

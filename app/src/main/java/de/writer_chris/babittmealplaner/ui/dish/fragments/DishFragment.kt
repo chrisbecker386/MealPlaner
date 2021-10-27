@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
+import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
+import de.writer_chris.babittmealplaner.ui.dish.DishViewModel
+import de.writer_chris.babittmealplaner.ui.dish.DishViewModelFactory
 
 class DishFragment : Fragment() {
 

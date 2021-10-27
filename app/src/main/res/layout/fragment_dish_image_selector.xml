@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dish.DishImageSelectorFragment">
+    tools:context=".ui.dish.fragments.DishImageSelectorFragment">
 
     <EditText
         android:id="@+id/txt_input_dish_image_selector_search"

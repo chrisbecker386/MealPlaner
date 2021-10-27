@@ -1,7 +1,6 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,8 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailBinding
+import de.writer_chris.babittmealplaner.ui.dish.DishDetailsViewModel
+import de.writer_chris.babittmealplaner.ui.dish.DishDetailsViewModelFactory
 
 class DishDetailFragment : Fragment() {
     lateinit var dish: Dish

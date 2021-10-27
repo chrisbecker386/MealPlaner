@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +15,8 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
+import de.writer_chris.babittmealplaner.ui.dish.DishViewModel
+import de.writer_chris.babittmealplaner.ui.dish.DishViewModelFactory
 
 class EditDishFragment : Fragment() {
     //TODO renew edit Dish

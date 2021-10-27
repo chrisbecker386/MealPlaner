@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentDishImageSelectorBinding
+import de.writer_chris.babittmealplaner.ui.dish.adapters.DishImageListAdapter
+import de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorViewModel
+import de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorViewModelFactory
+import de.writer_chris.babittmealplaner.ui.dish.PhotoStatus
 
 class DishImageSelectorFragment : Fragment() {
 
@@ -40,7 +44,10 @@ class DishImageSelectorFragment : Fragment() {
         val adapter = DishImageListAdapter()
         binding.recyclerViewImageSelector.adapter = adapter
         viewModel.photos.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it.isNotEmpty()) {
+                adapter.submitList(it)
+            }
+
         }
 
         viewModel.status.observe(viewLifecycleOwner) {
@@ -81,7 +88,6 @@ class DishImageSelectorFragment : Fragment() {
                     return false
                 }
             }
-
         }
 
         return true
