@@ -58,6 +58,11 @@ class DishDetailFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun bindEditSelection() {
         binding.apply {
             btnDishSetChanges.text = getString(R.string.ok)
