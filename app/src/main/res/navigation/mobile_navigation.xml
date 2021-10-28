@@ -132,7 +132,11 @@
         android:id="@+id/dishImageSelectorFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishImageSelectorFragment"
         android:label="fragment_dish_image_selector"
-        tools:layout="@layout/fragment_dish_image_selector" >
+        tools:layout="@layout/fragment_dish_image_selector">
+        <argument
+            android:name="dish_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_dishImageSelectorFragment_to_editDishFragment"
             app:destination="@id/editDishFragment"
