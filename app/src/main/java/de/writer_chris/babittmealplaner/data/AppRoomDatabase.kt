@@ -16,7 +16,7 @@ import de.writer_chris.babittmealplaner.data.entities.*
         UnitType::class,
         Period::class
                ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class AppRoomDatabase : RoomDatabase() {
