@@ -117,8 +117,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
             }
             cal.add(Calendar.DATE, 1)
         }
-
-
     }
 
     //helper methods
@@ -128,7 +126,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
             _endDate.value = calendar
         }
         _startDate.value = getNormalizedCalender(calendar)
-
     }
 
     private fun setEnd(calendar: Calendar) {
