@@ -50,8 +50,6 @@ class MealsFromPeriodViewModel(
         }
         return dayMealsAndDishes
     }
-
-
 }
 
 class MealsFromPeriodViewModelFactory(
