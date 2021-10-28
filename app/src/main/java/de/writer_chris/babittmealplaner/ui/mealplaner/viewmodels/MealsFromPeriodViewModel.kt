@@ -27,7 +27,6 @@ class MealsFromPeriodViewModel(
         lateinit var lunch: MealAndDish
         lateinit var dinner: MealAndDish
         var counter = 0
-        var testCounter = 0
         for (i in allMealsWithDish) {
             when (counter) {
                 0 -> breakfast = i
@@ -48,7 +47,6 @@ class MealsFromPeriodViewModel(
             } else {
                 counter++
             }
-            testCounter++
         }
         return dayMealsAndDishes
     }
