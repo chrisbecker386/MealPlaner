@@ -11,8 +11,9 @@ import org.jetbrains.annotations.NotNull
 data class Dish(
     @PrimaryKey(autoGenerate = true) val dishId: Int = 0,
     @ColumnInfo(name = "dish_name") @NotNull val dishName: String,
-    val duration: Long=0,
-    val description: String="",
-    )
+    val duration: Long = 0,
+    val description: String = "",
+    val imgUrl: String?
+)
 
 //TODO create an TimeFormatter extension
