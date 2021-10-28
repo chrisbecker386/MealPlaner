@@ -7,8 +7,6 @@ import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.IllegalArgumentException
 
@@ -18,8 +16,10 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
 
     private var _startDate = MutableLiveData<Calendar>()
     val startDate: LiveData<Calendar> get() = _startDate
+
     private var _endDate = MutableLiveData<Calendar>()
     val endDate: LiveData<Calendar> get() = _endDate
+
     private val dayDish = listOf("breakfast", "lunch", "dinner")
 
     val daysBetween = PairMediatorLiveData(_startDate, _endDate).switchMap {
@@ -36,85 +36,33 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         _endDate.value = getCalendarDate(null, 6)
     }
 
-    private fun getCalendarDate(timeInMillis: Long?, additionalDays: Int): Calendar {
-        val cal = Calendar.getInstance()
-        if (timeInMillis != null) {
-            cal.timeInMillis = timeInMillis
-        }
-        cal.add(Calendar.DAY_OF_YEAR, additionalDays)
-        return formatCalender(cal)
-    }
-
-    private fun insertPeriodAndItsMeals(period: Period) {
-        val start = startDate.value
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
-        val end = endDate.value
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
-        val days = getDayDiff(start.timeInMillis, end.timeInMillis)
-
-        CoroutineScope(IO).launch {
-            val res = repository.insertPeriod(period)
-            addMeals(start, days, res)
-        }
-    }
-
-    private fun getDayDiff(lowerValue: Long, higherValue: Long): Int {
-        val diffMillis = higherValue.minus(lowerValue)
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = diffMillis
-        return cal.get(Calendar.DAY_OF_YEAR)
-    }
-
-    private fun formatCalender(calendar: Calendar): Calendar {
-        calendar.set(Calendar.MILLISECOND, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        return calendar
-    }
-
-    private fun addMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = firstDayToInsert.timeInMillis
-        CoroutineScope(IO).launch {
-            repeat(numberOfDays) {
-                dayDish.forEach {
-                    repository.insertMeal(
-                        Meal(
-                            dishId = null, date = cal.timeInMillis,
-                            mealType = it, periodId = periodId
-                        )
-                    )
-                }
-                cal.add(Calendar.DATE, 1)
-            }
-        }
-
-    }
-
-    fun setStartDate(calendar: Calendar) {
-        val end =
-            endDate.value ?: throw IllegalArgumentException("$LOG setStartDate - endDate is null")
-        if (calendar.timeInMillis >= end.timeInMillis) {
-            _endDate.value = calendar
-        }
-        _startDate.value = formatCalender(calendar)
-    }
-
-    fun setEndDate(calendar: Calendar) {
-        val start =
-            startDate.value ?: throw IllegalArgumentException("$LOG setEndDate - startDate is null")
-        if (calendar.timeInMillis <= start.timeInMillis) {
-            _startDate.value = calendar
-        }
-        _endDate.value = formatCalender(calendar)
-    }
-
+    //communication methods
     fun retrievePeriod(id: Int): LiveData<Period> {
         return repository.getPeriod(id).asLiveData()
     }
 
+    fun setStartDate(calendar: Calendar) {
+        setStart(calendar)
+    }
+
+    fun setEndDate(calendar: Calendar) {
+        setEnd(calendar)
+    }
+
     fun addPeriod() {
+        createPeriod()
+    }
+
+    fun updatePeriod(period: Period) {
+        applyChangesPeriod(period)
+    }
+
+    fun deletePeriod(period: Period) {
+        erasePeriod(period)
+    }
+
+    //database execution
+    private fun createPeriod() {
         val start: Long =
             startDate.value?.timeInMillis
                 ?: throw IllegalArgumentException("$LOG addPeriod() - start")
@@ -127,10 +75,24 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         insertPeriodAndItsMeals(period)
     }
 
-    fun updatePeriod(period: Period) {
+    private fun insertPeriodAndItsMeals(period: Period) {
+        val start = startDate.value
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - value null")
+        val days = daysBetween.value
+            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - value null")
+
+        CoroutineScope(IO).launch {
+            val res = repository.insertPeriod(period)
+            insertMeals(start, days, res)
+        }
+    }
+
+    private fun applyChangesPeriod(period: Period) {
         val start =
-            startDate.value ?: throw IllegalArgumentException("startDate is null")
-        val end = endDate.value ?: throw IllegalArgumentException("endDate is null")
+            startDate.value ?: throw IllegalArgumentException("applyChangesPeriod value null")
+        val end = endDate.value ?: throw IllegalArgumentException("applyChangesPeriod value null")
+        val days = daysBetween.value
+            ?: throw IllegalArgumentException("applyChangesPeriod value null")
 
         val updatedPeriod = Period(period.periodId, start.timeInMillis, end.timeInMillis)
         CoroutineScope(IO).launch {
@@ -139,15 +101,78 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
             //removing overhang in meal
             repository.deleteMealsBeforeAndAfter(updatedPeriod)
             //adding new in meal
-            insertPeriodAndItsMeals(updatedPeriod)
+            insertMeals(start, days, period.periodId)
         }
     }
 
-    fun deletePeriod(period: Period) {
+    private fun erasePeriod(period: Period) {
         CoroutineScope(IO).launch {
             repository.deletePeriod(period)
             repository.deleteMealsFromPeriod(periodId = period.periodId)
         }
+    }
+
+    private suspend fun insertMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = firstDayToInsert.timeInMillis
+        //CoroutineScope(IO).launch {
+        repeat(numberOfDays) {
+            dayDish.forEach {
+                repository.insertMeal(
+                    Meal(
+                        dishId = null, date = cal.timeInMillis,
+                        mealType = it, periodId = periodId
+                    )
+                )
+            }
+            cal.add(Calendar.DATE, 1)
+        }
+        //}
+
+    }
+
+    //helper methods
+    private fun setStart(calendar: Calendar) {
+        val end =
+            endDate.value ?: throw IllegalArgumentException("$LOG setStartDate - endDate is null")
+        if (calendar.timeInMillis >= end.timeInMillis) {
+            _endDate.value = calendar
+        }
+        _startDate.value = getNormalizedCalender(calendar)
+
+    }
+
+    private fun setEnd(calendar: Calendar) {
+        val start =
+            startDate.value ?: throw IllegalArgumentException("$LOG setEndDate - startDate is null")
+        if (calendar.timeInMillis <= start.timeInMillis) {
+            _startDate.value = calendar
+        }
+        _endDate.value = getNormalizedCalender(calendar)
+    }
+
+    private fun getCalendarDate(timeInMillis: Long?, additionalDays: Int): Calendar {
+        val cal = Calendar.getInstance()
+        if (timeInMillis != null) {
+            cal.timeInMillis = timeInMillis
+        }
+        cal.add(Calendar.DAY_OF_YEAR, additionalDays)
+        return getNormalizedCalender(cal)
+    }
+
+    private fun getDayDiff(lowerValue: Long, higherValue: Long): Int {
+        val diffMillis = higherValue.minus(lowerValue)
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = diffMillis
+        return cal.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun getNormalizedCalender(calendar: Calendar): Calendar {
+        calendar.set(Calendar.MILLISECOND, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        return calendar
     }
 }
 
