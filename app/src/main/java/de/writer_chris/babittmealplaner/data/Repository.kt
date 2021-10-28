@@ -1,12 +1,13 @@
 package de.writer_chris.babittmealplaner.data
 
 import android.content.Context
+import android.icu.util.Calendar
+import androidx.lifecycle.viewModelScope
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
 
 class Repository(context: Context) {
@@ -48,7 +49,6 @@ class Repository(context: Context) {
     }
 
     //Meal
-
     suspend fun insertMeal(meal: Meal) {
         val date: Long = meal.date
         val mealType: String = meal.mealType
@@ -62,12 +62,6 @@ class Repository(context: Context) {
     suspend fun updateMeal(meal: Meal) {
         withContext(Dispatchers.IO) {
             dishDao.updateMeal(meal)
-        }
-    }
-
-    suspend fun deleteMeal(meal: Meal) {
-        withContext(Dispatchers.IO) {
-            dishDao.deleteMeal(meal)
         }
     }
 
@@ -156,7 +150,7 @@ class Repository(context: Context) {
     fun getPeriodIdFlow(startDate: Long, endDate: Long) =
         dishDao.getPeriodIdFlow(startDate, endDate)
 
-    fun getLatestPeriodId() = dishDao.getLatestPeriodId()
+    suspend fun getLatestPeriodId() = dishDao.getLatestPeriodId()
 
     fun getMealAndDishAll() = dishDao.getMealAndDishAll()
 

@@ -5,6 +5,10 @@ import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.IllegalArgumentException
 
@@ -46,11 +50,11 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
             ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
         val end = endDate.value
             ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - actualDate")
-
         val days = getDayDiff(start.timeInMillis, end.timeInMillis)
-        viewModelScope.launch {
-            val periodId = repository.insertPeriod(period)
-            addMeals(start, days, periodId)
+
+        CoroutineScope(IO).launch {
+            val res = repository.insertPeriod(period)
+            addMeals(start, days, res)
         }
     }
 
@@ -72,7 +76,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     private fun addMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
         val cal = Calendar.getInstance()
         cal.timeInMillis = firstDayToInsert.timeInMillis
-        viewModelScope.launch {
+        CoroutineScope(IO).launch {
             repeat(numberOfDays) {
                 dayDish.forEach {
                     repository.insertMeal(
@@ -85,6 +89,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
                 cal.add(Calendar.DATE, 1)
             }
         }
+
     }
 
     fun setStartDate(calendar: Calendar) {
@@ -128,7 +133,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         val end = endDate.value ?: throw IllegalArgumentException("endDate is null")
 
         val updatedPeriod = Period(period.periodId, start.timeInMillis, end.timeInMillis)
-        viewModelScope.launch {
+        CoroutineScope(IO).launch {
             //update in period
             repository.updatePeriod(updatedPeriod)
             //removing overhang in meal
@@ -139,9 +144,9 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun deletePeriod(period: Period) {
-        viewModelScope.launch {
-            repository.deleteMealsFromPeriod(periodId = period.periodId)
+        CoroutineScope(IO).launch {
             repository.deletePeriod(period)
+            repository.deleteMealsFromPeriod(periodId = period.periodId)
         }
     }
 }
