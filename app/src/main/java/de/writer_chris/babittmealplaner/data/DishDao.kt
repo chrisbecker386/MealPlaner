@@ -33,7 +33,7 @@ interface DishDao {
 
     //Meal table
     @Transaction
-    @Query("INSERT INTO Meal (date, mealType, periodId)  SELECT :date, :mealType, :periodId WHERE NOT EXISTS (SELECT date, mealType, periodID FROM MEAL WHERE date=:date AND mealType=:mealType AND periodId=:periodId)")
+    @Query("INSERT INTO Meal (date, mealType, periodId)  SELECT :date, :mealType, :periodId WHERE NOT EXISTS (SELECT date, mealType, periodID FROM Meal WHERE date=:date AND mealType=:mealType AND periodId=:periodId)")
     suspend fun insertMeal(date: Long, mealType: String, periodId: Int)
 
     @Transaction
@@ -148,7 +148,7 @@ interface DishDao {
 
     @Transaction
     @Query("SELECT MAX(periodId) FROM Period ")
-    fun getLatestPeriodId(): Flow<Int>
+    suspend fun getLatestPeriodId(): Int
 
     @Transaction
     @Query("SELECT periodId FROM Period WHERE startDate=:startDate AND endDate=:endDate LIMIT 1")
