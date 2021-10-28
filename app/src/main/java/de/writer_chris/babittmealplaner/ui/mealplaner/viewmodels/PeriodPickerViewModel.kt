@@ -63,23 +63,15 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
 
     //database execution
     private fun createPeriod() {
-        val start: Long =
-            startDate.value?.timeInMillis
-                ?: throw IllegalArgumentException("$LOG addPeriod() - start")
-        val end: Long =
-            endDate.value?.timeInMillis ?: throw IllegalArgumentException("$LOG addPeriod() - end")
-        val period = Period(
-            startDate = start,
-            endDate = end
-        )
+        val start: Long = getStart().timeInMillis
+        val end: Long = getEnd().timeInMillis
+        val period = Period(startDate = start, endDate = end)
         insertPeriodAndItsMeals(period)
     }
 
     private fun insertPeriodAndItsMeals(period: Period) {
-        val start = startDate.value
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - value null")
-        val days = daysBetween.value
-            ?: throw IllegalArgumentException("$LOG insertMealsForPeriod() - value null")
+        val start = getStart()
+        val days = getDaysBetween()
 
         CoroutineScope(IO).launch {
             val res = repository.insertPeriod(period)
@@ -88,13 +80,11 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     }
 
     private fun applyChangesPeriod(period: Period) {
-        val start =
-            startDate.value ?: throw IllegalArgumentException("applyChangesPeriod value null")
-        val end = endDate.value ?: throw IllegalArgumentException("applyChangesPeriod value null")
-        val days = daysBetween.value
-            ?: throw IllegalArgumentException("applyChangesPeriod value null")
-
+        val start = getStart()
+        val end = getEnd()
+        val days = getDaysBetween()
         val updatedPeriod = Period(period.periodId, start.timeInMillis, end.timeInMillis)
+
         CoroutineScope(IO).launch {
             //update in period
             repository.updatePeriod(updatedPeriod)
@@ -115,7 +105,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     private suspend fun insertMeals(firstDayToInsert: Calendar, numberOfDays: Int, periodId: Int) {
         val cal = Calendar.getInstance()
         cal.timeInMillis = firstDayToInsert.timeInMillis
-        //CoroutineScope(IO).launch {
+
         repeat(numberOfDays) {
             dayDish.forEach {
                 repository.insertMeal(
@@ -127,14 +117,13 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
             }
             cal.add(Calendar.DATE, 1)
         }
-        //}
+
 
     }
 
     //helper methods
     private fun setStart(calendar: Calendar) {
-        val end =
-            endDate.value ?: throw IllegalArgumentException("$LOG setStartDate - endDate is null")
+        val end = getEnd()
         if (calendar.timeInMillis >= end.timeInMillis) {
             _endDate.value = calendar
         }
@@ -143,8 +132,7 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
     }
 
     private fun setEnd(calendar: Calendar) {
-        val start =
-            startDate.value ?: throw IllegalArgumentException("$LOG setEndDate - startDate is null")
+        val start = getStart()
         if (calendar.timeInMillis <= start.timeInMillis) {
             _startDate.value = calendar
         }
@@ -173,6 +161,19 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         return calendar
+    }
+
+    private fun getStart(): Calendar {
+        return startDate.value ?: throw IllegalArgumentException("startDate value null")
+    }
+
+    private fun getEnd(): Calendar {
+        return endDate.value ?: throw IllegalArgumentException("endDate value null")
+    }
+
+    private fun getDaysBetween(): Int {
+        return daysBetween.value
+            ?: throw IllegalArgumentException("daysBetween value null")
     }
 }
 
