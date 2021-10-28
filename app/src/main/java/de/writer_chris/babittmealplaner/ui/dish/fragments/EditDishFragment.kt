@@ -91,7 +91,9 @@ class EditDishFragment : Fragment() {
             viewModel.addDish(
                 binding.txtInputEditDishName.text.toString(),
                 this.binding.txtInputEditDishDescription.text.toString(),
-                this.binding.txtInputEditDishDuration.text.toString().toLong()
+                this.binding.txtInputEditDishDuration.text.toString().toLong(),
+                null
+
             )
             val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
             findNavController().navigate(action)
@@ -104,7 +106,7 @@ class EditDishFragment : Fragment() {
                 this.navigationArgs.dishId,
                 this.binding.txtInputEditDishName.text.toString(),
                 this.binding.txtInputEditDishDescription.text.toString(),
-                this.binding.txtInputEditDishDuration.text.toString().toLong()
+                this.binding.txtInputEditDishDuration.text.toString().toLong(), dish.imgUrl
             )
             val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
             findNavController().navigate(action)

@@ -1,5 +1,6 @@
-package de.writer_chris.babittmealplaner.ui.mealplaner
+package de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import java.lang.IllegalArgumentException
@@ -8,6 +9,10 @@ import de.writer_chris.babittmealplaner.data.entities.Period
 
 class PeriodViewModel(private val repository: Repository) : ViewModel() {
     val periods: LiveData<List<Period>> = repository.getAllPeriods().asLiveData()
+
+
+
+
 }
 
 

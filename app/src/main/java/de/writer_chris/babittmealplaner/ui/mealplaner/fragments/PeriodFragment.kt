@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
-import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModel
-import de.writer_chris.babittmealplaner.ui.mealplaner.PeriodViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodViewModel
+import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodViewModelFactory
 import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.PeriodListAdapter
 
 class PeriodFragment : Fragment() {

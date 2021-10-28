@@ -28,24 +28,36 @@ class DishViewModel(private val repository: Repository) : ViewModel() {
         return repository.getDish(id).asLiveData()
     }
 
-    private fun getNewDishEntry(dishName: String, description: String?, duration: Long?): Dish {
+    private fun getNewDishEntry(
+        dishName: String,
+        description: String?,
+        duration: Long?,
+        imgUrl: String?
+    ): Dish {
         val des = description ?: ""
         val dur = duration ?: 0
-        return Dish(dishName = dishName, description = des, duration = dur)
+        val img = imgUrl ?: null
+        return Dish(dishName = dishName, description = des, duration = dur, imgUrl = img)
     }
 
-    fun addDish(dishName: String, description: String?, duration: Long?) {
-        val newDish = getNewDishEntry(dishName, description, duration)
+    fun addDish(dishName: String, description: String?, duration: Long?, imgUrl: String?) {
+        val newDish = getNewDishEntry(dishName, description, duration, imgUrl)
         insertDish(newDish)
     }
 
-    fun editDish(dishId: Int, dishName: String, description: String?, duration: Long?) {
-        val toUpdateDish: Dish = Dish(dishId, dishName, duration ?: 0, description ?: "")
+    fun editDish(
+        dishId: Int,
+        dishName: String,
+        description: String?,
+        duration: Long?,
+        imgUrl: String?
+    ) {
+        val toUpdateDish: Dish = Dish(dishId, dishName, duration ?: 0, description ?: "", imgUrl)
         updateDish(toUpdateDish)
     }
 
     fun eraseDish(dishId: Int) {
-        val dish: Dish = Dish(dishId, "", 0, "")
+        val dish: Dish = Dish(dishId, "", 0, "", null)
         deleteDish(dish)
     }
 
