@@ -39,7 +39,7 @@
             android:layout_margin="8dp"
             android:ems="10"
             android:hint="@string/duration_hint"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_view_edit_dish"
             app:layout_constraintTop_toBottomOf="@id/txt_input_edit_dish_name"
