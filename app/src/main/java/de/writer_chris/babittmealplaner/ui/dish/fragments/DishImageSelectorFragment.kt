@@ -6,23 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
+import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.databinding.FragmentDishImageSelectorBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishImageListAdapter
-import de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorViewModel
-import de.writer_chris.babittmealplaner.ui.dish.DishImageSelectorViewModelFactory
-import de.writer_chris.babittmealplaner.ui.dish.PhotoStatus
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishImageSelectorViewModel
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishImageSelectorViewModelFactory
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.PhotoStatus
 
 class DishImageSelectorFragment : Fragment() {
-
-
-    //    private val navigationArgs: DishImageSelectorFragmentArgs by navArgs()
     private val viewModel: DishImageSelectorViewModel by viewModels {
         DishImageSelectorViewModelFactory(Repository(requireContext()))
     }
-
+    private val navigationArgs: DishImageSelectorFragmentArgs by navArgs()
     private var _binding: FragmentDishImageSelectorBinding? = null
     private val binding get() = _binding!!
 
@@ -41,26 +41,45 @@ class DishImageSelectorFragment : Fragment() {
                 search()
             }
         }
-        val adapter = DishImageListAdapter()
+        val adapter = DishImageListAdapter {
+            val args = ArgsToDishEdit(
+                navigationArgs.argsToDishImageSelection.title,
+                navigationArgs.argsToDishImageSelection.dishId,
+                navigationArgs.argsToDishImageSelection.dishName,
+                navigationArgs.argsToDishImageSelection.duration,
+                navigationArgs.argsToDishImageSelection.description
+            )
+            val action =
+                DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToEditDishFragment(
+                    args
+                )
+            this.findNavController().navigate(action)
+        }
         binding.recyclerViewImageSelector.adapter = adapter
         viewModel.photos.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
             }
-
         }
 
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
+                //show errorPicture
                 PhotoStatus.ERROR -> {
-                } //show errorPicture
+                    binding.imgViewDishImageSelector.visibility = View.VISIBLE
+                    binding.imgViewDishImageSelector.setImageResource(R.drawable.ic_broken_image_96)
+                }
+                //show loading Animation
                 PhotoStatus.LOADING -> {
-                } //show loading Animation
+                    binding.imgViewDishImageSelector.visibility = View.VISIBLE
+                    binding.imgViewDishImageSelector.setImageResource(R.drawable.loading_animation)
+                    binding.recyclerViewImageSelector.visibility = View.GONE
+                }
+                // give the pics binding.recyclerViewImageSelector
                 PhotoStatus.DONE -> {
-                    viewModel.photos.observe(viewLifecycleOwner) {
-                        // give the pics binding.recyclerViewImageSelector
-                    }
-                }  //show pics
+                    binding.recyclerViewImageSelector.visibility = View.VISIBLE
+                    binding.imgViewDishImageSelector.visibility = View.GONE
+                }
             }
         }
     }

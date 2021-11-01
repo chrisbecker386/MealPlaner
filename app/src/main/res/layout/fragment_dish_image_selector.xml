@@ -22,6 +22,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_input_dish_image_selector_search" />
 
+    <ImageView
+        android:id="@+id/img_view_dish_image_selector"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dish_search"
+        tools:src="@drawable/loading_animation" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_image_selector"
         android:layout_width="match_parent"
@@ -32,8 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_dish_search"
+        app:spanCount="3"
         tools:itemCount="15"
-        tools:listitem="@layout/item_dish_image"
-        app:spanCount="3" />
+        tools:listitem="@layout/item_dish_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

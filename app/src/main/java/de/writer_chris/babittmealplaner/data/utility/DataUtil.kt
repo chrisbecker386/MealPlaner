@@ -10,9 +10,9 @@ import java.lang.Exception
 class DataUtil {
     companion object {
 
-        private fun deletePhotoFromInternalStorage(context: Context, dishId: Int): Boolean {
+        fun deletePhotoFromInternalStorage(context: Context, filename: String): Boolean {
             return try {
-                context.deleteFile("$dishId.jpg")
+                context.deleteFile("$filename.jpg")
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -20,15 +20,19 @@ class DataUtil {
             }
         }
 
-        private fun loadDishPictureFromInternalStorage(context: Context, id: Int): Bitmap? {
-            val files = context.filesDir.listFiles()
-                .filter { it.canRead() && it.isFile && it.name == "$id.jpg" }
-                .map {
-                    val bytes = it.readBytes()
-                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                }
-
-            return files[0] ?: null
+        fun loadDishPictureFromInternalStorage(context: Context, filename: String): Bitmap? {
+            return try {
+                val files = context.filesDir.listFiles()
+                    .filter { it.canRead() && it.isFile && it.name == "$filename.jpg" }
+                    .map {
+                        val bytes = it.readBytes()
+                        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    }
+                files[0]
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
 
         fun saveDishPictureToInternalStorage(

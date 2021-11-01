@@ -1,8 +1,6 @@
 package de.writer_chris.babittmealplaner.data
 
 import android.content.Context
-import android.icu.util.Calendar
-import androidx.lifecycle.viewModelScope
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
@@ -19,10 +17,12 @@ class Repository(context: Context) {
     }
 
     //Dish
-    suspend fun insertDish(dish: Dish) {
+    suspend fun insertDish(dish: Dish): Int {
+        var dishId: Int
         withContext(Dispatchers.IO) {
-            dishDao.insertDish(dish)
+            dishId = dishDao.insertDish(dish).toInt()
         }
+        return dishId
     }
 
     suspend fun updateDish(dish: Dish) {

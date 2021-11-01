@@ -34,7 +34,8 @@
     <string name="till">till</string>
     <string name="from">from</string>
     <string name="dialog_information_title">Information</string>
-    <string name="information_text">A mealplan has minimal 1 day</string>
+    <string name="minimum_day_information_text">A mealplan has minimal 1 day</string>
+    <string name="incomplete_dish_edit_text">A dish description parameter is missing</string>
     <string name="ok">ok</string>
     <string name="update_period">Update Mealplan</string>
     <string name="add_period">add mealplan</string>
@@ -53,7 +54,12 @@
     <string name="null_or_empty">image search need minimun 1 character</string>
     <string name="forbidden_symbols_title">Contains forbidden Characters</string>
     <string name="warning">Warning</string>
+    <string name="title_meal_planer">Meal Planer</string>
+    <string name="title_actual_meal_plan">Actual Meal Plan</string>
     <string name="forbidden_symbols_text">contains forbidden Characters</string>
+    <string name="title_add_dish">Add Dish</string>
+    <string name="title_dish_detail">Recipe</string>
+    <string name="title_dish_image_selection">Image Selection</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

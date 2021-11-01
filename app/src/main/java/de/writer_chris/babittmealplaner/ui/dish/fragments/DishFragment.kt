@@ -12,10 +12,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
+import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
-import de.writer_chris.babittmealplaner.ui.dish.DishViewModel
-import de.writer_chris.babittmealplaner.ui.dish.DishViewModelFactory
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
 
 class DishFragment : Fragment() {
 
@@ -57,10 +58,8 @@ class DishFragment : Fragment() {
             )
             this.findNavController().navigate(action)
         }, {
-            val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(
-                getString(R.string.edit_dish),
-                it.dishId
-            )
+            val args = ArgsToDishEdit(getString(R.string.edit_dish), it.dishId, null, null, null)
+            val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(args)
             this.findNavController().navigate(action)
         })
 
@@ -75,11 +74,9 @@ class DishFragment : Fragment() {
         if (mealId == -1) {
             binding.btnAddDish.apply {
                 setOnClickListener {
+                    val args = ArgsToDishEdit(getString(R.string.add_dish), -1, null, null, null)
                     val action =
-                        DishFragmentDirections.actionNavigationDishToEditDishFragment(
-                            getString(R.string.add_dish),
-                            -1
-                        )
+                        DishFragmentDirections.actionNavigationDishToEditDishFragment(args)
                     this.findNavController().navigate(action)
                 }
             }

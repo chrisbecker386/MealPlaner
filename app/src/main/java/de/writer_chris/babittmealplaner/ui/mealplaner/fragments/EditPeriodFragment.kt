@@ -217,7 +217,7 @@ class EditPeriodFragment : Fragment() {
     private fun showInformationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.dialog_information_title))
-            .setMessage(getString(R.string.information_text))
+            .setMessage(getString(R.string.minimum_day_information_text))
             .setCancelable(false)
             .setPositiveButton(getString(R.string.ok)) { _, _ -> }
             .show()

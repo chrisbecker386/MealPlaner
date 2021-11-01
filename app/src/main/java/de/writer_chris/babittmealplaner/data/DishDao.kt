@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface DishDao {
     //Dish table
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertDish(dish: Dish)
+    suspend fun insertDish(dish: Dish):Long
 
     @Update
     suspend fun updateDish(dish: Dish)
