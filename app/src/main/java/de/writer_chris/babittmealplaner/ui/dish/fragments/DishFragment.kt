@@ -22,8 +22,6 @@ class DishFragment : Fragment() {
 
     //TODO story III
     //TODO add a searchbar
-
-
     private val navigationArgs: DishFragmentArgs by navArgs()
 
     private val viewModel: DishViewModel by viewModels {

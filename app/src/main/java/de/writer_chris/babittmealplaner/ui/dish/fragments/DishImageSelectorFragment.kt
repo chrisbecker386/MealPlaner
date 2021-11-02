@@ -91,7 +91,6 @@ class DishImageSelectorFragment : Fragment() {
         }
         if (isInputValid(inputText.toString()))
             viewModel.search(inputText.toString())
-
     }
 
     private fun isInputValid(inputText: String): Boolean {
