@@ -51,12 +51,6 @@ class DishViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private fun saveDishPicture(dishId: Int) {
-        CoroutineScope(IO).launch {
-
-        }
-    }
-
     fun retrieve(id: Int): LiveData<Dish> {
         return repository.getDish(id).asLiveData()
     }

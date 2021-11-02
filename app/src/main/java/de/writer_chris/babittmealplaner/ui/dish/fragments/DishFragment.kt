@@ -58,7 +58,13 @@ class DishFragment : Fragment() {
             )
             this.findNavController().navigate(action)
         }, {
-            val args = ArgsToDishEdit(getString(R.string.edit_dish), it.dishId, null, null, null)
+            val args = ArgsToDishEdit(
+                getString(R.string.edit_dish),
+                it.dishId,
+                it.dishName,
+                it.duration.toString(),
+                it.description
+            )
             val action = DishFragmentDirections.actionNavigationDishToEditDishFragment(args)
             this.findNavController().navigate(action)
         })

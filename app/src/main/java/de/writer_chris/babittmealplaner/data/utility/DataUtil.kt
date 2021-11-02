@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import java.io.File
 import java.io.IOException
 import java.lang.Exception
 
@@ -32,6 +33,17 @@ class DataUtil {
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
+            }
+        }
+
+        fun isFileExists(context: Context, filename: String): Boolean {
+            return try {
+                val file: File = File(context.filesDir, "$filename.jpg")
+                file.exists()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
             }
         }
 

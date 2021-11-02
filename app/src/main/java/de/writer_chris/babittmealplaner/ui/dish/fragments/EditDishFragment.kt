@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,7 +13,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.Repository
-import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishImageSelection
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
@@ -29,11 +26,6 @@ class EditDishFragment : Fragment() {
     //TODO  if ingredient not exists add it with a unitType
     //TODO  show a list of all ingredients
 
-    //TODO
-    //TODO add ImageFunctionality with a search for Picture in editDish
-
-
-    lateinit var dish: Dish
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
     }
@@ -41,7 +33,6 @@ class EditDishFragment : Fragment() {
     private val navigationArgs: EditDishFragmentArgs by navArgs()
     private var _binding: FragmentEditDishBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,28 +44,41 @@ class EditDishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = navigationArgs.argsToDishEdit.dishId
-        if (id > 0) {
-            viewModel.retrieve(id).observe(this.viewLifecycleOwner) {
-                dish = it
-                bindUpdate(dish)
-            }
-        } else {
-            bindAdd()
-        }
+        bind()
     }
 
-    private fun bindUpdate(dish: Dish) {
+    private fun bind() {
         binding.apply {
-            txtInputEditDishName.setText(dish.dishName, TextView.BufferType.SPANNABLE)
-            txtInputEditDishDuration.setText(
-                dish.duration.toInt().toString(),
-                TextView.BufferType.SPANNABLE
-            )
-            txtInputEditDishDescription.setText(dish.description, TextView.BufferType.SPANNABLE)
-            btnDishSave.setOnClickListener { updateDish() }
-            btnDishDelete.isVisible = true
-            btnDishDelete.setOnClickListener { showDeleteConfirmationDialog() }
+            //add Dish
+            if (navigationArgs.argsToDishEdit.dishId < 0) {
+                btnDishSave.setOnClickListener { addNewDish() }
+                btnDishDelete.visibility = View.GONE
+            }
+            //update Dish
+            else {
+                btnDishSave.setOnClickListener { updateDish() }
+                btnDishDelete.visibility = View.VISIBLE
+                btnDishDelete.setOnClickListener { showDeleteConfirmationDialog() }
+            }
+
+            if (navigationArgs.argsToDishEdit.name != null) {
+                txtInputEditDishName.setText(
+                    navigationArgs.argsToDishEdit.name,
+                    TextView.BufferType.SPANNABLE
+                )
+            }
+            if (navigationArgs.argsToDishEdit.duration != null) {
+                txtInputEditDishDuration.setText(
+                    navigationArgs.argsToDishEdit.duration,
+                    TextView.BufferType.SPANNABLE
+                )
+            }
+            if (navigationArgs.argsToDishEdit.description != null) {
+                txtInputEditDishDescription.setText(
+                    navigationArgs.argsToDishEdit.description,
+                    TextView.BufferType.SPANNABLE
+                )
+            }
 
             imgViewEditDish.setOnClickListener {
                 val args = ArgsToDishImageSelection(
@@ -90,64 +94,43 @@ class EditDishFragment : Fragment() {
                     )
                 findNavController().navigate(action)
             }
-            //TODO make this more nice!!!
-            val bitmap = DataUtil.loadDishPictureFromInternalStorage(
-                requireContext(),
-                dish.dishId.toString()
-            )
-            if (bitmap != null) {
-                imgViewEditDish.setImageBitmap(bitmap)
+
+            imageHandler()
+        }
+    }
+
+    //Image
+    private fun imageHandler() {
+        if (isImageExists(TEMPORAL_FILE_NAME)) {
+            setImage(TEMPORAL_FILE_NAME)
+        } else {
+            if (navigationArgs.argsToDishEdit.dishId > 0) {
+                if (isImageExists(navigationArgs.argsToDishEdit.dishId.toString())) {
+                    setImage(navigationArgs.argsToDishEdit.dishId.toString())
+                } else {
+                    setDefaultImage()
+                }
             } else {
-                imgViewEditDish.setImageResource(R.drawable.ic_img_search_96)
+                setDefaultImage()
             }
         }
     }
 
-    private fun bindAdd() {
-        binding.apply {
-            imgViewEditDish.setImageResource(R.drawable.ic_img_search_96)
-            val bitmap = DataUtil.loadDishPictureFromInternalStorage(
+    private fun setImage(filename: String) {
+        binding.imgViewEditDish.setImageBitmap(
+            DataUtil.loadDishPictureFromInternalStorage(
                 requireContext(),
-                TEMPORAL_FILE_NAME
+                filename
             )
-            if (bitmap != null) {
-                imgViewEditDish.setImageBitmap(bitmap)
-            } else {
-                imgViewEditDish.setImageResource(R.drawable.ic_img_search_96)
-            }
-            if (navigationArgs.argsToDishEdit.name != null) {
-                txtInputEditDishName.setText(
-                    navigationArgs.argsToDishEdit.name,
-                    TextView.BufferType.SPANNABLE
-                )
-            }
-            if (navigationArgs.argsToDishEdit.duration != null) {
-                txtInputEditDishDuration.setText(
-                    navigationArgs.argsToDishEdit.duration,
-                    TextView.BufferType.SPANNABLE
-                )
-            }
-            if (navigationArgs.argsToDishEdit.description != null) {
-                txtInputEditDishDescription.setText(navigationArgs.argsToDishEdit.description, TextView.BufferType.SPANNABLE)
-            }
+        )
+    }
 
-            btnDishSave.setOnClickListener { addNewDish() }
-            btnDishDelete.visibility = View.GONE
-            imgViewEditDish.setOnClickListener {
-                val args = ArgsToDishImageSelection(
-                    navigationArgs.argsToDishEdit.title,
-                    -1,
-                    getNameString(),
-                    getDurationString(),
-                    getDescriptionString()
-                )
-                val action =
-                    EditDishFragmentDirections.actionEditDishFragmentToDishImageSelectorFragment(
-                        args
-                    )
-                findNavController().navigate(action)
-            }
-        }
+    private fun setDefaultImage() {
+        binding.imgViewEditDish.setImageResource(R.drawable.ic_img_search_96)
+    }
+
+    private fun isImageExists(filename: String): Boolean {
+        return DataUtil.isFileExists(requireContext(), filename)
     }
 
     private fun addNewDish() {
@@ -226,12 +209,11 @@ class EditDishFragment : Fragment() {
     }
 
     private fun getParameterDish(): Dish {
-
         return Dish(
             navigationArgs.argsToDishEdit.dishId,
-            getNameString()!!,
-            getDurationLong()!!,
-            getDescriptionString()!!
+            getNameString(),
+            getDurationLong(),
+            getDescriptionString()
         )
     }
 
