@@ -1,11 +1,14 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,6 +36,18 @@ class EditDishFragment : Fragment() {
     private val navigationArgs: EditDishFragmentArgs by navArgs()
     private var _binding: FragmentEditDishBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                deleteTemporalImage()
+                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToNavigationDish())
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,7 +114,7 @@ class EditDishFragment : Fragment() {
         }
     }
 
-    //Image
+    //image
     private fun imageHandler() {
         if (isImageExists(TEMPORAL_FILE_NAME)) {
             setImage(TEMPORAL_FILE_NAME)
@@ -133,6 +148,13 @@ class EditDishFragment : Fragment() {
         return DataUtil.isFileExists(requireContext(), filename)
     }
 
+    private fun deleteTemporalImage() {
+        if (DataUtil.isFileExists(requireContext(), TEMPORAL_FILE_NAME)) {
+            DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_FILE_NAME)
+        }
+    }
+
+    //data
     private fun addNewDish() {
         if (isEntryValid()) {
             viewModel.addDish(
@@ -160,6 +182,7 @@ class EditDishFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    //dialogs
     private fun showDeleteConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.dialog_alert_title))

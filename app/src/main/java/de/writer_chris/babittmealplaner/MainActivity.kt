@@ -3,6 +3,7 @@ package de.writer_chris.babittmealplaner
 import android.database.DatabaseUtils
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
+        //val fallbackNav
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -41,11 +44,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        super.onBackPressed()
         return super.onSupportNavigateUp() || navController.navigateUp()
     }
+
+
 }
