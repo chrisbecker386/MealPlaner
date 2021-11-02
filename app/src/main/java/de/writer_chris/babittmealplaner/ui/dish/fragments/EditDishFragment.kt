@@ -37,13 +37,7 @@ class EditDishFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                deleteTemporalImage()
-                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToNavigationDish())
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        applyBackPressBehavior()
     }
 
     override fun onCreateView(
@@ -240,6 +234,17 @@ class EditDishFragment : Fragment() {
             getDurationLong(),
             getDescriptionString()
         )
+    }
+
+    //lifecycle
+    private fun applyBackPressBehavior() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                deleteTemporalImage()
+                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToNavigationDish())
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
 }
