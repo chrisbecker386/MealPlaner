@@ -46,7 +46,7 @@ class MealsFromPeriodFragment : Fragment() {
     }
 
     private fun getDayMealListAdapter(): DayMealsListAdapter {
-        return DayMealsListAdapter({
+        return DayMealsListAdapter(requireContext(), {
             val action =
                 MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToNavigationDish(it)
             findNavController().navigate(action)
