@@ -68,15 +68,13 @@
     <fragment
         android:id="@+id/editPeriodFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.EditPeriodFragment"
-        android:label="{title}"
         tools:layout="@layout/fragment_edit_period">
+        <!--        android:label="de.writer_chris.babittmealplaner.utility.Constants."-->
+
         <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="period_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:name="args_to_period_edit"
+            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToPeriodEdit" />
+
         <action
             android:id="@+id/action_datePickerFragment_to_navigation_meal"
             app:destination="@id/navigation_meal"
