@@ -9,7 +9,7 @@
         android:id="@+id/recycler_view_meals_from_period"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemCount="6"
+        tools:itemCount="4"
         tools:listitem="@layout/item_meal_day"/>
 
 </FrameLayout>
