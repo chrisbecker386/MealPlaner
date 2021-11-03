@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/dishDetailFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailsFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_dish_detail">
         <argument

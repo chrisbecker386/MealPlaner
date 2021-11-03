@@ -17,10 +17,10 @@ import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModelFactory
 
-class DishDetailFragment : Fragment() {
+class DishDetailsFragment : Fragment() {
     lateinit var dish: Dish
     lateinit var meal: Meal
-    private val navigationArgs: DishDetailFragmentArgs by navArgs()
+    private val navigationArgs: DishDetailsFragmentArgs by navArgs()
 
     private val viewModel: DishDetailsViewModel by viewModels {
         DishDetailsViewModelFactory(Repository(requireContext()))
@@ -79,7 +79,7 @@ class DishDetailFragment : Fragment() {
             txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
-                val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish()
+                val action = DishDetailsFragmentDirections.actionDishDetailFragmentToNavigationDish()
                 findNavController().navigate(action)
             }
         }
@@ -92,7 +92,7 @@ class DishDetailFragment : Fragment() {
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
                 val action =
-                    DishDetailFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
+                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
                         meal.periodId
                     )
                 findNavController().navigate(action)
@@ -100,14 +100,14 @@ class DishDetailFragment : Fragment() {
             btnDishUnselect.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, null)
                 val action =
-                    DishDetailFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
+                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
                         meal.periodId
                     )
                 findNavController().navigate(action)
             }
             btnDishReselect.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, null)
-                val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish(
+                val action = DishDetailsFragmentDirections.actionDishDetailFragmentToNavigationDish(
                     meal.mealId
                 )
                 findNavController().navigate(action)
@@ -121,7 +121,7 @@ class DishDetailFragment : Fragment() {
             btnDishSetChanges.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, dish)
                 val action =
-                    DishDetailFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
+                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
                         meal.periodId
                     )
                 findNavController().navigate(action)
