@@ -39,9 +39,9 @@ class PeriodListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(period: Period) {
             binding.apply {
-                txtStartWeekday.setText(CalendarUtil.longToWeekdayResId(period.startDate))
+                txtStartWeekday.text = CalendarUtil.longToWeekday(period.startDate)
                 txtStartDate.text = CalendarUtil.longToGermanDate(period.startDate)
-                txtEndWeekday.setText(CalendarUtil.longToWeekdayResId(period.endDate))
+                txtEndWeekday.text = CalendarUtil.longToWeekday(period.endDate)
                 txtEndDate.text = CalendarUtil.longToGermanDate(period.endDate)
             }
         }
