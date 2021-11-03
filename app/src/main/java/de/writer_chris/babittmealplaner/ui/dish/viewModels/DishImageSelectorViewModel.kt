@@ -15,6 +15,9 @@ class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
     private val _photos = MutableLiveData<List<DishPhoto>>(listOf())
     val photos: LiveData<List<DishPhoto>> get() = _photos
 
+    private val _errorMessage = MutableLiveData<String>("")
+    val errorMessage: LiveData<String> get() = _errorMessage
+
     fun search(searchWord: String) {
         getDishPhotos(searchWord)
     }
@@ -25,9 +28,11 @@ class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
             try {
                 _photos.value = PixaBayApi.retrofitService.searchForImage(searchWord).hits
                 _status.value = PhotoStatus.DONE
+                _errorMessage.value = ""
             } catch (e: Exception) {
                 _status.value = PhotoStatus.ERROR
                 _photos.value = listOf()
+                _errorMessage.value = e.message
             }
         }
     }

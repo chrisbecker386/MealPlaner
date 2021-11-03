@@ -61,6 +61,16 @@ class DishImageSelectorFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                binding.apply {
+                    txtErrorMessage.text = it
+                    txtErrorMessage.visibility = View.VISIBLE
+                }
+            } else {
+                binding.txtErrorMessage.visibility = View.GONE
+            }
+        }
 
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
