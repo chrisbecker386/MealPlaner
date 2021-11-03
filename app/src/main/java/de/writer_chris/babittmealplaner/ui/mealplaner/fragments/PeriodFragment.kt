@@ -38,33 +38,17 @@ class PeriodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bind()
-
     }
 
     private fun bind() {
-
         val adapter = getPeriodAdapter()
-        binding.apply {
-            periodRecyclerView.adapter = adapter
-            periodRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-            btnAddSchedulePeriod.setOnClickListener {
-                val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
-                    ArgsToPeriodEdit(getString(R.string.add_period), -1)
-//                    getString(R.string.add_period),
-//                    -1
-                )
-                findNavController().navigate(action)
-            }
-        }
-
-        viewModel.periods.observe(this.viewLifecycleOwner) { periods ->
-            periods.let { adapter.submitList(it) }
-        }
+        setRecyclerView(adapter)
+        initObserver(adapter)
+        setBtnAdd()
     }
 
-    //defines onClick and onLongClick functions for the items
     private fun getPeriodAdapter(): PeriodListAdapter {
+        //defines onClick and onLongClick for item
         return PeriodListAdapter({
             val action =
                 PeriodFragmentDirections.actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
@@ -78,6 +62,28 @@ class PeriodFragment : Fragment() {
             )
             this.findNavController().navigate(action)
         })
+    }
+
+    private fun setRecyclerView(adapter: PeriodListAdapter) {
+        binding.apply {
+            periodRecyclerView.adapter = adapter
+            periodRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun setBtnAdd() {
+        binding.btnAddSchedulePeriod.setOnClickListener {
+            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
+                ArgsToPeriodEdit(getString(R.string.add_period), -1)
+            )
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun initObserver(adapter: PeriodListAdapter) {
+        viewModel.periods.observe(this.viewLifecycleOwner) { periods ->
+            periods.let { adapter.submitList(it) }
+        }
     }
 
     override fun onDestroyView() {
