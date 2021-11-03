@@ -37,7 +37,8 @@
         <entry key="app/src/main/res/layout/fragment_shopping.xml" value="0.15273556231003038" />
         <entry key="app/src/main/res/layout/item_dish.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/item_dish_image.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_meal_day.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_meal_day.xml" value="0.21653543307086615" />
+        <entry key="app/src/main/res/layout/item_meal_dish.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_period.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
