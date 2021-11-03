@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        //val fallbackNav
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -48,7 +46,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         super.onBackPressed()
-        return super.onSupportNavigateUp() || navController.navigateUp()
+        return true
+        // TODO improve!!!
+        // no a nice code
+        // super.onSupportNavigateUp() || navController.navigateUp()
     }
 
 
