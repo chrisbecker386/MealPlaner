@@ -1,9 +1,11 @@
-package de.writer_chris.babittmealplaner.ui.dish
+package de.writer_chris.babittmealplaner.ui.dish.viewModels
 
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class DishDetailsViewModel(private val repository: Repository) : ViewModel() {
@@ -19,11 +21,11 @@ class DishDetailsViewModel(private val repository: Repository) : ViewModel() {
     fun updateMealWithDishId(meal: Meal, dish: Dish?) {
 
         val updatedMeal = Meal(
-            mealId = meal.mealId, dishId = dish?.dishId ?: null,
+            mealId = meal.mealId, dishId = dish?.dishId,
             date = meal.date, mealType = meal.mealType,
             periodId = meal.periodId
         )
-        viewModelScope.launch {
+        CoroutineScope(IO).launch {
             repository.updateMeal(updatedMeal)
         }
     }
