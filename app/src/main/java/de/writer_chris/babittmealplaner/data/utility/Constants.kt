@@ -1,6 +1,5 @@
 package de.writer_chris.babittmealplaner.data.utility
 
-
 import de.writer_chris.babittmealplaner.R
 
 enum class TITLE(resId: Int) {
@@ -13,5 +12,10 @@ enum class TITLE(resId: Int) {
     IMAGE_SELECTION(R.string.title_dish_image_selection)
 }
 
+enum class MealTypes(val title: String) {
+    BREAKFAST("breakfast"),
+    LUNCH("lunch"),
+    DINNER("dinner")
+}
 
 const val TEMPORAL_FILE_NAME = "temp"
