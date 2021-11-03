@@ -160,11 +160,11 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         return calendar
     }
 
-    private fun getStart(): Calendar {
+    fun getStart(): Calendar {
         return startDate.value ?: throw IllegalArgumentException("startDate value null")
     }
 
-    private fun getEnd(): Calendar {
+    fun getEnd(): Calendar {
         return endDate.value ?: throw IllegalArgumentException("endDate value null")
     }
 
