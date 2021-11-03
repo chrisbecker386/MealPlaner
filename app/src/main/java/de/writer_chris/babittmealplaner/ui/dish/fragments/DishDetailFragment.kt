@@ -12,15 +12,15 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.entities.Meal
+import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailBinding
-import de.writer_chris.babittmealplaner.ui.dish.DishDetailsViewModel
-import de.writer_chris.babittmealplaner.ui.dish.DishDetailsViewModelFactory
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModel
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModelFactory
 
 class DishDetailFragment : Fragment() {
     lateinit var dish: Dish
     lateinit var meal: Meal
     private val navigationArgs: DishDetailFragmentArgs by navArgs()
-
 
     private val viewModel: DishDetailsViewModel by viewModels {
         DishDetailsViewModelFactory(Repository(requireContext()))
@@ -39,24 +39,8 @@ class DishDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mealId = navigationArgs.mealId
-        val dishId = navigationArgs.dishId
-        viewModel.retrieveDish(dishId).observe(this.viewLifecycleOwner) { it ->
-            dish = it
-            bindBasic()
-            if (mealId == -1) {
-                bindRead()
-            } else {
-                viewModel.retrieveMeal(mealId).observe(this.viewLifecycleOwner) {
-                    meal = it
-                    if (meal.dishId == null) {
-                        bindSelection()
-                    } else {
-                        bindEditSelection()
-                    }
-                }
-            }
-        }
+        setDish()
+        setMeal()
     }
 
     override fun onDestroy() {
@@ -64,8 +48,47 @@ class DishDetailFragment : Fragment() {
         _binding = null
     }
 
-    private fun bindEditSelection() {
+    private fun setDish() {
+        viewModel.retrieveDish(navigationArgs.dishId).observe(this.viewLifecycleOwner) {
+            dish = it
+            setDefaults(dish)
+        }
+    }
+
+    private fun setMeal() {
+        val mealId = navigationArgs.mealId
+        if (mealId > 0) {
+            viewModel.retrieveMeal(mealId).observe(this.viewLifecycleOwner) {
+                meal = it
+                if (meal.dishId == null) {
+                    setSelect()
+                } else {
+                    setReSelect()
+                }
+            }
+        }
+    }
+
+    private fun setDefaults(dish: Dish) {
         binding.apply {
+            btnDishReselect.visibility = View.GONE
+            btnDishUnselect.visibility = View.GONE
+            setImage(dish.dishId)
+            txtDishName.text = dish.dishName
+            txtDishDescription.text = dish.description
+            txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
+            btnDishSetChanges.text = getString(R.string.ok)
+            btnDishSetChanges.setOnClickListener {
+                val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish()
+                findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun setReSelect() {
+        binding.apply {
+            btnDishReselect.visibility = View.VISIBLE
+            btnDishUnselect.visibility = View.VISIBLE
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
                 val action =
@@ -89,26 +112,11 @@ class DishDetailFragment : Fragment() {
                 )
                 findNavController().navigate(action)
             }
-
         }
     }
 
-    private fun bindRead() {
+    private fun setSelect() {
         binding.apply {
-            btnDishReselect.visibility = View.GONE
-            btnDishUnselect.visibility = View.GONE
-            btnDishSetChanges.text = getString(R.string.ok)
-            btnDishSetChanges.setOnClickListener {
-                val action = DishDetailFragmentDirections.actionDishDetailFragmentToNavigationDish()
-                findNavController().navigate(action)
-            }
-        }
-    }
-
-    private fun bindSelection() {
-        binding.apply {
-            btnDishReselect.visibility = View.GONE
-            btnDishUnselect.visibility = View.GONE
             btnDishSetChanges.text = getString(R.string.select)
             btnDishSetChanges.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, dish)
@@ -121,14 +129,16 @@ class DishDetailFragment : Fragment() {
         }
     }
 
-    private fun bindBasic() {
-        binding.apply {
-            txtDishName.text = dish.dishName
-            txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
-            txtDishDescription.text = dish.description
-            imgViewDish.setImageResource(R.drawable.ic_lunch)
-
+    private fun setImage(dishId: Int) {
+        if (DataUtil.isFileExists(requireContext(), dishId.toString())) {
+            binding.imgViewDish.setImageBitmap(
+                DataUtil.loadDishPictureFromInternalStorage(
+                    requireContext(),
+                    dishId.toString()
+                )
+            )
+        } else {
+            binding.imgViewDish.setImageResource(R.drawable.ic_broken_image_96)
         }
     }
-
 }
