@@ -35,7 +35,18 @@ class MealsFromPeriodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DayMealsListAdapter({
+        val adapter = getDayMealListAdapter()
+        setRecyclerView(adapter)
+        initObserver(adapter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    private fun getDayMealListAdapter(): DayMealsListAdapter {
+        return DayMealsListAdapter({
             val action =
                 MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToNavigationDish(it)
             findNavController().navigate(action)
@@ -46,18 +57,19 @@ class MealsFromPeriodFragment : Fragment() {
                 )
             findNavController().navigate(action)
         })
-        binding.recyclerViewMealsFromPeriod.adapter = adapter
+    }
 
-        viewModel.mealsAndDishes.observe(this.viewLifecycleOwner) {
-            adapter.submitList(viewModel.getDayMealsAndDish())
+    private fun setRecyclerView(adapter: DayMealsListAdapter) {
+        binding.recyclerViewMealsFromPeriod.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(this.context)
         }
-
-        binding.recyclerViewMealsFromPeriod.layoutManager = LinearLayoutManager(this.context)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+    private fun initObserver(adapter: DayMealsListAdapter) {
+        viewModel.mealsAndDishes.observe(this.viewLifecycleOwner) { mealsAndDishes ->
+            mealsAndDishes.let { adapter.submitList(viewModel.getDayMealsAndDish()) }
 
+        }
+    }
 }
