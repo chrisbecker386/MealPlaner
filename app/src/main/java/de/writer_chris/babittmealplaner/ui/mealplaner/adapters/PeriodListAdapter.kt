@@ -2,8 +2,6 @@ package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +57,6 @@ class PeriodListAdapter(
 
     override fun onBindViewHolder(holder: PeriodViewHolder, position: Int) {
         val current = getItem(position)
-        val toast = Toast.makeText(holder.itemView.context, "${current.periodId}", LENGTH_SHORT)
         holder.itemView.setOnClickListener { onItemClick(current) }
         holder.itemView.setOnLongClickListener {
             onItemLongClick(current)
@@ -67,6 +64,5 @@ class PeriodListAdapter(
         }
         holder.bind(current)
     }
-
 
 }
