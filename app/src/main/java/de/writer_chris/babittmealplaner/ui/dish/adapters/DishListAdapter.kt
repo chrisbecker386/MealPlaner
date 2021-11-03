@@ -24,7 +24,6 @@ class DishListAdapter(
                 return oldItem.dishName == newItem.dishName
             }
         }
-
     }
 
     class DishViewHolder(private var binding: ItemDishBinding) :
@@ -51,6 +50,4 @@ class DishListAdapter(
             bind(current)
         }
     }
-
-
 }

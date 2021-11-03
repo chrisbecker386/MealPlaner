@@ -44,8 +44,6 @@ class DishImageListAdapter(private val navigateToDishEditFragment: () -> Unit) :
         val navigateToDishEditFragment: () -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(dishPhoto: DishPhoto) {
             binding.apply {
                 val imgUri = dishPhoto.previewURL.toUri().buildUpon().scheme("https").build()
@@ -64,7 +62,6 @@ class DishImageListAdapter(private val navigateToDishEditFragment: () -> Unit) :
                         }
                     }
                 ).build()
-
                 Coil.enqueue(request)
             }
         }
@@ -87,6 +84,4 @@ class DishImageListAdapter(private val navigateToDishEditFragment: () -> Unit) :
         val current = getItem(position)
         holder.bind(current)
     }
-
-
 }

@@ -124,5 +124,4 @@ class DishImageSelectorFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok)) { _, _ -> }
             .show()
     }
-
 }

@@ -51,11 +51,11 @@ class EditPeriodFragment : Fragment() {
     private fun bind() {
         val id = navigationArgs.argsToPeriodEdit.periodId
         initObservers(id)
-        bindBasic()
+        setDefault()
         if (id > 0) {
-            bindUpdate()
+            setUpdate()
         } else {
-            bindCreate()
+            setCreate()
         }
     }
 
@@ -93,7 +93,7 @@ class EditPeriodFragment : Fragment() {
         }
     }
 
-    private fun bindBasic() {
+    private fun setDefault() {
         binding.apply {
             txtStartDate.setOnClickListener {
                 viewModel
@@ -107,7 +107,7 @@ class EditPeriodFragment : Fragment() {
         }
     }
 
-    private fun bindCreate() {
+    private fun setCreate() {
         binding.apply {
             btnDelete.visibility = View.GONE
             btnSetChanges.text = getString(R.string.save)
@@ -118,7 +118,7 @@ class EditPeriodFragment : Fragment() {
         }
     }
 
-    private fun bindUpdate() {
+    private fun setUpdate() {
         binding.apply {
             btnSetChanges.text = getString(R.string.update)
             btnDelete.text = getString(R.string.delete)
@@ -204,8 +204,6 @@ class EditPeriodFragment : Fragment() {
             ?: throw IllegalArgumentException("endDate is null")
 
         end.add(Calendar.DAY_OF_YEAR, -1)
-
-
         if (end.timeInMillis < start.timeInMillis) {
             showInformationDialog()
         } else {

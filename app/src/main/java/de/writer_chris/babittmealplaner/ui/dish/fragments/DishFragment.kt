@@ -67,7 +67,6 @@ class DishFragment : Fragment() {
             this.findNavController().navigate(action)
         })
 
-
         binding.dishRecyclerView.adapter = adapter
         viewModel.allDishes.observe(this.viewLifecycleOwner) { dishes ->
             dishes.let {
@@ -87,7 +86,6 @@ class DishFragment : Fragment() {
         } else {
             binding.btnAddDish.visibility = View.GONE
         }
-
     }
 
     override fun onDestroyView() {
