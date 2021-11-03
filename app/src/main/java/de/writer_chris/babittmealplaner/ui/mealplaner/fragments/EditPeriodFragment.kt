@@ -72,7 +72,7 @@ class EditPeriodFragment : Fragment() {
             it.let {
                 binding.apply {
                     txtStartDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
-                    txtWeekdayStartDay.text = getString(CalendarUtil.calendarToWeekdayResId(it))
+                    txtWeekdayStartDay.text = CalendarUtil.calendarToWeekday(it)
                 }
             }
         }
@@ -81,7 +81,7 @@ class EditPeriodFragment : Fragment() {
             it.let {
                 binding.apply {
                     txtEndDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
-                    txtWeekdayEndDay.text = getString(CalendarUtil.calendarToWeekdayResId(it))
+                    txtWeekdayEndDay.text = CalendarUtil.calendarToWeekday(it)
                 }
             }
         }
@@ -91,7 +91,6 @@ class EditPeriodFragment : Fragment() {
                 binding.txtDaysBetween.text = resources.getQuantityString(R.plurals.days, it, it)
             }
         }
-
     }
 
     private fun bindBasic() {
