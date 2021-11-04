@@ -9,13 +9,13 @@ import kotlinx.coroutines.launch
 enum class PhotoStatus { LOADING, ERROR, DONE }
 class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
 
-    private val _status = MutableLiveData<PhotoStatus>(PhotoStatus.DONE)
+    private val _status = MutableLiveData(PhotoStatus.DONE)
     val status: LiveData<PhotoStatus> get() = _status
 
     private val _photos = MutableLiveData<List<DishPhoto>>(listOf())
     val photos: LiveData<List<DishPhoto>> get() = _photos
 
-    private val _errorMessage = MutableLiveData<String>("")
+    private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> get() = _errorMessage
 
     fun search(searchWord: String) {

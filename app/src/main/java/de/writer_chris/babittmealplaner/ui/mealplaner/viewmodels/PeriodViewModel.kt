@@ -5,7 +5,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import java.lang.IllegalArgumentException
 import de.writer_chris.babittmealplaner.data.entities.Period
 
-class PeriodViewModel(private val repository: Repository) : ViewModel() {
+class PeriodViewModel(repository: Repository) : ViewModel() {
     val periods: LiveData<List<Period>> = repository.getAllPeriods().asLiveData()
 }
 

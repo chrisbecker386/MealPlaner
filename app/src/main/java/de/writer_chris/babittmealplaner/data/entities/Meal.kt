@@ -1,9 +1,6 @@
 package de.writer_chris.babittmealplaner.data.entities
 
-import androidx.annotation.Nullable
-
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
@@ -15,5 +12,3 @@ data class Meal(
     val periodId: Int
 
 )
-{
-}

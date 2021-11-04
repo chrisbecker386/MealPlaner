@@ -14,7 +14,6 @@ import coil.request.ImageRequest
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
-import de.writer_chris.babittmealplaner.data.utility.TITLE
 import de.writer_chris.babittmealplaner.databinding.ItemDishImageBinding
 import de.writer_chris.babittmealplaner.network.DishPhoto
 

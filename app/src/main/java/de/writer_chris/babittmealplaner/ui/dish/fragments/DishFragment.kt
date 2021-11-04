@@ -35,7 +35,7 @@ class DishFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentDishBinding.inflate(inflater, container, false)
         return binding.root
@@ -45,7 +45,7 @@ class DishFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var mealId = -1
 
-        navigationArgs?.mealId?.let {
+        navigationArgs.mealId.let {
             mealId = it
         }
 

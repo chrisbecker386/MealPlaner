@@ -30,7 +30,7 @@ class PeriodFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPeriodBinding.inflate(inflater, container, false)
         return binding.root
     }

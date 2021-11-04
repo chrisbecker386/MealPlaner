@@ -36,7 +36,7 @@
     <string name="dialog_information_title">Information</string>
     <string name="minimum_day_information_text">A mealplan has minimal 1 day</string>
     <string name="incomplete_dish_edit_text">A dish description parameter is missing</string>
-    <string name="ok">ok</string>
+    <string name="ok">OK</string>
     <string name="update_period">Update Mealplan</string>
     <string name="add_period">add mealplan</string>
     <string name="update">Update</string>

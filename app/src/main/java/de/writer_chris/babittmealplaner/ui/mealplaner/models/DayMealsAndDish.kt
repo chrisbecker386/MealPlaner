@@ -7,5 +7,4 @@ class DayMealsAndDish(
     val breakfast: MealAndDish,
     val lunch: MealAndDish,
     val dinner: MealAndDish
-) {
-}
+)

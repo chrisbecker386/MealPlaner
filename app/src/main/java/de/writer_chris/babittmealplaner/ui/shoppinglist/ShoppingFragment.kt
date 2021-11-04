@@ -20,7 +20,7 @@ class ShoppingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         shoppingViewModel = ViewModelProvider(this).get(ShoppingViewModel::class.java)
         _binding = FragmentShoppingBinding.inflate(inflater, container, false)
         val root = binding.root
