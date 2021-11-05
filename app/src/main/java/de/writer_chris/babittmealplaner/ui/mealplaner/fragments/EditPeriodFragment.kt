@@ -47,7 +47,6 @@ class EditPeriodFragment : Fragment() {
         _binding = null
     }
 
-
     private fun bind() {
         val id = navigationArgs.argsToPeriodEdit.periodId
         initObservers(id)
@@ -217,7 +216,6 @@ class EditPeriodFragment : Fragment() {
 
     private fun navigateBack() {
         val action = EditPeriodFragmentDirections.actionEditPeriodFragmentToPeriodFragment()
-//        actionDatePickerFragmentToNavigationMeal()
         findNavController().navigate(action)
     }
 

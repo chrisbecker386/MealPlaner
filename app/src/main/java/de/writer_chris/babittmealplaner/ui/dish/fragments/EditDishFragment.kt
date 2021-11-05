@@ -105,7 +105,6 @@ class EditDishFragment : Fragment() {
                     )
                 findNavController().navigate(action)
             }
-
             imageHandler()
         }
     }
@@ -159,23 +158,20 @@ class EditDishFragment : Fragment() {
                 getDurationLong(),
                 requireContext()
             )
-            val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
-            findNavController().navigate(action)
+            navToDish()
         }
     }
 
     private fun updateDish() {
         if (isEntryValid()) {
             viewModel.editDish(getParameterDish(), requireContext())
-            val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
-            findNavController().navigate(action)
+            navToDish()
         }
     }
 
     private fun deleteDish() {
         viewModel.eraseDish(this.navigationArgs.args.dishId, requireContext())
-        val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
-        findNavController().navigate(action)
+        navToDish()
     }
 
     //dialogs
@@ -234,6 +230,11 @@ class EditDishFragment : Fragment() {
             getDurationLong(),
             getDescriptionString()
         )
+    }
+
+    private fun navToDish() {
+        val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
+        findNavController().navigate(action)
     }
 
     //lifecycle

@@ -58,7 +58,6 @@ class MealDishDetailsFragment : Fragment() {
     }
 
     private fun setMeal() {
-
         val mealId = navigationArgs.args.mealId ?: -1
         if (mealId > 0) {
             viewModel.retrieveMeal(mealId).observe(this.viewLifecycleOwner) {
@@ -70,10 +69,8 @@ class MealDishDetailsFragment : Fragment() {
                 }
             }
         }
-
     }
 
-    //renew !!!
     private fun setDefaults(dish: Dish) {
         binding.apply {
             btnDishReselect.visibility = View.GONE
@@ -83,12 +80,6 @@ class MealDishDetailsFragment : Fragment() {
             txtDishDescription.text = dish.description
             txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
             btnDishSetChanges.text = getString(R.string.ok)
-//            btnDishSetChanges.setOnClickListener {
-//                val action =
-//                    MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealDishListFragment()
-////                actionDishDetailFragmentToNavigationDish()
-//                findNavController().navigate(action)
-//            }
         }
     }
 
@@ -98,30 +89,15 @@ class MealDishDetailsFragment : Fragment() {
             btnDishUnselect.visibility = View.VISIBLE
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
-                val action =
-                    MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealsFromPeriodFragment(
-//                    actionDishDetailFragmentToMealsFromPeriodFragment(
-                        ArgsToMealFromPeriod(meal.periodId)
-                    )
-                findNavController().navigate(action)
+                navToMealsFromPeriod(ArgsToMealFromPeriod(meal.periodId))
             }
             btnDishUnselect.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, null)
-                val action =
-                    MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealsFromPeriodFragment(
-//                    actionDishDetailFragmentToMealsFromPeriodFragment(
-                        ArgsToMealFromPeriod(meal.periodId)
-                    )
-                findNavController().navigate(action)
+                navToMealsFromPeriod(ArgsToMealFromPeriod(meal.periodId))
             }
             btnDishReselect.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, null)
-                val action =
-                    MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealDishListFragment(
-//                actionDishDetailFragmentToNavigationDish(
-                        ArgsToDish(meal.mealId)
-                    )
-                findNavController().navigate(action)
+                navToMealDish(ArgsToDish(meal.mealId))
             }
         }
     }
@@ -131,12 +107,7 @@ class MealDishDetailsFragment : Fragment() {
             btnDishSetChanges.text = getString(R.string.select)
             btnDishSetChanges.setOnClickListener {
                 viewModel.updateMealWithDishId(meal, dish)
-                val action =
-                    MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealsFromPeriodFragment(
-//                    actionDishDetailFragmentToMealsFromPeriodFragment(
-                        ArgsToMealFromPeriod(meal.periodId)
-                    )
-                findNavController().navigate(action)
+                navToMealsFromPeriod(ArgsToMealFromPeriod(meal.periodId))
             }
         }
     }
@@ -152,5 +123,19 @@ class MealDishDetailsFragment : Fragment() {
         } else {
             binding.imgViewDish.setImageResource(R.drawable.ic_broken_image_96)
         }
+    }
+
+    private fun navToMealsFromPeriod(args: ArgsToMealFromPeriod) {
+        val action =
+            MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealsFromPeriodFragment(
+                args
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun navToMealDish(args:ArgsToDish){
+        val action =
+            MealDishDetailsFragmentDirections.actionMealDishDetailsFragmentToMealDishListFragment(args)
+        findNavController().navigate(action)
     }
 }

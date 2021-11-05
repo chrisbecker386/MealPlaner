@@ -40,6 +40,11 @@ class PeriodFragment : Fragment() {
         bind()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun bind() {
         val adapter = getPeriodAdapter()
         setRecyclerView(adapter)
@@ -48,23 +53,10 @@ class PeriodFragment : Fragment() {
     }
 
     private fun getPeriodAdapter(): PeriodListAdapter {
-        //defines onClick and onLongClick for item
         return PeriodListAdapter({
-            val action =
-                PeriodFragmentDirections.actionPeriodFragmentToMealsFromPeriodFragment(
-                    ArgsToMealFromPeriod(it.periodId)
-                )
-//                actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
-            this.findNavController().navigate(action)
+            navToMealFromPeriod(ArgsToMealFromPeriod(it.periodId))
         }, {
-            val action = PeriodFragmentDirections.actionPeriodFragmentToEditPeriodFragment(
-//            actionNavigationPeriodToDatePickerFragment(
-                ArgsToPeriodEdit(
-                    getString(R.string.update_period),
-                    it.periodId
-                )
-            )
-            this.findNavController().navigate(action)
+            navToEditPeriod(ArgsToPeriodEdit(getString(R.string.update_period), it.periodId))
         })
     }
 
@@ -75,24 +67,27 @@ class PeriodFragment : Fragment() {
         }
     }
 
-    private fun setBtnAdd() {
-        binding.btnAddSchedulePeriod.setOnClickListener {
-            val action = PeriodFragmentDirections.actionPeriodFragmentToEditPeriodFragment(
-//            actionNavigationPeriodToDatePickerFragment(
-                ArgsToPeriodEdit(getString(R.string.add_period), -1)
-            )
-            findNavController().navigate(action)
-        }
-    }
-
     private fun initObserver(adapter: PeriodListAdapter) {
         viewModel.periods.observe(this.viewLifecycleOwner) { periods ->
             periods.let { adapter.submitList(it) }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setBtnAdd() {
+        binding.btnAddSchedulePeriod.setOnClickListener {
+            navToEditPeriod(ArgsToPeriodEdit(getString(R.string.add_period), -1))
+        }
+    }
+
+    //navigation
+    private fun navToMealFromPeriod(args: ArgsToMealFromPeriod) {
+        val action =
+            PeriodFragmentDirections.actionPeriodFragmentToMealsFromPeriodFragment(args)
+        this.findNavController().navigate(action)
+    }
+
+    private fun navToEditPeriod(args: ArgsToPeriodEdit) {
+        val action = PeriodFragmentDirections.actionPeriodFragmentToEditPeriodFragment(args)
+        this.findNavController().navigate(action)
     }
 }

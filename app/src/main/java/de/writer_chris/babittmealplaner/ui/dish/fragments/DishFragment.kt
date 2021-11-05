@@ -21,10 +21,6 @@ import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
 
 class DishFragment : Fragment() {
 
-    //TODO story III
-    //TODO add a searchbar
-//    private val navigationArgs: DishFragmentArgs by navArgs()
-
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
     }
@@ -44,18 +40,14 @@ class DishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         val adapter = DishListAdapter(
             {
-                val action = DishFragmentDirections.actionDishFragmentToDishDetailsFragment(
-                    ArgsToDishDetails(
-                        getString(R.string.details_dish),
-                        it.dishId,
-                        null
-                    )
+                val args = ArgsToDishDetails(
+                    getString(R.string.details_dish),
+                    it.dishId,
+                    null
                 )
-                this.findNavController().navigate(action)
+                navToDishDetails(args)
             }, {
                 val args = ArgsToDishEdit(
                     getString(R.string.edit_dish),
@@ -64,8 +56,7 @@ class DishFragment : Fragment() {
                     it.duration.toString(),
                     it.description
                 )
-                val action = DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
-                this.findNavController().navigate(action)
+                navToEditDish(args)
             })
 
         binding.dishRecyclerView.adapter = adapter
@@ -79,12 +70,20 @@ class DishFragment : Fragment() {
         binding.btnAddDish.apply {
             setOnClickListener {
                 val args = ArgsToDishEdit(getString(R.string.add_dish), -1, null, null, null)
-                val action =
-                    DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
-                this.findNavController().navigate(action)
+                navToEditDish(args)
             }
         }
+    }
 
+    private fun navToEditDish(args: ArgsToDishEdit) {
+        val action =
+            DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
+        this.findNavController().navigate(action)
+    }
+
+    private fun navToDishDetails(args: ArgsToDishDetails) {
+        val action = DishFragmentDirections.actionDishFragmentToDishDetailsFragment(args)
+        this.findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

@@ -49,19 +49,13 @@ class MealsFromPeriodFragment : Fragment() {
 
     private fun getDayMealListAdapter(): DayMealsListAdapter {
         return DayMealsListAdapter(requireContext(), {
-            val action =
-                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishListFragment(
-                    ArgsToDish(it)
-                )
-//                actionMealsFromPeriodFragmentToNavigationDish(it)
-            findNavController().navigate(action)
+            navToDishList(
+                ArgsToDish(it)
+            )
         }, {
-            val action =
-                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishDetailsFragment(
-//                actionMealsFromPeriodFragmentToDishDetailFragment(
-                    ArgsToDishDetails(getString(R.string.details_dish), it[0], it[1])
-                )
-            findNavController().navigate(action)
+            navToDishDetails(
+                ArgsToDishDetails(getString(R.string.details_dish), it[0], it[1])
+            )
         })
     }
 
@@ -77,5 +71,21 @@ class MealsFromPeriodFragment : Fragment() {
             mealsAndDishes.let { adapter.submitList(viewModel.getDayMealsAndDish()) }
 
         }
+    }
+
+    private fun navToDishList(args: ArgsToDish) {
+        val action =
+            MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishListFragment(
+                args
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun navToDishDetails(args: ArgsToDishDetails) {
+        val action =
+            MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishDetailsFragment(
+                args
+            )
+        findNavController().navigate(action)
     }
 }

@@ -49,11 +49,7 @@ class DishImageSelectorFragment : Fragment() {
                 navigationArgs.args.duration,
                 navigationArgs.args.description
             )
-            val action =
-                DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToEditDishFragment(
-                    args
-                )
-            this.findNavController().navigate(action)
+            navToEditDish(args)
         }
         binding.recyclerViewImageSelector.adapter = adapter
         viewModel.photos.observe(viewLifecycleOwner) {
@@ -133,5 +129,13 @@ class DishImageSelectorFragment : Fragment() {
             .setCancelable(false)
             .setPositiveButton(getString(R.string.ok)) { _, _ -> }
             .show()
+    }
+
+    private fun navToEditDish(args: ArgsToDishEdit) {
+        val action =
+            DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToEditDishFragment(
+                args
+            )
+        this.findNavController().navigate(action)
     }
 }

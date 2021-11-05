@@ -39,7 +39,6 @@ class DishDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setDish()
-
     }
 
     override fun onDestroy() {
@@ -65,12 +64,10 @@ class DishDetailsFragment : Fragment() {
             txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
-                val action = DishDetailsFragmentDirections.actionDishDetailsFragmentToDishFragment()
-                findNavController().navigate(action)
+                navToDish()
             }
         }
     }
-
 
     private fun setImage(dishId: Int) {
         if (DataUtil.isFileExists(requireContext(), dishId.toString())) {
@@ -83,5 +80,10 @@ class DishDetailsFragment : Fragment() {
         } else {
             binding.imgViewDish.setImageResource(R.drawable.ic_broken_image_96)
         }
+    }
+
+    private fun navToDish() {
+        val action = DishDetailsFragmentDirections.actionDishDetailsFragmentToDishFragment()
+        findNavController().navigate(action)
     }
 }

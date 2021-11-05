@@ -6,17 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
-import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
-import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 import de.writer_chris.babittmealplaner.databinding.FragmentMealDishListBinding
-import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
 import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.MealDishListAdapter
