@@ -11,6 +11,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
+import de.writer_chris.babittmealplaner.data.parcels.ArgsToDish
+import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModelFactory
@@ -19,7 +21,7 @@ import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.DayMealsListAdapt
 class MealsFromPeriodFragment : Fragment() {
     private val navigationArgs: MealsFromPeriodFragmentArgs by navArgs()
     private val viewModel: MealsFromPeriodViewModel by viewModels {
-        MealsFromPeriodViewModelFactory(Repository(requireContext()), navigationArgs.periodId)
+        MealsFromPeriodViewModelFactory(Repository(requireContext()), navigationArgs.args.periodId)
     }
 
     private var _binding: FragmentMealsFromPeriodBinding? = null
@@ -48,12 +50,16 @@ class MealsFromPeriodFragment : Fragment() {
     private fun getDayMealListAdapter(): DayMealsListAdapter {
         return DayMealsListAdapter(requireContext(), {
             val action =
-                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToNavigationDish(it)
+                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishListFragment(
+                    ArgsToDish(it)
+                )
+//                actionMealsFromPeriodFragmentToNavigationDish(it)
             findNavController().navigate(action)
         }, {
             val action =
-                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToDishDetailFragment(
-                    getString(R.string.details_dish), it[0], it[1]
+                MealsFromPeriodFragmentDirections.actionMealsFromPeriodFragmentToMealDishDetailsFragment(
+//                actionMealsFromPeriodFragmentToDishDetailFragment(
+                    ArgsToDishDetails(getString(R.string.details_dish), it[0], it[1])
                 )
             findNavController().navigate(action)
         })

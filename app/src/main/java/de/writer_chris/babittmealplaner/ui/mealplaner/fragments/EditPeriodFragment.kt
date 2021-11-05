@@ -216,7 +216,8 @@ class EditPeriodFragment : Fragment() {
     }
 
     private fun navigateBack() {
-        val action = EditPeriodFragmentDirections.actionDatePickerFragmentToNavigationMeal()
+        val action = EditPeriodFragmentDirections.actionEditPeriodFragmentToPeriodFragment()
+//        actionDatePickerFragmentToNavigationMeal()
         findNavController().navigate(action)
     }
 

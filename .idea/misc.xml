@@ -23,6 +23,9 @@
         <entry key="app/src/main/res/layout/fragment_dish_image_selector.xml" value="0.16296296296296298" />
         <entry key="app/src/main/res/layout/fragment_edit_dish.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_meal.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_meal_dish_detail.xml" value="0.2755208333333333" />
+        <entry key="app/src/main/res/layout/fragment_meal_dish_details.xml" value="0.31302083333333336" />
+        <entry key="app/src/main/res/layout/fragment_meal_dish_list.xml" value="0.2755208333333333" />
         <entry key="app/src/main/res/layout/fragment_meal_planer_periode_selector.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/layout/fragment_meals_from_period.xml" value="0.12968591691995948" />
         <entry key="app/src/main/res/layout/fragment_nav_dish.xml" value="0.1852355072463768" />

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mealPlanerGraph"
+    app:startDestination="@id/periodFragment">
+
+    <fragment
+        android:id="@+id/periodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodFragment"
+        android:label="fragment_period"
+        tools:layout="@layout/fragment_period">
+        <action
+            android:id="@+id/action_periodFragment_to_mealsFromPeriodFragment"
+            app:destination="@id/mealsFromPeriodFragment" />
+        <action
+            android:id="@+id/action_periodFragment_to_editPeriodFragment"
+            app:destination="@id/editPeriodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsFromPeriodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealsFromPeriodFragment"
+        android:label="fragment_meals_from_period"
+        tools:layout="@layout/fragment_meals_from_period">
+        <argument
+            android:name="args"
+            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToMealFromPeriod" />
+        <action
+            android:id="@+id/action_mealsFromPeriodFragment_to_mealDishListFragment"
+            app:destination="@id/mealDishListFragment" />
+        <action
+            android:id="@+id/action_mealsFromPeriodFragment_to_mealDishDetailsFragment"
+            app:destination="@id/mealDishDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDishListFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealDishListFragment"
+        android:label="fragment_meal_dish_list"
+        tools:layout="@layout/fragment_meal_dish_list">
+        <argument
+            android:name="args"
+            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToDish" />
+        <action
+            android:id="@+id/action_mealDishListFragment_to_mealDishDetailsFragment"
+            app:destination="@id/mealDishDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDishDetailsFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealDishDetailsFragment"
+        android:label="fragment_meal_dish_details"
+        tools:layout="@layout/fragment_meal_dish_details">
+        <argument
+            android:name="args"
+            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails" />
+        <action
+            android:id="@+id/action_mealDishDetailsFragment_to_mealDishListFragment"
+            app:destination="@id/mealDishListFragment" />
+        <action
+            android:id="@+id/action_mealDishDetailsFragment_to_mealsFromPeriodFragment"
+            app:destination="@id/mealsFromPeriodFragment"
+            app:popUpTo="@id/mealsFromPeriodFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPeriodFragment"
+        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.EditPeriodFragment"
+        android:label="fragment_edit_period"
+        tools:layout="@layout/fragment_edit_period">
+        <argument
+            android:name="argsToPeriodEdit"
+            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToPeriodEdit" />
+        <action
+            android:id="@+id/action_editPeriodFragment_to_periodFragment"
+            app:destination="@id/periodFragment"
+            app:popUpTo="@id/periodFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

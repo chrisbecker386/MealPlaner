@@ -61,7 +61,7 @@ class EditDishFragment : Fragment() {
     private fun bind() {
         binding.apply {
             //add Dish
-            if (navigationArgs.argsToDishEdit.dishId < 0) {
+            if (navigationArgs.args.dishId < 0) {
                 btnDishSave.setOnClickListener { addNewDish() }
                 btnDishDelete.visibility = View.GONE
             }
@@ -72,29 +72,29 @@ class EditDishFragment : Fragment() {
                 btnDishDelete.setOnClickListener { showDeleteConfirmationDialog() }
             }
 
-            if (navigationArgs.argsToDishEdit.name != null) {
+            if (navigationArgs.args.name != null) {
                 txtInputEditDishName.setText(
-                    navigationArgs.argsToDishEdit.name,
+                    navigationArgs.args.name,
                     TextView.BufferType.SPANNABLE
                 )
             }
-            if (navigationArgs.argsToDishEdit.duration != null) {
+            if (navigationArgs.args.duration != null) {
                 txtInputEditDishDuration.setText(
-                    navigationArgs.argsToDishEdit.duration,
+                    navigationArgs.args.duration,
                     TextView.BufferType.SPANNABLE
                 )
             }
-            if (navigationArgs.argsToDishEdit.description != null) {
+            if (navigationArgs.args.description != null) {
                 txtInputEditDishDescription.setText(
-                    navigationArgs.argsToDishEdit.description,
+                    navigationArgs.args.description,
                     TextView.BufferType.SPANNABLE
                 )
             }
 
             imgViewEditDish.setOnClickListener {
                 val args = ArgsToDishImageSelection(
-                    navigationArgs.argsToDishEdit.title,
-                    navigationArgs.argsToDishEdit.dishId,
+                    navigationArgs.args.title,
+                    navigationArgs.args.dishId,
                     getNameString(),
                     getDurationString(),
                     getDescriptionString()
@@ -115,9 +115,9 @@ class EditDishFragment : Fragment() {
         if (isImageExists(TEMPORAL_FILE_NAME)) {
             setImage(TEMPORAL_FILE_NAME)
         } else {
-            if (navigationArgs.argsToDishEdit.dishId > 0) {
-                if (isImageExists(navigationArgs.argsToDishEdit.dishId.toString())) {
-                    setImage(navigationArgs.argsToDishEdit.dishId.toString())
+            if (navigationArgs.args.dishId > 0) {
+                if (isImageExists(navigationArgs.args.dishId.toString())) {
+                    setImage(navigationArgs.args.dishId.toString())
                 } else {
                     setDefaultImage()
                 }
@@ -159,7 +159,7 @@ class EditDishFragment : Fragment() {
                 getDurationLong(),
                 requireContext()
             )
-            val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
+            val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
             findNavController().navigate(action)
         }
     }
@@ -167,14 +167,14 @@ class EditDishFragment : Fragment() {
     private fun updateDish() {
         if (isEntryValid()) {
             viewModel.editDish(getParameterDish(), requireContext())
-            val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
+            val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
             findNavController().navigate(action)
         }
     }
 
     private fun deleteDish() {
-        viewModel.eraseDish(this.navigationArgs.argsToDishEdit.dishId, requireContext())
-        val action = EditDishFragmentDirections.actionEditDishFragmentToNavigationDish()
+        viewModel.eraseDish(this.navigationArgs.args.dishId, requireContext())
+        val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
         findNavController().navigate(action)
     }
 
@@ -229,7 +229,7 @@ class EditDishFragment : Fragment() {
 
     private fun getParameterDish(): Dish {
         return Dish(
-            navigationArgs.argsToDishEdit.dishId,
+            navigationArgs.args.dishId,
             getNameString(),
             getDurationLong(),
             getDescriptionString()
@@ -241,7 +241,7 @@ class EditDishFragment : Fragment() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 deleteTemporalImage()
-                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToNavigationDish())
+                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToDishFragment())
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)

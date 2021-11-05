@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
-import de.writer_chris.babittmealplaner.data.entities.Meal
+
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModel
@@ -19,7 +19,6 @@ import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModelF
 
 class DishDetailsFragment : Fragment() {
     lateinit var dish: Dish
-    lateinit var meal: Meal
     private val navigationArgs: DishDetailsFragmentArgs by navArgs()
 
     private val viewModel: DishDetailsViewModel by viewModels {
@@ -40,34 +39,21 @@ class DishDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setDish()
-        setMeal()
+
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
     private fun setDish() {
-        viewModel.retrieveDish(navigationArgs.dishId).observe(this.viewLifecycleOwner) {
+        viewModel.retrieveDish(navigationArgs.args.dishId).observe(this.viewLifecycleOwner) {
             dish = it
             setDefaults(dish)
         }
     }
 
-    private fun setMeal() {
-        val mealId = navigationArgs.mealId
-        if (mealId > 0) {
-            viewModel.retrieveMeal(mealId).observe(this.viewLifecycleOwner) {
-                meal = it
-                if (meal.dishId == null) {
-                    setSelect()
-                } else {
-                    setReSelect()
-                }
-            }
-        }
-    }
 
     private fun setDefaults(dish: Dish) {
         binding.apply {
@@ -79,55 +65,12 @@ class DishDetailsFragment : Fragment() {
             txtDishDuration.text = getString(R.string.duration, dish.duration.toString())
             btnDishSetChanges.text = getString(R.string.ok)
             btnDishSetChanges.setOnClickListener {
-                val action = DishDetailsFragmentDirections.actionDishDetailFragmentToNavigationDish()
+                val action = DishDetailsFragmentDirections.actionDishDetailsFragmentToDishFragment()
                 findNavController().navigate(action)
             }
         }
     }
 
-    private fun setReSelect() {
-        binding.apply {
-            btnDishReselect.visibility = View.VISIBLE
-            btnDishUnselect.visibility = View.VISIBLE
-            btnDishSetChanges.text = getString(R.string.ok)
-            btnDishSetChanges.setOnClickListener {
-                val action =
-                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
-                        meal.periodId
-                    )
-                findNavController().navigate(action)
-            }
-            btnDishUnselect.setOnClickListener {
-                viewModel.updateMealWithDishId(meal, null)
-                val action =
-                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
-                        meal.periodId
-                    )
-                findNavController().navigate(action)
-            }
-            btnDishReselect.setOnClickListener {
-                viewModel.updateMealWithDishId(meal, null)
-                val action = DishDetailsFragmentDirections.actionDishDetailFragmentToNavigationDish(
-                    meal.mealId
-                )
-                findNavController().navigate(action)
-            }
-        }
-    }
-
-    private fun setSelect() {
-        binding.apply {
-            btnDishSetChanges.text = getString(R.string.select)
-            btnDishSetChanges.setOnClickListener {
-                viewModel.updateMealWithDishId(meal, dish)
-                val action =
-                    DishDetailsFragmentDirections.actionDishDetailFragmentToMealsFromPeriodFragment(
-                        meal.periodId
-                    )
-                findNavController().navigate(action)
-            }
-        }
-    }
 
     private fun setImage(dishId: Int) {
         if (DataUtil.isFileExists(requireContext(), dishId.toString())) {

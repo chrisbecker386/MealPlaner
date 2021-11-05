@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_meal"
+        android:id="@+id/mealPlanerGraph"
         android:icon="@drawable/ic_calendar_24"
         android:title="@string/title_meal" />
 
     <item
-        android:id="@+id/navigation_dish"
+        android:id="@+id/dishGraph"
         android:icon="@drawable/ic_book_24"
         android:title="@string/title_dish" />
 
@@ -20,5 +20,6 @@
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_24"
         android:title="@string/title_settings" />
+
 
 </menu>

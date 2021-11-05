@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
+import de.writer_chris.babittmealplaner.data.parcels.ArgsToMealFromPeriod
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToPeriodEdit
 import de.writer_chris.babittmealplaner.databinding.FragmentPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodViewModel
@@ -51,10 +51,14 @@ class PeriodFragment : Fragment() {
         //defines onClick and onLongClick for item
         return PeriodListAdapter({
             val action =
-                PeriodFragmentDirections.actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
+                PeriodFragmentDirections.actionPeriodFragmentToMealsFromPeriodFragment(
+                    ArgsToMealFromPeriod(it.periodId)
+                )
+//                actionNavigationPeriodToMealsFromPeriodFragment(it.periodId)
             this.findNavController().navigate(action)
         }, {
-            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
+            val action = PeriodFragmentDirections.actionPeriodFragmentToEditPeriodFragment(
+//            actionNavigationPeriodToDatePickerFragment(
                 ArgsToPeriodEdit(
                     getString(R.string.update_period),
                     it.periodId
@@ -73,7 +77,8 @@ class PeriodFragment : Fragment() {
 
     private fun setBtnAdd() {
         binding.btnAddSchedulePeriod.setOnClickListener {
-            val action = PeriodFragmentDirections.actionNavigationPeriodToDatePickerFragment(
+            val action = PeriodFragmentDirections.actionPeriodFragmentToEditPeriodFragment(
+//            actionNavigationPeriodToDatePickerFragment(
                 ArgsToPeriodEdit(getString(R.string.add_period), -1)
             )
             findNavController().navigate(action)

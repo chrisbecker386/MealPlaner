@@ -1,4 +1,4 @@
-package de.writer_chris.babittmealplaner.ui.dish.fragments
+package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,21 +15,23 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
+import de.writer_chris.babittmealplaner.databinding.FragmentMealDishListBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
+import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.MealDishListAdapter
 
-class DishFragment : Fragment() {
+class MealDishListFragment : Fragment() {
 
     //TODO story III
     //TODO add a searchbar
-//    private val navigationArgs: DishFragmentArgs by navArgs()
+    private val navigationArgs: MealDishListFragmentArgs by navArgs()
 
     private val viewModel: DishViewModel by viewModels {
         DishViewModelFactory(Repository(requireContext()))
     }
 
-    private var _binding: FragmentDishBinding? = null
+    private var _binding: FragmentMealDishListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -38,35 +40,30 @@ class DishFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentDishBinding.inflate(inflater, container, false)
+        _binding = FragmentMealDishListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var mealId = -1
+        mealId = navigationArgs.args.mealId
 
+//        navigationArgs.args?.let {
+//            mealId = it.mealId
+//        }
 
-        val adapter = DishListAdapter(
-            {
-                val action = DishFragmentDirections.actionDishFragmentToDishDetailsFragment(
+        val adapter = MealDishListAdapter {
+            val action =
+                MealDishListFragmentDirections.actionMealDishListFragmentToMealDishDetailsFragment(
                     ArgsToDishDetails(
                         getString(R.string.details_dish),
                         it.dishId,
-                        null
+                        mealId
                     )
                 )
-                this.findNavController().navigate(action)
-            }, {
-                val args = ArgsToDishEdit(
-                    getString(R.string.edit_dish),
-                    it.dishId,
-                    it.dishName,
-                    it.duration.toString(),
-                    it.description
-                )
-                val action = DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
-                this.findNavController().navigate(action)
-            })
+            this.findNavController().navigate(action)
+        }
 
         binding.dishRecyclerView.adapter = adapter
         viewModel.allDishes.observe(this.viewLifecycleOwner) { dishes ->
@@ -75,15 +72,6 @@ class DishFragment : Fragment() {
             }
         }
         binding.dishRecyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        binding.btnAddDish.apply {
-            setOnClickListener {
-                val args = ArgsToDishEdit(getString(R.string.add_dish), -1, null, null, null)
-                val action =
-                    DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
-                this.findNavController().navigate(action)
-            }
-        }
 
     }
 

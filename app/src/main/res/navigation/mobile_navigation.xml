@@ -2,39 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_dish">
+    app:startDestination="@id/navigation_settings">
 
-    <fragment
-        android:id="@+id/navigation_dish"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishFragment"
-        android:label="@string/title_dish"
-        tools:layout="@layout/fragment_dish">
-        <argument
-            android:name="meal_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_navigation_dish_to_dishDetailFragment"
-            app:destination="@id/dishDetailFragment"
-            app:launchSingleTop="false" />
-        <action
-            android:id="@+id/action_navigation_dish_to_editDishFragment"
-            app:destination="@id/editDishFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_meal"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodFragment"
-        android:label="@string/title_meal"
-        tools:layout="@layout/fragment_period">
-
-        <action
-            android:id="@+id/action_navigation_period_to_datePickerFragment"
-            app:destination="@id/editPeriodFragment" />
-        <action
-            android:id="@+id/action_navigation_period_to_mealsFromPeriodFragment"
-            app:destination="@id/mealsFromPeriodFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_shopping"
@@ -47,95 +16,7 @@
         android:name="de.writer_chris.babittmealplaner.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/editDishFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.EditDishFragment"
-        tools:layout="@layout/fragment_edit_dish">
 
-        <argument
-            android:name="args_to_dish_edit"
-            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit" />
-
-        <action
-            android:id="@+id/action_editDishFragment_to_navigation_dish"
-            app:destination="@id/navigation_dish"
-            app:popUpTo="@id/navigation_dish"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_editDishFragment_to_dishImageSelectorFragment"
-            app:destination="@id/dishImageSelectorFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editPeriodFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.EditPeriodFragment"
-        tools:layout="@layout/fragment_edit_period">
-        <!--        android:label="de.writer_chris.babittmealplaner.utility.Constants."-->
-
-        <argument
-            android:name="args_to_period_edit"
-            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToPeriodEdit" />
-
-        <action
-            android:id="@+id/action_datePickerFragment_to_navigation_meal"
-            app:destination="@id/navigation_meal"
-            app:popUpTo="@id/navigation_meal"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/mealsFromPeriodFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealsFromPeriodFragment"
-        android:label="fragment_meals_from_period"
-        tools:layout="@layout/fragment_meals_from_period">
-        <argument
-            android:name="period_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_mealsFromPeriodFragment_to_navigation_dish"
-            app:destination="@id/navigation_dish" />
-        <action
-            android:id="@+id/action_mealsFromPeriodFragment_to_dishDetailFragment"
-            app:destination="@id/dishDetailFragment" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/dishDetailFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailsFragment"
-        android:label="{title}"
-        tools:layout="@layout/fragment_dish_detail">
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="dish_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
-        <argument
-            android:name="meal_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_dishDetailFragment_to_mealsFromPeriodFragment"
-            app:destination="@id/mealsFromPeriodFragment"
-            app:popUpTo="@id/mealsFromPeriodFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_dishDetailFragment_to_navigation_dish"
-            app:destination="@id/navigation_dish" />
-    </fragment>
-    <fragment
-        android:id="@+id/dishImageSelectorFragment"
-        android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishImageSelectorFragment"
-        android:label="@string/title_dish_image_selection"
-        tools:layout="@layout/fragment_dish_image_selector">
-        <argument
-            android:name="args_to_dish_image_selection"
-            app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToDishImageSelection" />
-        <action
-            android:id="@+id/action_dishImageSelectorFragment_to_editDishFragment"
-            app:destination="@id/editDishFragment"
-            app:popUpTo="@id/editDishFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-
+    <include app:graph="@navigation/meal_planer_graph" />
+    <include app:graph="@navigation/dish_graph" />
 </navigation>

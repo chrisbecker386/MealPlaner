@@ -43,11 +43,11 @@ class DishImageSelectorFragment : Fragment() {
         }
         val adapter = DishImageListAdapter {
             val args = ArgsToDishEdit(
-                navigationArgs.argsToDishImageSelection.title,
-                navigationArgs.argsToDishImageSelection.dishId,
-                navigationArgs.argsToDishImageSelection.dishName,
-                navigationArgs.argsToDishImageSelection.duration,
-                navigationArgs.argsToDishImageSelection.description
+                navigationArgs.args.title,
+                navigationArgs.args.dishId,
+                navigationArgs.args.dishName,
+                navigationArgs.args.duration,
+                navigationArgs.args.description
             )
             val action =
                 DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToEditDishFragment(
