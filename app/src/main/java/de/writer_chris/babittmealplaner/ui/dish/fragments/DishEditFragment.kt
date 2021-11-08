@@ -1,12 +1,13 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,6 +21,10 @@ import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class DishEditFragment : Fragment() {
     //TODO renew edit Dish
@@ -34,11 +39,6 @@ class DishEditFragment : Fragment() {
     private val navigationArgs: DishEditFragmentArgs by navArgs()
     private var _binding: FragmentEditDishBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        applyBackPressBehavior()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -143,12 +143,6 @@ class DishEditFragment : Fragment() {
         return DataUtil.isFileExists(requireContext(), filename)
     }
 
-    private fun deleteTemporalImage() {
-        if (DataUtil.isFileExists(requireContext(), TEMPORAL_FILE_NAME)) {
-            DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_FILE_NAME)
-        }
-    }
-
     //data
     private fun addNewDish() {
         if (isEntryValid()) {
@@ -235,17 +229,6 @@ class DishEditFragment : Fragment() {
     private fun navToDish() {
         val action = DishEditFragmentDirections.actionDishEditFragmentToDishFragment()
         findNavController().navigate(action)
-    }
-
-    //lifecycle
-    private fun applyBackPressBehavior() {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                deleteTemporalImage()
-                findNavController().navigate(DishEditFragmentDirections.actionDishEditFragmentToDishFragment())
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
 }

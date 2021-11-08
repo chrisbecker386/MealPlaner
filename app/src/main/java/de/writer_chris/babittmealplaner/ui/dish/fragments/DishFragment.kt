@@ -14,6 +14,8 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
+import de.writer_chris.babittmealplaner.data.utility.DataUtil
+import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
@@ -76,6 +78,7 @@ class DishFragment : Fragment() {
     }
 
     private fun navToEditDish(args: ArgsToDishEdit) {
+        deleteTempFile()
         val action =
             DishFragmentDirections.actionDishFragmentToDishEditFragment(args)
         this.findNavController().navigate(action)
@@ -89,5 +92,12 @@ class DishFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    //deletes a TempFile, that maybe not was erased
+    private fun deleteTempFile() {
+        if (DataUtil.isFileExists(requireContext(), TEMPORAL_FILE_NAME)) {
+            DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_FILE_NAME)
+        }
     }
 }

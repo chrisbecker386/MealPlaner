@@ -43,6 +43,9 @@
         <entry key="app/src/main/res/layout/item_meal_day.xml" value="0.21653543307086615" />
         <entry key="app/src/main/res/layout/item_meal_dish.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_period.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/app_bar_mealplaner.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/menu/app_bar_recipe.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/menu/app_bar_topic_menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

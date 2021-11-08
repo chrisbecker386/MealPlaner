@@ -1,9 +1,8 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -36,8 +35,14 @@ class PeriodFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         bind()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {
@@ -45,7 +50,12 @@ class PeriodFragment : Fragment() {
         super.onDestroyView()
     }
 
+
     private fun bind() {
+        (activity as AppCompatActivity).supportActionBar?.let {
+            val bar = it
+            bar.setDisplayHomeAsUpEnabled(false)
+        }
         val adapter = getPeriodAdapter()
         setRecyclerView(adapter)
         initObserver(adapter)
