@@ -1,9 +1,6 @@
 package de.writer_chris.babittmealplaner
 
-import android.database.DatabaseUtils
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -12,6 +9,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import de.writer_chris.babittmealplaner.data.utility.DataUtil
+import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,12 +44,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        super.onBackPressed()
-        return true
-        // TODO improve!!!
-        // no a nice code
-        // super.onSupportNavigateUp() || navController.navigateUp()
+        val navController = this.findNavController(R.id.nav_host_fragment_activity_main)
+        if (navController.currentDestination?.id == R.id.action_dishEditFragment_to_dishFragment) {
+            saveDelete()
+        }
+        return super.onSupportNavigateUp() || navController.navigateUp()
+
     }
 
+    private fun saveDelete() {
+        if (DataUtil.isFileExists(this, TEMPORAL_FILE_NAME)) {
+            DataUtil.deletePhotoFromInternalStorage(this, TEMPORAL_FILE_NAME)
+        }
+    }
 
 }

@@ -133,7 +133,7 @@ class DishImageSelectorFragment : Fragment() {
 
     private fun navToEditDish(args: ArgsToDishEdit) {
         val action =
-            DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToEditDishFragment(
+            DishImageSelectorFragmentDirections.actionDishImageSelectorFragmentToDishEditFragment(
                 args
             )
         this.findNavController().navigate(action)

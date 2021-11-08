@@ -21,7 +21,7 @@ import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
 
-class EditDishFragment : Fragment() {
+class DishEditFragment : Fragment() {
     //TODO renew edit Dish
     //TODO  *** add ingredient
     //TODO  if ingredient not exists add it with a unitType
@@ -31,7 +31,7 @@ class EditDishFragment : Fragment() {
         DishViewModelFactory(Repository(requireContext()))
     }
 
-    private val navigationArgs: EditDishFragmentArgs by navArgs()
+    private val navigationArgs: DishEditFragmentArgs by navArgs()
     private var _binding: FragmentEditDishBinding? = null
     private val binding get() = _binding!!
 
@@ -54,8 +54,8 @@ class EditDishFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
     private fun bind() {
@@ -100,7 +100,7 @@ class EditDishFragment : Fragment() {
                     getDescriptionString()
                 )
                 val action =
-                    EditDishFragmentDirections.actionEditDishFragmentToDishImageSelectorFragment(
+                    DishEditFragmentDirections.actionDishEditFragmentToDishImageSelectorFragment(
                         args
                     )
                 findNavController().navigate(action)
@@ -233,7 +233,7 @@ class EditDishFragment : Fragment() {
     }
 
     private fun navToDish() {
-        val action = EditDishFragmentDirections.actionEditDishFragmentToDishFragment()
+        val action = DishEditFragmentDirections.actionDishEditFragmentToDishFragment()
         findNavController().navigate(action)
     }
 
@@ -242,7 +242,7 @@ class EditDishFragment : Fragment() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 deleteTemporalImage()
-                findNavController().navigate(EditDishFragmentDirections.actionEditDishFragmentToDishFragment())
+                findNavController().navigate(DishEditFragmentDirections.actionDishEditFragmentToDishFragment())
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)

@@ -77,7 +77,7 @@ class DishFragment : Fragment() {
 
     private fun navToEditDish(args: ArgsToDishEdit) {
         val action =
-            DishFragmentDirections.actionDishFragmentToEditDishFragment(args)
+            DishFragmentDirections.actionDishFragmentToDishEditFragment(args)
         this.findNavController().navigate(action)
     }
 

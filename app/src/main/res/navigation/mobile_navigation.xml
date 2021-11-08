@@ -17,6 +17,8 @@
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 
-    <include app:graph="@navigation/meal_planer_graph" />
-    <include app:graph="@navigation/dish_graph" />
+    <include
+        app:graph="@navigation/meal_planer_graph" />
+    <include
+        app:graph="@navigation/dish_graph" />
 </navigation>
