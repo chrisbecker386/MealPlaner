@@ -1,13 +1,9 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,12 +15,9 @@ import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishImageSelection
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
-import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
-import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModel
+import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModelFactory
+
 
 class DishEditFragment : Fragment() {
     //TODO renew edit Dish
@@ -32,8 +25,8 @@ class DishEditFragment : Fragment() {
     //TODO  if ingredient not exists add it with a unitType
     //TODO  show a list of all ingredients
 
-    private val viewModel: DishViewModel by viewModels {
-        DishViewModelFactory(Repository(requireContext()))
+    private val viewModel: DishEditViewModel by viewModels {
+        DishEditViewModelFactory(Repository(requireContext()))
     }
 
     private val navigationArgs: DishEditFragmentArgs by navArgs()
