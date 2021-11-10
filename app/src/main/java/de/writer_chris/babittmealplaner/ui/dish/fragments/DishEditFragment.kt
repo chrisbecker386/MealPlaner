@@ -20,7 +20,6 @@ import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModelFact
 
 
 class DishEditFragment : Fragment() {
-    //TODO renew edit Dish
     //TODO  *** add ingredient
     //TODO  if ingredient not exists add it with a unitType
     //TODO  show a list of all ingredients
