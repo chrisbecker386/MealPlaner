@@ -12,7 +12,6 @@ import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.data.utility.MealTypes
 import de.writer_chris.babittmealplaner.databinding.ItemMealDishBinding
-
 class DayMealItemListAdapter(
     private val context: Context,
     private val onItemSelect: (mealId: Int) -> Unit,
@@ -20,13 +19,15 @@ class DayMealItemListAdapter(
 ) :
     ListAdapter<MealAndDish, DayMealItemListAdapter.MealAndDishViewHolder>(DiffCallback) {
     companion object {
+
         private val DiffCallback = object : DiffUtil.ItemCallback<MealAndDish>() {
             override fun areItemsTheSame(oldItem: MealAndDish, newItem: MealAndDish): Boolean {
                 return oldItem.meal.mealId == newItem.meal.mealId
             }
 
             override fun areContentsTheSame(oldItem: MealAndDish, newItem: MealAndDish): Boolean {
-                return oldItem.meal.mealType == newItem.meal.mealType && oldItem.meal.dishId == newItem.meal.dishId
+                return oldItem.meal.mealType == newItem.meal.mealType &&
+                        oldItem.meal.dishId == newItem.meal.dishId
             }
         }
     }

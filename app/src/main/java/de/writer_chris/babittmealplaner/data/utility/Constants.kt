@@ -18,4 +18,11 @@ enum class MealTypes(val title: String) {
     DINNER("dinner")
 }
 
+enum class PaperType(val longSide: Int, val shortSide: Int) {
+    //resource
+    //http://prepessure.com/libary/paper-size
+    A4(842, 595),
+    US_LETTER(792, 612)
+}
+
 const val TEMPORAL_FILE_NAME = "temp"

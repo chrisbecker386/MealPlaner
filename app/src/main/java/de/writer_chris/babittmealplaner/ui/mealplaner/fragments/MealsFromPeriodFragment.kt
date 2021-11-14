@@ -1,7 +1,9 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,12 +13,18 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDish
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
+import de.writer_chris.babittmealplaner.data.utility.PaperType
+import de.writer_chris.babittmealplaner.data.utility.PdfMaker
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModelFactory
 import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.DayMealsListAdapter
+import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.PdfListAdapter
+import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
+
 
 class MealsFromPeriodFragment : Fragment() {
+    private lateinit var listView: ListView
     private val navigationArgs: MealsFromPeriodFragmentArgs by navArgs()
     private val viewModel: MealsFromPeriodViewModel by viewModels {
         MealsFromPeriodViewModelFactory(Repository(requireContext()), navigationArgs.args.periodId)
@@ -35,6 +43,7 @@ class MealsFromPeriodFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMealsFromPeriodBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -48,6 +57,21 @@ class MealsFromPeriodFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
         inflater.inflate(R.menu.app_bar_mealplaner, menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.miExport -> {
+                PdfMaker.createPDF(
+                    null,
+                    PaperType.A4,
+                    requireContext(),
+                    view?.findViewById(R.id.pdf_view)
+                )
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {
@@ -76,9 +100,16 @@ class MealsFromPeriodFragment : Fragment() {
 
     private fun initObserver(adapter: DayMealsListAdapter) {
         viewModel.mealsAndDishes.observe(this.viewLifecycleOwner) { mealsAndDishes ->
-            mealsAndDishes.let { adapter.submitList(viewModel.getDayMealsAndDish()) }
+            mealsAndDishes.let {
+                adapter.submitList(viewModel.getDayMealsAndDish())
+                setPdfData(viewModel.getDayMealsAndDish())
+            }
 
         }
+    }
+
+    private fun setPdfData(dayMealsAndDish: List<DayMealsAndDish>) {
+        binding.pdfViewListView.adapter = PdfListAdapter(dayMealsAndDish)
     }
 
     private fun navToDishList(args: ArgsToDish) {

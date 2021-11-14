@@ -1,9 +1,14 @@
 package de.writer_chris.babittmealplaner.data.utility
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.pdf.PdfDocument
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -68,5 +73,59 @@ class DataUtil {
             }
         }
 
+        fun savePdfToInternalStorage(context:Context, pdf:PdfDocument):Boolean{
+            return try {
+                context.openFileOutput("HelloPDfWorld.pdf", MODE_PRIVATE).use {
+                    pdf.writeTo(it)
+                }
+                true
+            } catch (e: IOException) {
+                e.printStackTrace()
+                false
+            }
+        }
+
+        fun isExternalStorageWritable(context: Context): Boolean {
+            return Permissions.hasWritePermission(context)
+        }
+
+        fun writeFileToExternalStorage(context: Context, filename: String): Boolean {
+            if (!isExternalStorageWritable(context)) {
+                return false
+            }
+            val file = File(
+                context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "/$filename.pdf"
+            )
+
+
+            return true
+        }
+
+        fun savePdfToExternalStorage(context: Context, filename: String, pdf: PdfDocument) {
+            val pdfCollection = sdk29AndUp {
+                MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            } ?: { MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL) }
+
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Files.FileColumns.DISPLAY_NAME, "$filename.pdf")
+                put(MediaStore.Files.FileColumns.MIME_TYPE, "application/pdf")
+                put(MediaStore.Files.FileColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+            }
+            val resolver = context.contentResolver
+            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+        }
+
+
+    }
+
+
+}
+
+
+inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        onSdk29()
+    } else {
+        null
     }
 }

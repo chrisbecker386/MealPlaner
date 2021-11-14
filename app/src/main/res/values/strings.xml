@@ -64,6 +64,7 @@
     <string name="export">export</string>
     <string name="dish">dish</string>
     <string name="ingredient">ingredient</string>
+    <string name="date">date</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
