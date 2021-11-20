@@ -70,7 +70,7 @@ class EditPeriodFragment : Fragment() {
         viewModel.startDate.observe(this.viewLifecycleOwner) { it ->
             it.let {
                 binding.apply {
-                    txtStartDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
+                    txtStartDate.text = CalendarUtil.longToDate(it.timeInMillis)
                     txtWeekdayStartDay.text = CalendarUtil.calendarToWeekday(it)
                 }
             }
@@ -79,7 +79,7 @@ class EditPeriodFragment : Fragment() {
         viewModel.endDate.observe(this.viewLifecycleOwner) { it ->
             it.let {
                 binding.apply {
-                    txtEndDate.text = CalendarUtil.longToGermanDate(it.timeInMillis)
+                    txtEndDate.text = CalendarUtil.longToDate(it.timeInMillis)
                     txtWeekdayEndDay.text = CalendarUtil.calendarToWeekday(it)
                 }
             }

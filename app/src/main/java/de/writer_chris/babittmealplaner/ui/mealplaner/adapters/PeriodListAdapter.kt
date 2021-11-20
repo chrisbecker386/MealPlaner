@@ -38,9 +38,9 @@ class PeriodListAdapter(
         fun bind(period: Period) {
             binding.apply {
                 txtStartWeekday.text = CalendarUtil.longToWeekday(period.startDate)
-                txtStartDate.text = CalendarUtil.longToGermanDate(period.startDate)
+                txtStartDate.text = CalendarUtil.longToDate(period.startDate)
                 txtEndWeekday.text = CalendarUtil.longToWeekday(period.endDate)
-                txtEndDate.text = CalendarUtil.longToGermanDate(period.endDate)
+                txtEndDate.text = CalendarUtil.longToDate(period.endDate)
             }
         }
     }

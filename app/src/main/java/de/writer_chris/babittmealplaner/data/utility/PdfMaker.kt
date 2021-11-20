@@ -39,14 +39,15 @@ class PdfMaker() {
                 ).create()
             val pageOne: PdfDocument.Page = document.startPage(pageInfo)
             val canvas = pageOne.canvas
-//            canvas.drawText("Hello PDFWorld", 40F, 50F, paint)
-//            paint.color = Color.RED
-//            canvas.drawText("another Text", 80F, 100F, paint)
-//            canvas.drawRect(Rect(90, 5, 95, paperType.longSide), paint)
-//
-//            canvas.drawText("Hello PDFWorld", 60F, 50F, paint)
-            canvas.scale(72F / paperType.longSide, 72F / paperType.shortSide)
+
+            canvas.scale(245F / paperType.longSide, 245F / paperType.shortSide)
+            Log.d(
+                "Numbers",
+                "longSide: ${144F / paperType.longSide} short: ${144F / paperType.shortSide}"
+            )
+
             view?.draw(canvas)
+
 
 
             document.finishPage(pageOne)

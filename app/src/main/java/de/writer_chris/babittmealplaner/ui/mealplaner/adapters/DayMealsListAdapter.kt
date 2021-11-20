@@ -57,7 +57,7 @@ class DayMealsListAdapter(
         }
 
         private fun getDate(date: Long): String {
-            return CalendarUtil.longToGermanDate(date)
+            return CalendarUtil.longToDate(date)
         }
 
         private fun getDayOfWeek(date: Long): String {

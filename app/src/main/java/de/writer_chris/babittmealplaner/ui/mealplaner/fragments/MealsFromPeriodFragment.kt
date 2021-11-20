@@ -13,6 +13,7 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDish
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
+import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.data.utility.PaperType
 import de.writer_chris.babittmealplaner.data.utility.PdfMaker
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
@@ -67,7 +68,7 @@ class MealsFromPeriodFragment : Fragment() {
                     null,
                     PaperType.A4,
                     requireContext(),
-                    view?.findViewById(R.id.pdf_view)
+                    view?.findViewById(R.id.pdf_view_outer)
                 )
             }
         }
@@ -104,11 +105,11 @@ class MealsFromPeriodFragment : Fragment() {
                 adapter.submitList(viewModel.getDayMealsAndDish())
                 setPdfData(viewModel.getDayMealsAndDish())
             }
-
         }
     }
 
     private fun setPdfData(dayMealsAndDish: List<DayMealsAndDish>) {
+        binding.pdfViewTimePeriod.text = getTimePeriodString(dayMealsAndDish)
         binding.pdfViewListView.adapter = PdfListAdapter(dayMealsAndDish)
     }
 
@@ -126,5 +127,11 @@ class MealsFromPeriodFragment : Fragment() {
                 args
             )
         findNavController().navigate(action)
+    }
+
+    private fun getTimePeriodString(period: List<DayMealsAndDish>): String {
+        return CalendarUtil.longToDate(period.get(0).date) + " - " + CalendarUtil.longToDate(
+            period.last().date
+        )
     }
 }

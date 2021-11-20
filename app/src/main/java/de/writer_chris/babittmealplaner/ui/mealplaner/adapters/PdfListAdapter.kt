@@ -27,7 +27,7 @@ class PdfListAdapter(
         val item = getItem(position) as DayMealsAndDish
         binding.apply {
 
-            date.text = CalendarUtil.longToGermanDate(item.date)
+            date.text = CalendarUtil.longToWeekday(item.date)
             breakfast.text = item.breakfast.dish?.dishName ?: "-"
             lunch.text = item.lunch.dish?.dishName ?: "-"
             dinner.text = item.dinner.dish?.dishName ?: "-"
