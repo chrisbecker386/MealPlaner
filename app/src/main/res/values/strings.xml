@@ -67,6 +67,10 @@
     <string name="date">date</string>
     <string name="title_meal_plan">Meal Plan</string>
     <string name="weekday">Weekday</string>
+    <string name="email_share_meal_plan_subject">"meal plan"</string>
+    <string name="email_share_meal_plan_body">Hi, I created a new meal plan. I hope you like it. You will find an pdf-File attached. It is named MealPlan.pdf .</string>
+    <string name="email_share_meal_plan_toast">Meal Plan shared</string>
+    <string name="meal_plan_downloaded">meal plan has been downloaded to your download folder</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

@@ -6,9 +6,12 @@ import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
-import android.os.Build
+import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
+import androidx.core.content.FileProvider.getUriForFile
+import androidx.core.net.toFile
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -43,7 +46,7 @@ class DataUtil {
 
         fun isFileExists(context: Context, filename: String): Boolean {
             return try {
-                val file: File = File(context.filesDir, "$filename.jpg")
+                val file = File(context.filesDir, "$filename.jpg")
                 file.exists()
 
             } catch (e: Exception) {
@@ -73,9 +76,10 @@ class DataUtil {
             }
         }
 
-        fun savePdfToInternalStorage(context:Context, pdf:PdfDocument):Boolean{
+        fun savePdfToInternalStorage(context: Context, pdf: PdfDocument): Boolean {
+
             return try {
-                context.openFileOutput("HelloPDfWorld.pdf", MODE_PRIVATE).use {
+                context.openFileOutput(INTERNAL_PDF_FILE_NAME, MODE_PRIVATE).use {
                     pdf.writeTo(it)
                 }
                 true
@@ -85,47 +89,55 @@ class DataUtil {
             }
         }
 
-        fun isExternalStorageWritable(context: Context): Boolean {
-            return Permissions.hasWritePermission(context)
+        // Checks if a volume containing external storage is available
+        // for read and write.
+        private fun isExternalStorageWritable(): Boolean {
+            return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
         }
 
-        fun writeFileToExternalStorage(context: Context, filename: String): Boolean {
-            if (!isExternalStorageWritable(context)) {
+        fun writePdfToDownloads(
+            context: Context,
+            pdf: PdfDocument,
+            filename: String
+        ): Boolean {
+            handlePermissionWrite(context)
+
+            if (!isExternalStorageWritable()) {
+                Log.d("Save", "External storage is not writable")
                 return false
             }
-            val file = File(
-                context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "/$filename.pdf"
-            )
 
-
-            return true
-        }
-
-        fun savePdfToExternalStorage(context: Context, filename: String, pdf: PdfDocument) {
-            val pdfCollection = sdk29AndUp {
-                MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-            } ?: { MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL) }
+            val path = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
             val contentValues = ContentValues().apply {
-                put(MediaStore.Files.FileColumns.DISPLAY_NAME, "$filename.pdf")
-                put(MediaStore.Files.FileColumns.MIME_TYPE, "application/pdf")
-                put(MediaStore.Files.FileColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                put(MediaStore.Downloads.DISPLAY_NAME, filename)
+                put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
             }
-            val resolver = context.contentResolver
-            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+            return try {
+                context.contentResolver.insert(path, contentValues)?.also { uri ->
+                    context.contentResolver.openOutputStream(uri).use { out ->
+                        pdf.writeTo(out)
+                    }
+                } ?: throw IOException("Couldn't save file")
+                true
+            } catch (e: IOException) {
+                e.printStackTrace()
+                false
+            }
         }
 
+        private fun handlePermissionWrite(context: Context) {
+            if (!Permissions.hasWritePermission(context)) {
+                Permissions.permissionRequestWriteExternal(context)
+            }
+        }
 
+        private fun handlePermissionRead(context: Context) {
+            if (!Permissions.hasReadPermission(context)) {
+                Permissions.permissionRequestReadExternal(context)
+            }
+        }
     }
-
-
 }
 
 
-inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        onSdk29()
-    } else {
-        null
-    }
-}

@@ -1,31 +1,22 @@
 package de.writer_chris.babittmealplaner.data.utility
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.pdf.PdfDocument
-import android.os.Environment
 import android.util.Log
 import android.view.View
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 class PdfMaker() {
     companion object {
         fun createPDF(
-            text: String?,
+            text: String,
             paperType: PaperType,
             context: Context,
-            view: View?
+            view: View?,
+            isDownload: Boolean
         ): Boolean {
-            //TODO needes values:
-            //Header Mealplaner week
-            //From -Till
-            //Table columns: date, breakfast, lunch, dinner
 
             val document = PdfDocument()
             val paint = Paint()
@@ -48,20 +39,47 @@ class PdfMaker() {
 
             view?.draw(canvas)
 
-
-
             document.finishPage(pageOne)
 
-            return if (DataUtil.savePdfToInternalStorage(context, document)) {
-                Log.d("save Private", "Success")
-                document.close()
-                true
+//            return if (DataUtil.savePdfToInternalStorage(context, document)) {
+//                Log.d("save Private", "Success")
+//                document.close()
+//                document
+//            } else {
+//                Log.d("save Private", "Error")
+//                document.close()
+//                document
+//            }
+            val filename = EXTERNAL_PDF_FILE_NAME + text + ".pdf"
+
+            if (isDownload) {
+                return if (DataUtil.writePdfToDownloads(
+                        context,
+                        document,
+                        filename
+                    )
+                ) {
+                    Log.d("save Private", "Success")
+                    document.close()
+                    true
+                } else {
+                    Log.d("save Private", "Error")
+                    document.close()
+                    false
+                }
             } else {
-                Log.d("save Private", "Error")
-                document.close()
-                false
+                return if (DataUtil.savePdfToInternalStorage(context, document)) {
+                    Log.d("save Private", "Success")
+                    document.close()
+                    true
+                } else {
+                    Log.d("save Private", "Error")
+                    document.close()
+                    false
+                }
             }
         }
+
 
     }
 }

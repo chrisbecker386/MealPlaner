@@ -1,6 +1,9 @@
 package de.writer_chris.babittmealplaner
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import de.writer_chris.babittmealplaner.data.utility.PermissionCode
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -41,16 +45,44 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {
         return super.onSupportNavigateUp() || navController.navigateUp()
-
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PermissionCode.WRITE_EXTERNAL.requestCode && grantResults.isNotEmpty()) {
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("PermissionRequest", "${permissions[i]} granted")
+                }
+            }
+        }
+
+        if (requestCode == PermissionCode.READ_EXTERNAL.requestCode && grantResults.isNotEmpty()) {
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("PermissionRequest", "${permissions[i]} granted")
+                }
+            }
+        }
+
+        if (requestCode == PermissionCode.LOCATION_BACKGROUND.requestCode && grantResults.isNotEmpty()) {
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("PermissionRequest", "${permissions[i]} granted")
+                }
+            }
+        }
+    }
+
 
 
 }

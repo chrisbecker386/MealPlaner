@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/menu/app_bar_recipe.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/app_bar_topic_menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/filepaths.xml" value="0.1" />
       </map>
     </option>
   </component>
