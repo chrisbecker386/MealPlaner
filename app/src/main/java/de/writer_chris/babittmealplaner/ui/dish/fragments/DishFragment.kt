@@ -13,7 +13,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
@@ -94,8 +94,8 @@ class DishFragment : Fragment() {
 
     //deletes a TempFile, that maybe not was erased
     private fun deleteTempFile() {
-        if (DataUtil.isFileExists(requireContext(), TEMPORAL_FILE_NAME)) {
-            DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_FILE_NAME)
+        if (DataUtil.isFileExists(requireContext(), TEMPORAL_NAME.fileString)) {
+            DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_NAME.fileString)
         }
     }
 }

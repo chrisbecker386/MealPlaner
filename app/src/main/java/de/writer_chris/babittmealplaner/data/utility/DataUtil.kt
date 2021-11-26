@@ -6,12 +6,10 @@ import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
-import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.core.content.FileProvider.getUriForFile
-import androidx.core.net.toFile
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -21,7 +19,7 @@ class DataUtil {
 
         fun deletePhotoFromInternalStorage(context: Context, filename: String): Boolean {
             return try {
-                context.deleteFile("$filename.jpg")
+                context.deleteFile("$filename.${JPG.fileString}")
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -32,7 +30,7 @@ class DataUtil {
         fun loadDishPictureFromInternalStorage(context: Context, filename: String): Bitmap? {
             return try {
                 val files = context.filesDir.listFiles()
-                    .filter { it.canRead() && it.isFile && it.name == "$filename.jpg" }
+                    .filter { it.canRead() && it.isFile && it.name == "$filename.${JPG.fileString}" }
                     .map {
                         val bytes = it.readBytes()
                         BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -46,7 +44,7 @@ class DataUtil {
 
         fun isFileExists(context: Context, filename: String): Boolean {
             return try {
-                val file = File(context.filesDir, "$filename.jpg")
+                val file = File(context.filesDir, "$filename.${JPG.fileString}")
                 file.exists()
 
             } catch (e: Exception) {
@@ -61,7 +59,7 @@ class DataUtil {
             bmp: Bitmap
         ): Boolean {
             return try {
-                context.openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
+                context.openFileOutput("$filename.${JPG.fileString}", MODE_PRIVATE).use { stream ->
                     if (!bmp.compress(
                             Bitmap.CompressFormat.JPEG, 95, stream
                         )
@@ -79,7 +77,7 @@ class DataUtil {
         fun savePdfToInternalStorage(context: Context, pdf: PdfDocument): Boolean {
 
             return try {
-                context.openFileOutput(INTERNAL_PDF_FILE_NAME, MODE_PRIVATE).use {
+                context.openFileOutput(INTERNAL_PDF_NAME.fileString, MODE_PRIVATE).use {
                     pdf.writeTo(it)
                 }
                 true

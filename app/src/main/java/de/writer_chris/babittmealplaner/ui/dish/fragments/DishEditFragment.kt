@@ -13,7 +13,7 @@ import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishImageSelection
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import de.writer_chris.babittmealplaner.databinding.FragmentEditDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModelFactory
@@ -103,8 +103,8 @@ class DishEditFragment : Fragment() {
 
     //image
     private fun imageHandler() {
-        if (isImageExists(TEMPORAL_FILE_NAME)) {
-            setImage(TEMPORAL_FILE_NAME)
+        if (isImageExists(TEMPORAL_NAME.fileString)) {
+            setImage(TEMPORAL_NAME.fileString)
         } else {
             if (navigationArgs.args.dishId > 0) {
                 if (isImageExists(navigationArgs.args.dishId.toString())) {

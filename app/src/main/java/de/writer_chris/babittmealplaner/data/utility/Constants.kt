@@ -1,5 +1,8 @@
 package de.writer_chris.babittmealplaner.data.utility
 
+
+import de.writer_chris.babittmealplaner.R
+
 enum class MealTypes(val title: String) {
     BREAKFAST("breakfast"),
     LUNCH("lunch"),
@@ -13,10 +16,13 @@ enum class PaperType(val longSide: Int, val shortSide: Int) {
     US_LETTER(792, 612)
 }
 
-const val TEMPORAL_FILE_NAME = "temp"
-const val INTERNAL_PDF_FILE_NAME = "MealPlan.pdf"
-const val EXTERNAL_PDF_FILE_NAME = "MealPlan"
-const val SUB_FOLDER_NAME = "my_pdfs"
+enum class FileName(val fileString: String) {
+    TEMPORAL_NAME("temp"),
+    INTERNAL_PDF_NAME("MealPlan.pdf"),
+    EXTERNAL_PDF_NAME("MealPlan"),
+    PDF("pdf"),
+    JPG("jpg")
+}
 
 
 enum class PermissionCode(val requestCode: Int) {
@@ -27,4 +33,9 @@ enum class PermissionCode(val requestCode: Int) {
 
 enum class StorageAccessFrameworkCode(val requestCode: Int) {
     OPEN_REQUEST_CODE(41)
+}
+
+enum class ErrorMessage(val resId: Int) {
+    ERROR_PDF_SAVE(R.string.dialog_save_error_occured),
+    ERROR_PDF_SHARE(R.string.dialog_share_error_occured)
 }

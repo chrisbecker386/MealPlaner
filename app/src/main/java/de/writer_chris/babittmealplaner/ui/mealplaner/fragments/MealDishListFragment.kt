@@ -19,8 +19,7 @@ import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.MealDishListAdapt
 
 class MealDishListFragment : Fragment() {
 
-    //TODO story III
-    //TODO add a searchbar
+
     private val navigationArgs: MealDishListFragmentArgs by navArgs()
 
     private val viewModel: DishViewModel by viewModels {

@@ -8,39 +8,40 @@ import androidx.lifecycle.asLiveData
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class DishEditViewModel(private val repository: Repository):ViewModel(){
+class DishEditViewModel(private val repository: Repository) : ViewModel() {
 
     private fun insertDish(dish: Dish, context: Context) {
         CoroutineScope(IO).launch {
             val dishId = repository.insertDish(dish)
-            val bitmap = DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_FILE_NAME)
+            val bitmap =
+                DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_NAME.fileString)
             if (bitmap != null) {
                 DataUtil.saveDishPictureToInternalStorage(
                     context, dishId.toString(),
                     bitmap
                 )
             }
-            DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_FILE_NAME)
+            DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_NAME.fileString)
         }
     }
 
     private fun updateDish(dish: Dish, context: Context) {
         CoroutineScope(IO).launch {
             repository.updateDish(dish)
-            val bitmap = DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_FILE_NAME)
+            val bitmap = DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_NAME.fileString)
             if (bitmap != null) {
                 DataUtil.saveDishPictureToInternalStorage(
                     context, dish.dishId.toString(),
                     bitmap
                 )
             }
-            DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_FILE_NAME)
+            DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_NAME.fileString)
         }
     }
 

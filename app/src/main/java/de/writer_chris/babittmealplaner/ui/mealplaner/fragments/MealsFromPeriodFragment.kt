@@ -1,10 +1,7 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.ListView
 import android.widget.Toast
@@ -14,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDish
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.data.utility.*
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import de.writer_chris.babittmealplaner.databinding.FragmentMealsFromPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.MealsFromPeriodViewModelFactory
@@ -68,27 +67,11 @@ class MealsFromPeriodFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.miExport -> {
-                val period = getPeriodToString()
-                val isCreatePdfSuccess = PdfMaker.createPDF(
-                    period,
-                    PaperType.A4,
-                    requireContext(),
-                    view?.findViewById(R.id.pdf_view_outer),
-                    true
-                )
-                if (isCreatePdfSuccess) {
-                    Toast.makeText(activity, R.string.meal_plan_downloaded, Toast.LENGTH_LONG)
-                        .show()
-                } else {
-                    //TODO InfoScreen sorry an error occurred
-                }
-
+                saveMealPlanToDownload()
             }
 
             R.id.miShare -> {
-
-                //TODO create proper Share functionality
-                shareMealPlanByEmail()
+                shareMealPlan()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -155,18 +138,34 @@ class MealsFromPeriodFragment : Fragment() {
         )
     }
 
-    private fun shareMealPlanByEmail() {
+    private fun saveMealPlanToDownload() {
+        val period = getPeriodToString()
+        val isCreatePdfSuccess = PdfMaker.createPDF(
+            period,
+            PaperType.A4,
+            requireContext(),
+            view?.findViewById(R.id.pdf_view_outer),
+            true
+        )
+        if (isCreatePdfSuccess) {
+            Toast.makeText(activity, R.string.meal_plan_downloaded, Toast.LENGTH_LONG)
+                .show()
+        } else {
+            showSaveErrorDialog(ErrorMessage.ERROR_PDF_SAVE)
+        }
+    }
 
+    private fun shareMealPlan() {
         val isCreatePdfSuccess = PdfMaker.createPDF(
             "", PaperType.A4, requireContext(), view?.findViewById(R.id.pdf_view_outer),
             false
         )
-
         if (!isCreatePdfSuccess) {
+            showSaveErrorDialog(ErrorMessage.ERROR_PDF_SHARE)
             return
         }
 
-        val pdfPath = File(requireContext().filesDir, INTERNAL_PDF_FILE_NAME)
+        val pdfPath = File(requireContext().filesDir, INTERNAL_PDF_NAME.fileString)
         val uri =
             FileProvider.getUriForFile(
                 requireContext(),
@@ -193,4 +192,12 @@ class MealsFromPeriodFragment : Fragment() {
                     .replace('.', '_')
     }
 
+    private fun showSaveErrorDialog(errorMessage: ErrorMessage) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.dialog_alert_title))
+            .setMessage(getString(errorMessage.resId))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+            .show()
+    }
 }

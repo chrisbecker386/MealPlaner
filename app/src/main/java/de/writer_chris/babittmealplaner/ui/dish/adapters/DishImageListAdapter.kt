@@ -13,7 +13,7 @@ import coil.load
 import coil.request.ImageRequest
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.data.utility.TEMPORAL_FILE_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import de.writer_chris.babittmealplaner.databinding.ItemDishImageBinding
 import de.writer_chris.babittmealplaner.network.DishPhoto
 
@@ -54,7 +54,7 @@ class DishImageListAdapter(private val navigateToDishEditFragment: () -> Unit) :
                         imgViewDishImage.setOnClickListener {
                             DataUtil.saveDishPictureToInternalStorage(
                                 context,
-                                TEMPORAL_FILE_NAME,
+                                TEMPORAL_NAME.fileString,
                                 result.toBitmap()
                             )
                             navigateToDishEditFragment()
