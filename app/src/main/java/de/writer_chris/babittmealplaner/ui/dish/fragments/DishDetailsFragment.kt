@@ -11,7 +11,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
 
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailBinding
+import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailsBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModel
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModelFactory
 
@@ -23,7 +23,7 @@ class DishDetailsFragment : Fragment() {
         DishDetailsViewModelFactory(Repository(requireContext()))
     }
 
-    private var _binding: FragmentDishDetailBinding? = null
+    private var _binding: FragmentDishDetailsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class DishDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDishDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDishDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,8 +64,6 @@ class DishDetailsFragment : Fragment() {
 
     private fun setDefaults(dish: Dish) {
         binding.apply {
-            btnDishReselect.visibility = View.GONE
-            btnDishUnselect.visibility = View.GONE
             setImage(dish.dishId)
             txtDishName.text = dish.dishName
             txtDishDescription.text = dish.description
