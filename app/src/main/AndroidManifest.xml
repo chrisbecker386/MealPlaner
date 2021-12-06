@@ -20,12 +20,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BabittMealPlaner">
-        <!--        <provider-->
-        <!--            android:name="androidx.core.content.FileProvider"-->
-        <!--            android:authorities="de.writer_chris.babittmealplaner.fileprovider"-->
-        <!--            android:exported="false"-->
-        <!--            android:grantUriPermissions="true" />-->
+        android:theme="@style/Theme.BabittMealPlaner"
+
+        >
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -38,7 +36,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
 
             <intent-filter>
