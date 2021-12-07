@@ -3,6 +3,8 @@
 
     <style name="Theme.MealPlan.TextAppearanceHeadline1" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textSize">30sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="Theme.MealPlan.TextAppearanceHeadline1.Bold">
@@ -11,6 +13,8 @@
 
     <style name="Theme.MealPlan.TextAppearanceHeadline2" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textSize">22sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="Theme.MealPlan.TextAppearanceHeadline2.Bold">
@@ -26,7 +30,6 @@
 
     <style name="Theme.MealPlan.TextAppearanceHeadline3.Bold">
         <item name="android:textStyle">bold</item>
-
     </style>
 
 
@@ -43,6 +46,8 @@
 
     <style name="Theme.MealPlan.TextAppearanceBody2" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 
