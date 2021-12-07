@@ -1,106 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="de.writer_chris.babittmealplaner.ui.dish.fragments.DishEditFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="de.writer_chris.babittmealplaner.ui.dish.fragments.DishEditFragment">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dish_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_view_edit_dish"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="8dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_lunch" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_input_edit_dish_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="@string/new_dish_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_view_edit_dish"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="my new favorite dish" />
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_input_edit_dish_duration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:ems="10"
-            android:hint="@string/duration_hint"
-            android:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_view_edit_dish"
-            app:layout_constraintTop_toBottomOf="@id/txt_input_edit_dish_name"
-            tools:text="cooking time" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_edit_dish_ingredients"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_view_edit_dish"
-            tools:itemCount="5" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_edit_dish_add_ingredient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="+"
-            app:circularflow_defaultRadius="25dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_edit_dish_ingredients" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_edit_dish"
+                style="@style/Widget.MealPlan.CardView.Rounded.Big"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/ingredient"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txt_input_edit_dish_description"
-            app:layout_constraintStart_toEndOf="@+id/btn_edit_dish_add_ingredient"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_edit_dish_ingredients" />
-        <!--TODO add an add button with dialog for adding ingredients-->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_input_edit_dish_description"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:hint="@string/description_hint"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_edit_dish_add_ingredient"
-            tools:text="@string/test_text" />
+                <ImageView
+                    android:id="@+id/img_view_edit_dish"
+                    style="@style/ImageView.Round.Big"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_launcher_background" />
+            </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btn_dish_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/save"
-            app:layout_constraintTop_toBottomOf="@id/txt_input_edit_dish_description" />
-
-        <Button
-            android:id="@+id/btn_dish_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/delete"
-            app:layout_constraintTop_toBottomOf="@+id/btn_dish_save" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_input_edit_dish_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/new_dish_name"
+                android:inputType="text"
+                android:nextFocusDown="@id/txt_input_edit_dish_duration"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_edit_dish"
+                tools:text="my new favorite dish" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_input_edit_dish_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:hint="@string/duration_hint"
+                android:inputType="number"
+                android:nextFocusDown="@id/txt_input_edit_dish_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_input_edit_dish_name"
+                tools:text="cooking time" />
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_input_edit_dish_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:hint="@string/description_hint"
+                android:inputType="text"
+                android:nextFocusUp="@id/btn_dish_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_input_edit_dish_duration"
+                tools:layout_editor_absoluteY="429dp"
+                tools:text="@string/test_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btn_dish_save"
+        style="@style/Widget.MealPlan.Button.Margin8"
+        android:layout_marginBottom="0dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toTopOf="@id/btn_dish_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_dish_delete"
+        style="@style/Widget.MealPlan.Button.Margin8"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
