@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MealPlan.ConstraintLayout"
+    style="@style/MealPlan.ConstraintLayout.Basic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mealplaner.fragments.MealDishDetailsFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_meal_dish_details"
-        style="@style/Widget.MealPlan.CardView.Round.Big"
+        style="@style/MealPlan.CardView.Round.Big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
