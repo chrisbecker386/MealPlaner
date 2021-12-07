@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Dish
-
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.FragmentDishDetailsBinding
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishDetailsViewModel
