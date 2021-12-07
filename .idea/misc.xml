@@ -19,12 +19,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/date_picker_fragment.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout/fragment_date_picker.xml" value="0.14222222222222222" />
-        <entry key="app/src/main/res/layout/fragment_dish.xml" value="0.12" />
+        <entry key="app/src/main/res/layout/fragment_dish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dish_detail.xml" value="0.27760416666666665" />
         <entry key="app/src/main/res/layout/fragment_dish_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_dish_image_selector.xml" value="0.16296296296296298" />
         <entry key="app/src/main/res/layout/fragment_edit_dish.xml" value="0.21481481481481482" />
-        <entry key="app/src/main/res/layout/fragment_edit_period.xml" value="0.2859375" />
+        <entry key="app/src/main/res/layout/fragment_edit_period.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_meal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_meal_dish_detail.xml" value="0.2755208333333333" />
         <entry key="app/src/main/res/layout/fragment_meal_dish_details.xml" value="0.1" />

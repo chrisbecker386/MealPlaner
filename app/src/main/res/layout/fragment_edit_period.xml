@@ -98,14 +98,14 @@
 
     <Button
         android:id="@+id/btn_set_changes"
-        style="@style/MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.MarginRegular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fab_plus_day"
         tools:text="@string/save" />
 
     <Button
-        style="@style/MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.MarginRegular"
         android:id="@+id/btn_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MealPlan.ConstraintLayout.Basic"
     tools:context=".ui.dish.fragments.DishDetailsFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_dish_details"
-        style="@style/Widget.MealPlan.CardView.Round.Big"
+        style="@style/MealPlan.CardView.Round.Big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +17,7 @@
             style="@style/ImageView.Round.Big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_lunch" />
+            tools:src="@drawable/lb_background" />
     </androidx.cardview.widget.CardView>
 
 
@@ -44,9 +43,7 @@
 
     <ScrollView
         android:id="@+id/scroll_view_dish_details"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="8dp"
+        style="@style/MealPlan.ScrollView"
         app:layout_constraintBottom_toTopOf="@+id/btn_dish_set_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +55,8 @@
 
             <TextView
                 android:id="@+id/txt_dish_ingredients"
-                style="@style/Theme.MealPlan.TextAppearanceBody1.Bold"
+                style="@style/MealPlan.Text.Body1.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -68,9 +64,7 @@
 
             <TextView
                 android:id="@+id/txt_dish_description"
-                style="@style/Theme.MealPlan.TextAppearanceBody2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/MealPlan.Text.Body2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dish_ingredients"
                 tools:text="@string/test_text" />
@@ -80,8 +74,6 @@
     <Button
         android:id="@+id/btn_dish_set_changes"
         style="@style/MealPlan.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/select" />

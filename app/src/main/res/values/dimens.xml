@@ -5,6 +5,7 @@
     <dimen name="picture_size_small">60dp</dimen>
     <dimen name="picture_size_small_half">30dp</dimen>
 
+    <dimen name="height_no">0dp</dimen>
     <dimen name="width_no">0dp</dimen>
     <dimen name="width_extra_tiny">1dp</dimen>
     <dimen name="width_tiny">2dp</dimen>
@@ -13,5 +14,11 @@
     <dimen name="width_middle">12dp</dimen>
     <dimen name="width_medium">16dp</dimen>
     <dimen name="width_big">32dp</dimen>
+
+    <dimen name="text_size_headline1">30sp</dimen>
+    <dimen name="text_size_headline2">22sp</dimen>
+    <dimen name="text_size_headline3">20sp</dimen>
+    <dimen name="text_size_body1">18sp</dimen>
+    <dimen name="text_size_body2">14sp</dimen>
 
 </resources>
