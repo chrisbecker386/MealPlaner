@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/period_card_view"
-    style="@style/Widget.MealPlan.CardLayout">
+    style="@style/MealPlan.CardLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
 
         <View
             android:id="@+id/view_divider"
-            style="@style/Widget.MealPlan.Divider"
+            style="@style/MealPlan.Divider"
             android:layout_width="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/txt_end_weekday"
             app:layout_constraintTop_toBottomOf="@+id/txt_start_date" />

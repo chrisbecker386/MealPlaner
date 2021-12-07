@@ -63,7 +63,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_plus_day"
-        style="@style/Widget.MealPlan.FloatingActionButton.Mini"
+        style="@style/MealPlan.FloatingActionButton.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Plus a day"
@@ -86,7 +86,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_minus_day"
-        style="@style/Widget.MealPlan.FloatingActionButton.Mini"
+        style="@style/MealPlan.FloatingActionButton.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Minus a day"
@@ -98,14 +98,14 @@
 
     <Button
         android:id="@+id/btn_set_changes"
-        style="@style/Widget.MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.Margin8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fab_plus_day"
         tools:text="@string/save" />
 
     <Button
-        style="@style/Widget.MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.Margin8"
         android:id="@+id/btn_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -20,7 +20,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_schedule_period"
-        style="@style/Widget.MealPlan.FloatingActionButton"
+        style="@style/MealPlan.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lb_details_overview_action_items_spacing"

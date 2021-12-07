@@ -79,7 +79,7 @@
 
     <Button
         android:id="@+id/btn_dish_set_changes"
-        style="@style/Widget.MealPlan.Button"
+        style="@style/MealPlan.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Widget.MealPlan.Button" parent="Widget.AppCompat.Button.Colored">
+    <style name="MealPlan.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="Widget.MealPlan.Button.Margin4" parent="Widget.MealPlan.Button">
-        <item name="android:layout_margin">4dp</item>
+    <style name="MealPlan.Button.Margin4" parent="MealPlan.Button">
+        <item name="android:layout_margin">@dimen/width_small</item>
     </style>
 
-    <style name="Widget.MealPlan.Button.Margin8" parent="Widget.MealPlan.Button">
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
+    <style name="MealPlan.Button.Margin8" parent="MealPlan.Button">
+        <item name="android:layout_marginBottom">@dimen/width_regular</item>
+        <item name="android:layout_marginTop">@dimen/width_regular</item>
+        <item name="android:layout_marginLeft">@dimen/width_regular</item>
+        <item name="android:layout_marginRight">@dimen/width_regular</item>
     </style>
 
-    <style name="Widget.MealPlan.FloatingActionButton" parent="">
+    <style name="MealPlan.FloatingActionButton" parent="">
         <item name="backgroundTint">?attr/colorSecondary</item>
     </style>
 
-    <style name="Widget.MealPlan.FloatingActionButton.Mini">
+    <style name="MealPlan.FloatingActionButton.Mini">
         <item name="fabSize">mini</item>
-        <item name="borderWidth">2dp</item>
+        <item name="borderWidth">@dimen/width_tiny</item>
     </style>
 
 
-    <style name="Widget.MealPlan.Divider" parent="">
+    <style name="MealPlan.Divider" parent="">
         <item name="android:background">?attr/colorOnSurface</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginHorizontal">8dp</item>
-        <item name="android:layout_marginVertical">4dp</item>
+        <item name="android:layout_height">@dimen/width_extra_tiny</item>
+        <item name="android:layout_marginHorizontal">@dimen/width_regular</item>
+        <item name="android:layout_marginVertical">@dimen/width_small</item>
     </style>
 
-    <style name="Widget.MealPlan.ImageButton" parent="Widget.AppCompat.ImageButton">
+    <style name="MealPlan.ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:backgroundTint">?attr/colorSurface</item>
@@ -44,25 +44,25 @@
     </style>
 
     <style name="Widget.MealPlan.ImageButton.Custom" parent="CardView">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">@dimen/picture_size_small</item>
+        <item name="android:layout_height">@dimen/picture_size_small</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardCornerRadius">30dp</item>
-        <item name="borderWidth">0dp</item>
+        <item name="cardElevation">@dimen/width_no</item>
+        <item name="cardCornerRadius">@dimen/picture_size_small_half</item>
+        <item name="borderWidth">@dimen/width_no</item>
     </style>
 
     <style name="Widget.MealPlan.CardView.Round.Big" parent="CardView">
-        <item name="android:layout_width">@dimen/lb_details_v2_logo_max_width</item>
-        <item name="android:layout_height">@dimen/lb_details_v2_logo_max_width</item>
+        <item name="android:layout_width">@dimen/picture_size_big</item>
+        <item name="android:layout_height">@dimen/picture_size_big</item>
         <item name="android:layout_margin">@dimen/lb_basic_card_info_badge_margin</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardCornerRadius">75dp</item>
-        <item name="borderWidth">0dp</item>
+        <item name="cardElevation">@dimen/width_no</item>
+        <item name="cardCornerRadius">@dimen/picture_size_big_half</item>
+        <item name="borderWidth">@dimen/width_no</item>
     </style>
 
-    <style name="Widget.MealPlan.CardView.Rounded.Big" parent="Widget.MealPlan.CardView.Round.Big">
-        <item name="cardCornerRadius">20dp</item>
+    <style name="MealPlan.CardView.Rounded.Big" parent="Widget.MealPlan.CardView.Round.Big">
+        <item name="cardCornerRadius">@dimen/picture_size_big_small_rounded</item>
     </style>
 
 
@@ -72,21 +72,21 @@
     </style>
 
     <style name="ImageView.Round.Big" parent="ImageView">
-        <item name="android:layout_width">@dimen/lb_details_v2_logo_max_width</item>
-        <item name="android:layout_height">@dimen/lb_details_v2_logo_max_width</item>
+        <item name="android:layout_width">@dimen/picture_size_big</item>
+        <item name="android:layout_height">@dimen/picture_size_big</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-    <style name="Widget.MealPlan.CardLayout" parent="CardView">
+    <style name="MealPlan.CardLayout" parent="CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">12dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginEnd">12dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">@dimen/width_middle</item>
+        <item name="android:layout_marginTop">@dimen/width_regular</item>
+        <item name="android:layout_marginEnd">@dimen/width_middle</item>
+        <item name="android:layout_marginBottom">@dimen/width_regular</item>
         <item name="cardBackgroundColor">?attr/colorAccent</item>
-        <item name="cardCornerRadius">8dp</item>
-        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">@dimen/width_regular</item>
+        <item name="cardElevation">@dimen/width_regular</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
     </style>
 
@@ -95,7 +95,7 @@
     <style name="MealPlan.ConstraintLayout" parent="MealPlan">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:padding">@dimen/lb_browse_item_vertical_spacing</item>
+        <item name="android:padding">@dimen/width_regular</item>
     </style>
 
 </resources>

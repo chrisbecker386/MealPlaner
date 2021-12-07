@@ -20,7 +20,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_edit_dish"
-                style="@style/Widget.MealPlan.CardView.Rounded.Big"
+                style="@style/MealPlan.CardView.Rounded.Big"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -83,7 +83,7 @@
 
     <Button
         android:id="@+id/btn_dish_save"
-        style="@style/Widget.MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.Margin8"
         android:layout_marginBottom="0dp"
         android:text="@string/save"
         app:layout_constraintBottom_toTopOf="@id/btn_dish_delete"
@@ -92,7 +92,7 @@
 
     <Button
         android:id="@+id/btn_dish_delete"
-        style="@style/Widget.MealPlan.Button.Margin8"
+        style="@style/MealPlan.Button.Margin8"
         android:text="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

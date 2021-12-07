@@ -74,7 +74,7 @@
 
     <Button
         android:id="@+id/btn_dish_set_changes"
-        style="@style/Widget.MealPlan.Button"
+        style="@style/MealPlan.Button"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/btn_dish_unselect"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
 
     <Button
         android:id="@+id/btn_dish_unselect"
-        style="@style/Widget.MealPlan.Button"
+        style="@style/MealPlan.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/unselect"
@@ -94,7 +94,7 @@
 
     <Button
         android:id="@+id/btn_dish_reselect"
-        style="@style/Widget.MealPlan.Button"
+        style="@style/MealPlan.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/reselect"
