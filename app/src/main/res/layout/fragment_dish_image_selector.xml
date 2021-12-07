@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/txt_input_dish_image_selector_search"
+        style="@style/Theme.MealPlan.TextAppearanceBody1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,6 +17,7 @@
 
     <Button
         android:id="@+id/btn_dish_search"
+        style="@style/Widget.MealPlan.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search"
