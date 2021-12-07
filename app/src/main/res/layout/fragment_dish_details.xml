@@ -8,17 +8,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_dish_details"
-        style="@style/Widget.MealPlan.ImageView.Round.Big"
-        android:layout_margin="@dimen/lb_basic_card_info_badge_margin"
+        style="@style/Widget.MealPlan.CardView.Round.Big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/img_view_dish"
-            android:layout_width="@dimen/lb_details_v2_logo_max_width"
-            android:layout_height="@dimen/lb_details_v2_logo_max_width"
-            android:scaleType="centerCrop"
+            style="@style/ImageView.Round.Big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_lunch" />
