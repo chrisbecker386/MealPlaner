@@ -21,7 +21,7 @@
         android:id="@+id/dishDetailsFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailsFragment"
         android:label="fragment_dish_detail"
-        tools:layout="@layout/fragment_dish_detail">
+        tools:layout="@layout/fragment_dish_details">
         <argument
             android:name="args"
             app:argType="de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails" />
