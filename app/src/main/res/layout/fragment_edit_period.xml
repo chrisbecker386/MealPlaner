@@ -8,48 +8,45 @@
 
     <TextView
         android:id="@+id/txt_headline_start_date"
+        style="@style/Theme.MealPlan.TextAppearanceBody1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/from"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_headline_end_date"
+        style="@style/Theme.MealPlan.TextAppearanceBody1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/till"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_weekday_start_day"
+        style="@style/Theme.MealPlan.TextAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_headline_start_date"
         tools:text="@string/monday" />
 
     <TextView
         android:id="@+id/txt_start_date"
+        style="@style/Theme.MealPlan.TextAppearanceHeadline1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_weekday_start_day"
         tools:text="2.1.1984" />
 
     <TextView
         android:id="@+id/txt_weekday_end_day"
+        style="@style/Theme.MealPlan.TextAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_headline_end_date"
         tools:text="@string/friday" />
@@ -57,25 +54,20 @@
 
     <TextView
         android:id="@+id/txt_end_date"
+        style="@style/Theme.MealPlan.TextAppearanceHeadline1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_weekday_end_day"
         tools:text="30.5.1984" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_plus_day"
+        style="@style/Widget.MealPlan.FloatingActionButton.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:contentDescription="Plus a day"
         android:src="@drawable/ic_add_symb_24"
-        android:tint="@color/white"
-        app:backgroundTint="@color/black"
-        app:borderWidth="2dp"
-        app:fabSize="mini"
         app:layout_constraintEnd_toStartOf="@+id/txt_days_between"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_start_date" />
@@ -83,9 +75,9 @@
 
     <TextView
         android:id="@+id/txt_days_between"
+        style="@style/Theme.MealPlan.TextAppearanceHeadline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_set_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,15 +86,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_minus_day"
+        style="@style/Widget.MealPlan.FloatingActionButton.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:contentDescription="Minus a day"
         android:src="@drawable/ic_minus_symb_24"
-        android:tint="@color/white"
-        app:backgroundTint="@color/black"
-        app:borderWidth="2dp"
-        app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txt_days_between"
         app:layout_constraintTop_toBottomOf="@+id/txt_end_date" />
@@ -110,14 +98,14 @@
 
     <Button
         android:id="@+id/btn_set_changes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/Widget.MealPlan.Button.Margin8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fab_plus_day"
         tools:text="@string/save" />
 
     <Button
+        style="@style/Widget.MealPlan.Button.Margin8"
         android:id="@+id/btn_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
