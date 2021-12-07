@@ -12,6 +12,7 @@ import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.data.utility.MealTypes
 import de.writer_chris.babittmealplaner.databinding.ItemMealDishBinding
+
 class DayMealItemListAdapter(
     private val context: Context,
     private val onItemSelect: (mealId: Int) -> Unit,
@@ -46,7 +47,6 @@ class DayMealItemListAdapter(
 
         private fun setDefaults(mealAndDish: MealAndDish) {
             binding.apply {
-                txtMealType.text = mealAndDish.meal.mealType
                 when (mealAndDish.meal.mealType) {
                     MealTypes.BREAKFAST.title -> imgBtnDish.setImageResource(R.drawable.ic_breakfast)
                     MealTypes.LUNCH.title -> imgBtnDish.setImageResource(R.drawable.ic_lunch)
@@ -63,19 +63,22 @@ class DayMealItemListAdapter(
         ) {
             binding.apply {
                 if (mealAndDish.meal.dishId == null) {
-                    txtDishName.text = "-"
-                    imgBtnDish.setOnClickListener {
+                    txtDishName.text = mealAndDish.meal.mealType
+                    txtDishDuration.text = ""
+                    itemMealDish.setOnClickListener {
                         onItemSelect(mealAndDish.meal.mealId)
                     }
                 } else {
                     txtDishName.text = mealAndDish.dish?.dishName
+                    txtDishDuration.text =
+                        context.getString(R.string.min, mealAndDish.dish?.duration.toString())
                     imgBtnDish.setImageBitmap(
                         DataUtil.loadDishPictureFromInternalStorage(
                             context,
                             mealAndDish.dish?.dishId.toString()
                         )
                     )
-                    imgBtnDish.setOnClickListener {
+                    itemMealDish.setOnClickListener {
                         onItemRead(
                             arrayOf(
                                 mealAndDish.dish?.dishId ?: -1,
