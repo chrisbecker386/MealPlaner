@@ -3,9 +3,13 @@ package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
 import de.writer_chris.babittmealplaner.databinding.ItemMealDayBinding
@@ -48,11 +52,26 @@ class DayMealsListAdapter(
             onItemSelect: (mealId: Int) -> Unit,
             onItemRead: (dishMealId: Array<Int>) -> Unit
         ) {
+
+            val divider = DividerItemDecoration(
+                context,
+                LinearLayout.VERTICAL
+            )
+            val drawable = ContextCompat.getDrawable(context, R.drawable.recycler_view_divider)
+
             binding.apply {
-                txtDate.text = getDate(dayMeals.date)
-                txtDayOfTheWeek.text = getDayOfWeek(dayMeals.date)
+                txtWeekdayItemMealDay.text = getDayOfWeek(dayMeals.date)
+                txtDateItemMealDay.text = getDate(dayMeals.date)
                 recyclerViewDayMeals.adapter =
                     getAdapter(dayMeals, context, onItemSelect, onItemRead)
+
+                recyclerViewDayMeals.apply {
+                    drawable?.let {
+                        divider.setDrawable(drawable)
+                        addItemDecoration(divider)
+                    }
+                }
+
             }
         }
 
