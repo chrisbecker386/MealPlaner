@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/img_view_dish"
-            style="@style/ImageView.Round.Big"
+            style="@style/MealPlan.ImageView.Big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/lb_background" />
@@ -23,9 +23,7 @@
 
     <TextView
         android:id="@+id/txt_dish_name"
-        style="@style/Theme.MealPlan.TextAppearanceHeadline2.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MealPlan.Text.Headline2.Bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view_dish_details"
@@ -33,9 +31,7 @@
 
     <TextView
         android:id="@+id/txt_dish_duration"
-        style="@style/Theme.MealPlan.TextAppearanceBody2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MealPlan.Text.Body2"
         android:text="@string/duration"
         app:layout_constraintStart_toStartOf="@+id/txt_dish_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_dish_name"
