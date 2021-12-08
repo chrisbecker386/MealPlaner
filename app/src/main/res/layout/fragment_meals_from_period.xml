@@ -2,14 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MealPlan.ConstraintLayout.NoVerticalMargin"
     tools:context=".ui.mealplaner.fragments.MealsFromPeriodFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_meals_from_period"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/MealPlan.RecyclerView.Vertical"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,40 +18,27 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pdf_view_outer"
-        android:layout_width="900dp"
-        android:layout_height="700dp"
+        style="@style/MealPlan.ConstraintLayout.Pdf.Outer"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pdf_view"
-            android:layout_width="800dp"
-            android:layout_height="600dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginVertical="50dp"
+            style="@style/MealPlan.ConstraintLayout.Pdf.Inner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <TextView
                 android:id="@+id/pdf_view_head_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MealPlan.Text.Pdf.Bold"
                 android:text="@string/title_meal_plan"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/pdf_view_time_period"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="25sp"
+                style="@style/MealPlan.Text.Pdf"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pdf_view_head_text"
@@ -66,56 +52,32 @@
 
                 <TextView
                     android:id="@+id/pdf_view_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/weekday"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    style="@style/MealPlan.Text.Pdf.Columns.Title"
+                    android:text="@string/weekday" />
 
                 <TextView
                     android:id="@+id/pdf_view_breakfast"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/breakfast"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    style="@style/MealPlan.Text.Pdf.Columns.Title"
+                    android:text="@string/breakfast" />
 
                 <TextView
                     android:id="@+id/pdf_view_lunch"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/lunch"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    style="@style/MealPlan.Text.Pdf.Columns.Title"
+                    android:text="@string/lunch" />
 
                 <TextView
                     android:id="@+id/pdf_view_dinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/dinner"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    style="@style/MealPlan.Text.Pdf.Columns.Title"
+                    android:text="@string/dinner" />
             </LinearLayout>
+
             <View
                 android:id="@+id/view_divider"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/divider_height_regular"
                 android:background="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pdf_view_linear_layout"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/pdf_view_linear_layout" />
 
             <ListView
                 android:id="@+id/pdf_view_list_view"
