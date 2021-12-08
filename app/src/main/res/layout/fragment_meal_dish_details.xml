@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MealPlan.ConstraintLayout.Basic"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.mealplaner.fragments.MealDishDetailsFragment">
 
     <androidx.cardview.widget.CardView
@@ -24,7 +22,7 @@
 
     <TextView
         android:id="@+id/txt_dish_name"
-        style="@style/Theme.MealPlan.TextAppearanceHeadline2.Bold"
+        style="@style/MealPlan.Text.Headline2.Bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view_meal_dish_details"
@@ -32,7 +30,7 @@
 
     <TextView
         android:id="@+id/txt_dish_duration"
-        style="@style/Theme.MealPlan.TextAppearanceBody1"
+        style="@style/MealPlan.Text.Body1"
         android:text="@string/duration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,9 +39,7 @@
 
     <ScrollView
         android:id="@+id/scroll_view_meal_dish_details"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="8dp"
+        style="@style/MealPlan.ScrollView"
         app:layout_constraintBottom_toTopOf="@+id/btn_dish_set_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +60,7 @@
 
             <TextView
                 android:id="@+id/txt_dish_description"
-                style="@style/Theme.MealPlan.TextAppearanceBody2"
+                style="@style/MealPlan.Text.Body2"
                 android:layout_width="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_dish_ingredients"
@@ -75,7 +71,6 @@
     <Button
         android:id="@+id/btn_dish_set_changes"
         style="@style/MealPlan.Button"
-        android:layout_width="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/btn_dish_unselect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,20 +78,15 @@
 
     <Button
         android:id="@+id/btn_dish_unselect"
-        style="@style/MealPlan.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/MealPlan.Button.PartOf2"
         android:text="@string/unselect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_dish_reselect"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <Button
         android:id="@+id/btn_dish_reselect"
-        style="@style/MealPlan.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/MealPlan.Button.PartOf2"
         android:text="@string/reselect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
