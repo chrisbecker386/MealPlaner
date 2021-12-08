@@ -27,7 +27,7 @@
 
                 <ImageView
                     android:id="@+id/img_view_edit_dish"
-                    style="@style/ImageView.Round.Big"
+                    style="@style/MealPlan.ImageView.Big"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -69,6 +69,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
                 android:hint="@string/description_hint"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:nextFocusUp="@id/btn_dish_save"
                 app:layout_constraintEnd_toEndOf="parent"
