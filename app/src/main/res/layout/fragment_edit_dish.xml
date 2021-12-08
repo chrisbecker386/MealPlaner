@@ -2,13 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MealPlan.ConstraintLayout.Basic"
     tools:context="de.writer_chris.babittmealplaner.ui.dish.fragments.DishEditFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        style="@style/MealPlan.ScrollView"
         app:layout_constraintBottom_toTopOf="@+id/btn_dish_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,11 +34,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_input_edit_dish_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                style="@style/MealPlan.TextInput"
                 android:hint="@string/new_dish_name"
-                android:inputType="text"
                 android:nextFocusDown="@id/txt_input_edit_dish_duration"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +45,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_input_edit_dish_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                style="@style/MealPlan.TextInput"
                 android:ems="10"
                 android:hint="@string/duration_hint"
                 android:inputType="number"
@@ -65,17 +58,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_input_edit_dish_description"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
+                style="@style/MealPlan.TextInput"
                 android:hint="@string/description_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text"
                 android:nextFocusUp="@id/btn_dish_save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_input_edit_dish_duration"
-                tools:layout_editor_absoluteY="429dp"
                 tools:text="@string/test_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,8 +72,7 @@
 
     <Button
         android:id="@+id/btn_dish_save"
-        style="@style/MealPlan.Button.MarginRegular"
-        android:layout_marginBottom="0dp"
+        style="@style/MealPlan.Button"
         android:text="@string/save"
         app:layout_constraintBottom_toTopOf="@id/btn_dish_delete"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +80,7 @@
 
     <Button
         android:id="@+id/btn_dish_delete"
-        style="@style/MealPlan.Button.MarginRegular"
+        style="@style/MealPlan.Button"
         android:text="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
