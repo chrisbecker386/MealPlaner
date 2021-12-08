@@ -11,7 +11,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header_item_meal_day"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/lb_basic_card_info_height"
+            android:layout_height="@dimen/card_header_height"
+            android:layout_marginBottom="@dimen/height_small"
             app:layout_constraintBottom_toTopOf="@+id/recycler_view_day_meals"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +20,8 @@
 
             <TextView
                 android:id="@+id/txt_weekday_item_meal_day"
-                style="@style/Theme.MealPlan.TextAppearanceHeadline3.Bold"
-                android:layout_marginHorizontal="@dimen/lb_browse_item_horizontal_spacing"
+                style="@style/MealPlan.Text.Headline3.Bold"
+                android:layout_marginHorizontal="@dimen/width_regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -28,8 +29,8 @@
 
             <TextView
                 android:id="@+id/txt_date_item_meal_day"
-                style="@style/Theme.MealPlan.TextAppearanceHeadline3.Bold"
-                android:paddingHorizontal="@dimen/lb_browse_item_horizontal_spacing"
+                style="@style/MealPlan.Text.Headline3.Bold"
+                android:layout_marginHorizontal="@dimen/width_regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +38,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/lb_basic_card_info_text_margin"
+                android:layout_height="@dimen/divider_height_regular"
                 android:background="?attr/colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -45,11 +46,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_day_meals"
-            android:layout_width="match_parent"
+            style="@style/MealPlan.RecyclerView.LinearLayout"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/lb_browse_item_vertical_spacing"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:paddingBottom="@dimen/height_regular"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_item_meal_day"
             tools:itemCount="3"
