@@ -2,32 +2,53 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MealPlan.ConstraintLayout.Basic"
     tools:context=".ui.dish.fragments.DishImageSelectorFragment">
+
+    <TextView
+        android:id="@+id/txt_pixa_bay_presenter"
+        style="@style/MealPlan.Text.Body2"
+        android:text="@string/api_presenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_pixa_bay_logo"
+        style="@style/MealPlan.ImageView"
+        android:layout_height="@dimen/width_big"
+        android:layout_width="0dp"
+        android:src="@drawable/ic_pixa_bay_logo"
+        app:layout_constraintTop_toBottomOf="@id/txt_pixa_bay_presenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
     <EditText
         android:id="@+id/txt_input_dish_image_selector_search"
         style="@style/Theme.MealPlan.TextAppearanceBody1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/name_of_your_dish"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:nextFocusDown="@id/btn_dish_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_pixa_bay_logo"
         tools:text="nice picture" />
 
     <Button
         android:id="@+id/btn_dish_search"
         style="@style/MealPlan.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/search"
+        android:layout_marginVertical="@dimen/width_minus_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_input_dish_image_selector_search" />
 
+
     <ImageView
         android:id="@+id/img_view_dish_image_selector"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        style="@style/MealPlan.ImageView.Big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,25 +57,20 @@
 
     <TextView
         android:id="@+id/txt_error_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MealPlan.Text.Headline1"
         app:layout_constraintBottom_toTopOf="@+id/img_view_dish_image_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="http 403" />
+        tools:text="http 404" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_image_selector"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="6dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        style="@style/MealPlan.RecyclerView.GridView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_dish_search"
-        app:spanCount="3"
-        tools:itemCount="15"
+        tools:itemCount="3"
         tools:listitem="@layout/item_dish_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

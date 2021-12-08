@@ -78,5 +78,7 @@
         <item quantity="other">%d days</item>
     </plurals>
     <string name="min">%s min</string>
+    <string name="api_presenter">search by</string>
+    <string name="name_of_your_dish">name of your dish</string>
 
 </resources>
