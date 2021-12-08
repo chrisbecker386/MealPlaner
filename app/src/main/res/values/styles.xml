@@ -2,39 +2,11 @@
 <resources>
 
 
-    <style name="MealPlan.Divider" parent="">
-        <item name="android:background">?attr/colorOnSurface</item>
-        <item name="android:layout_height">@dimen/width_extra_tiny</item>
-        <item name="android:layout_marginHorizontal">@dimen/width_regular</item>
-        <item name="android:layout_marginVertical">@dimen/width_small</item>
-    </style>
-
     <style name="MealPlan.ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="android:scaleType">fitXY</item>
-    </style>
-
-    <style name="Widget.MealPlan.ImageButton.Custom" parent="CardView">
-        <item name="android:layout_width">@dimen/picture_size_small</item>
-        <item name="android:layout_height">@dimen/picture_size_small</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="cardElevation">@dimen/width_no</item>
-        <item name="cardCornerRadius">@dimen/picture_size_small_half</item>
-        <item name="borderWidth">@dimen/width_no</item>
-    </style>
-
-
-    <style name="ImageView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="ImageView.Round.Big" parent="ImageView">
-        <item name="android:layout_width">@dimen/picture_size_big</item>
-        <item name="android:layout_height">@dimen/picture_size_big</item>
-        <item name="android:scaleType">centerCrop</item>
     </style>
 
 
@@ -44,7 +16,27 @@
     <style name="MealPlan.ConstraintLayout.Basic" parent="MealPlan">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:padding">@dimen/width_regular</item>
+        <item name="android:layout_marginTop">@dimen/width_regular</item>
+        <item name="android:layout_marginBottom">@dimen/width_regular</item>
+        <item name="android:layout_marginLeft">@dimen/width_regular</item>
+        <item name="android:layout_marginRight">@dimen/width_regular</item>
+    </style>
+
+    <style name="MealPlan.ConstraintLayout.NoVerticalMargin" parent="MealPlan.ConstraintLayout.Basic">
+        <item name="android:layout_marginTop">@dimen/height_no</item>
+        <item name="android:layout_marginBottom">@dimen/height_no</item>
+    </style>
+
+    <style name="MealPlan.ConstraintLayout.Pdf.Outer" parent="MealPlan">
+        <item name="android:layout_width">@dimen/pdf_width_outer</item>
+        <item name="android:layout_height">@dimen/pdf_height_outer</item>
+    </style>
+
+    <style name="MealPlan.ConstraintLayout.Pdf.Inner" parent="MealPlan">
+        <item name="android:layout_width">@dimen/pdf_width_inner</item>
+        <item name="android:layout_height">@dimen/pdf_height_inner</item>
+        <item name="android:layout_marginHorizontal">@dimen/pdf_margin_big</item>
+        <item name="android:layout_marginVertical">@dimen/pdf_margin_big</item>
     </style>
 
     <!--RecyclerView-->
@@ -57,12 +49,28 @@
         <item name="android:scrollbars">vertical</item>
     </style>
 
+    <style name="MealPlan.RecyclerView.LinearLayout" parent="MealPlan.RecyclerView">
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
+    </style>
+
+    <style name="MealPlan.RecyclerView.GridView" parent="MealPlan.RecyclerView">
+        <item name="android:layout_height">@dimen/height_no</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="layoutManager">androidx.recyclerview.widget.GridLayoutManager</item>
+        <item name="spanCount">3</item>
+    </style>
+
     <!--Button-->
     <style name="MealPlan.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="MealPlan.Button.PartOf2" parent="MealPlan.Button">
+        <item name="android:layout_width">@dimen/width_no</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="MealPlan.Button.MarginSmall" parent="MealPlan.Button">
@@ -112,9 +120,19 @@
     <style name="MealPlan.CardView.Round.Big" parent="MealPlan.CardView">
         <item name="android:layout_width">@dimen/picture_size_big</item>
         <item name="android:layout_height">@dimen/picture_size_big</item>
-        <item name="cardElevation">@dimen/width_no</item>
         <item name="cardCornerRadius">@dimen/picture_size_big_half</item>
+        <item name="cardElevation">@dimen/width_no</item>
         <item name="borderWidth">@dimen/width_no</item>
+    </style>
+
+    <style name="MealPlan.CardView.Round.Small" parent="MealPlan.CardView.Round.Big">
+        <item name="android:layout_width">@dimen/picture_size_small</item>
+        <item name="android:layout_height">@dimen/picture_size_small</item>
+        <item name="cardCornerRadius">@dimen/picture_size_small_half</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/height_small</item>
+        <item name="android:layout_marginBottom">@dimen/height_small</item>
+        <item name="android:layout_marginStart">@dimen/height_regular</item>
     </style>
 
     <style name="MealPlan.CardView.Rounded.Big" parent="MealPlan.CardView.Round.Big">
@@ -122,13 +140,43 @@
     </style>
 
     <style name="MealPlan.CardView.CardLayout" parent="MealPlan.CardView">
+        <item name="android:layout_marginStart">@dimen/width_no</item>
+        <item name="android:layout_marginTop">@dimen/height_small</item>
+        <item name="android:layout_marginEnd">@dimen/width_no</item>
+        <item name="android:layout_marginBottom">@dimen/height_small</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/width_middle</item>
-        <item name="android:layout_marginEnd">@dimen/width_middle</item>
         <item name="cardBackgroundColor">?attr/colorAccent</item>
         <item name="cardCornerRadius">@dimen/width_regular</item>
         <item name="cardElevation">@dimen/width_regular</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+
+
+    <!--Image-->
+    <style name="MealPlan.ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MealPlan.ImageView.Normal" parent="MealPlan.ImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+
+    <style name="MealPlan.ImageView.square" parent="MealPlan.ImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_no</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
+    </style>
+
+    <style name="MealPlan.ImageView.Big" parent="MealPlan.ImageView">
+        <item name="android:layout_width">@dimen/picture_size_big</item>
+        <item name="android:layout_height">@dimen/picture_size_big</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <!--ScrollView-->
@@ -137,7 +185,7 @@
         <item name="android:layout_height">@dimen/height_no</item>
     </style>
 
-    <!--text-->
+    <!--TextView-->
     <style name="MealPlan.Text" parent="TextAppearance.AppCompat">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -183,6 +231,66 @@
 
     <style name="MealPlan.Text.Body2.Bold" parent="MealPlan.Text.Body2">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MealPlan.Text.Pdf" parent="MealPlan.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_pdf1</item>
+    </style>
+
+    <style name="MealPlan.Text.Pdf.Bold" parent="MealPlan.Text.Pdf">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MealPlan.Text.Pdf.Columns.Title" parent="MealPlan.Text.Pdf.Bold">
+        <item name="android:layout_width">@dimen/width_no</item>
+        <item name="android:layout_weight">@dimen/pdf_column_weight</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="MealPlan.Text.Pdf.Columns.Item" parent="MealPlan.Text.Pdf.Columns.Title">
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginHorizontal">@dimen/pdf_margin_tiny</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_pdf2</item>
+        <item name="android:gravity">start|top</item>
+    </style>
+
+    <!--TextInputEditText-->
+    <style name="MealPlan.TextInput" parent="MealPlan">
+        <item name="android:layout_marginTop">@dimen/height_small</item>
+        <item name="android:layout_width">@dimen/width_no</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+
+    <!--Divider-->
+    <style name="MealPlan.Divider">
+        <item name="android:background">?attr/colorOnSurface</item>
+        <item name="android:layout_height">@dimen/height_extra_tiny</item>
+        <item name="android:layout_marginHorizontal">@dimen/width_regular</item>
+        <item name="android:layout_marginVertical">@dimen/width_small</item>
+    </style>
+
+    <style name="MealPlan.Divider.Pdf" parent="MealPlan.Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:layout_marginHorizontal">@dimen/width_no</item>
+        <item name="android:layout_marginVertical">@dimen/height_no</item>
+    </style>
+
+    <!--LinearLayout-->
+    <style name="MealPlan.LinearLayout">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="MealPlan.LinearLayout.Pdf.Horizontal" parent="MealPlan.LinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginVertical">@dimen/pdf_margin_tiny</item>
+        <item name="android:columnCount">@dimen/pdf_column_weight_max</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 
