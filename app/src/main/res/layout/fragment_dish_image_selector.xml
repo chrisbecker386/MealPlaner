@@ -41,7 +41,6 @@
         android:id="@+id/btn_dish_search"
         style="@style/MealPlan.Button"
         android:text="@string/search"
-        android:layout_marginVertical="@dimen/width_minus_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_input_dish_image_selector_search" />
 
