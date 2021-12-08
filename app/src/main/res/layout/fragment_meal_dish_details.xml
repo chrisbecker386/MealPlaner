@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/img_view_dish"
-            style="@style/ImageView.Round.Big"
+            style="@style/MealPlan.ImageView.Big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_lunch" />
