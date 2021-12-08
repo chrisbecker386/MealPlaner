@@ -2,15 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MealPlan.ConstraintLayout.NoVerticalMargin"
     tools:context=".ui.mealplaner.fragments.PeriodFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/period_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
+        style="@style/MealPlan.RecyclerView.Vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +18,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_schedule_period"
         style="@style/MealPlan.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/lb_details_overview_action_items_spacing"
+        android:layout_marginBottom="@dimen/height_medium"
         android:src="@drawable/ic_add_symb_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
