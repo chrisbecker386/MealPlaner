@@ -44,7 +44,7 @@ class MealDishListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
-        return DishViewHolder(ItemDishBinding.inflate(LayoutInflater.from(parent.context)))
+        return DishViewHolder(ItemDishBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: DishViewHolder, position: Int) {

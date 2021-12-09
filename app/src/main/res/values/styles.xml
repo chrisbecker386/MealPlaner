@@ -109,12 +109,25 @@
 
     <!--CardView-->
     <style name="MealPlan.CardView" parent="MealPlan">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/width_regular</item>
         <item name="android:layout_marginTop">@dimen/width_regular</item>
         <item name="android:layout_marginEnd">@dimen/width_regular</item>
         <item name="android:layout_marginBottom">@dimen/width_regular</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="MealPlan.CardView.CardLayout" parent="MealPlan.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">@dimen/width_no</item>
+        <item name="android:layout_marginTop">@dimen/height_small</item>
+        <item name="android:layout_marginEnd">@dimen/width_no</item>
+        <item name="android:layout_marginBottom">@dimen/height_small</item>
+        <item name="cardBackgroundColor">?attr/colorAccent</item>
+        <item name="cardCornerRadius">@dimen/width_regular</item>
+        <item name="cardElevation">@dimen/width_regular</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
     </style>
 
     <style name="MealPlan.CardView.Round.Big" parent="MealPlan.CardView">
@@ -137,18 +150,6 @@
 
     <style name="MealPlan.CardView.Rounded.Big" parent="MealPlan.CardView.Round.Big">
         <item name="cardCornerRadius">@dimen/picture_size_big_small_rounded</item>
-    </style>
-
-    <style name="MealPlan.CardView.CardLayout" parent="MealPlan.CardView">
-        <item name="android:layout_marginStart">@dimen/width_no</item>
-        <item name="android:layout_marginTop">@dimen/height_small</item>
-        <item name="android:layout_marginEnd">@dimen/width_no</item>
-        <item name="android:layout_marginBottom">@dimen/height_small</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="cardBackgroundColor">?attr/colorAccent</item>
-        <item name="cardCornerRadius">@dimen/width_regular</item>
-        <item name="cardElevation">@dimen/width_regular</item>
-        <item name="android:textColor">?attr/colorOnSecondary</item>
     </style>
 
 

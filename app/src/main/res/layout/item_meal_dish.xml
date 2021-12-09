@@ -16,9 +16,8 @@
         <ImageView
             android:id="@+id/img_btn_dish"
             style="@style/MealPlan.ImageView.Normal"
-            android:visibility="visible"
             tools:src="@drawable/ic_launcher_background"
-            tools:visibility="visible" />
+             />
 
     </androidx.cardview.widget.CardView>
 
