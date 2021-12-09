@@ -41,6 +41,7 @@ class DishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = DishListAdapter(
+            requireContext(),
             {
                 val args = ArgsToDishDetails(
                     getString(R.string.details_dish),

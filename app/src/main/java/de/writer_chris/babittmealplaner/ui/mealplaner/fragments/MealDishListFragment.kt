@@ -19,7 +19,6 @@ import de.writer_chris.babittmealplaner.ui.mealplaner.adapters.MealDishListAdapt
 
 class MealDishListFragment : Fragment() {
 
-
     private val navigationArgs: MealDishListFragmentArgs by navArgs()
 
     private val viewModel: DishViewModel by viewModels {
@@ -44,11 +43,7 @@ class MealDishListFragment : Fragment() {
         var mealId = -1
         mealId = navigationArgs.args.mealId
 
-//        navigationArgs.args?.let {
-//            mealId = it.mealId
-//        }
-
-        val adapter = MealDishListAdapter {
+        val adapter = MealDishListAdapter(requireContext(), { it ->
             val action =
                 MealDishListFragmentDirections.actionMealDishListFragmentToMealDishDetailsFragment(
                     ArgsToDishDetails(
@@ -59,6 +54,7 @@ class MealDishListFragment : Fragment() {
                 )
             this.findNavController().navigate(action)
         }
+        )
 
         binding.dishRecyclerView.adapter = adapter
         viewModel.allDishes.observe(this.viewLifecycleOwner) { dishes ->

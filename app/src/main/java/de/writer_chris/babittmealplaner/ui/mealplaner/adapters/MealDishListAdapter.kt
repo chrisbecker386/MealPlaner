@@ -1,15 +1,17 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.writer_chris.babittmealplaner.data.entities.Dish
-import de.writer_chris.babittmealplaner.data.parcels.ArgsToDish
+import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.ItemDishBinding
 
 class MealDishListAdapter(
+    private val context: Context,
     private val onItemClick: (Dish) -> Unit
 ) :
     ListAdapter<Dish, MealDishListAdapter.DishViewHolder>(DiffCallback) {
@@ -28,9 +30,15 @@ class MealDishListAdapter(
 
     class DishViewHolder(private var binding: ItemDishBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dish: Dish) {
+        fun bind(context: Context, dish: Dish) {
             binding.apply {
-                txtInputEditDishName.text = dish.dishName
+                txtDishNameDishItem.text = dish.dishName
+                imgDishItem.setImageBitmap(
+                    DataUtil.loadDishPictureFromInternalStorage(
+                        context,
+                        dish.dishId.toString()
+                    )
+                )
             }
         }
     }
@@ -43,7 +51,7 @@ class MealDishListAdapter(
         val current = getItem(position)
         holder.apply {
             itemView.setOnClickListener { onItemClick(current) }
-            bind(current)
+            bind(context, current)
         }
     }
 }
