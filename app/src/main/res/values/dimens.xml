@@ -37,6 +37,7 @@
     <dimen name="pdf_margin_big">50dp</dimen>
     <dimen name="pdf_margin_tiny">5dp</dimen>
 
+    <dimen name="linear_layout_column_weight_min">1</dimen>
     <dimen name="pdf_column_weight">1</dimen>
     <dimen name="pdf_column_weight_max">4</dimen>
 

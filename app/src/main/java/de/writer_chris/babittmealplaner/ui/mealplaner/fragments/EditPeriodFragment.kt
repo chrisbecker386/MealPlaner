@@ -94,11 +94,11 @@ class EditPeriodFragment : Fragment() {
 
     private fun setDefault() {
         binding.apply {
-            txtStartDate.setOnClickListener {
+            cardViewStartEditPeriod.setOnClickListener {
                 viewModel
                 datePickerDialog(viewModel.getStart(), true)
             }
-            txtEndDate.setOnClickListener {
+            cardViewEndEditPeriod.setOnClickListener {
                 datePickerDialog(viewModel.getEnd(), false)
             }
             fabPlusDay.setOnClickListener { addOneDay() }

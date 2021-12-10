@@ -80,5 +80,7 @@
     <string name="min">%s min</string>
     <string name="api_presenter">search by</string>
     <string name="name_of_your_dish">name of your dish</string>
+    <string name="plus_a_day">Plus a day</string>
+    <string name="minus_a_day">Minus a day</string>
 
 </resources>
