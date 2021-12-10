@@ -43,13 +43,13 @@
         <entry key="app/src/main/res/layout/fragment_period_picker_summary.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/fragment_shopping.xml" value="0.15273556231003038" />
-        <entry key="app/src/main/res/layout/item_dish.xml" value="0.1859375" />
+        <entry key="app/src/main/res/layout/item_dish.xml" value="0.18" />
         <entry key="app/src/main/res/layout/item_dish_image.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_divider.xml" value="0.1752786220871327" />
         <entry key="app/src/main/res/layout/item_meal_day.xml" value="0.21653543307086615" />
         <entry key="app/src/main/res/layout/item_meal_day_pdf.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/item_meal_dish.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/item_period.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/item_period.xml" value="0.25" />
         <entry key="app/src/main/res/layout/pdf_view.xml" value="0.1" />
         <entry key="app/src/main/res/menu/app_bar_mealplaner.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/app_bar_recipe.xml" value="0.37604166666666666" />
