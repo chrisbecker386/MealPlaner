@@ -39,3 +39,6 @@ enum class ErrorMessage(val resId: Int) {
     ERROR_PDF_SAVE(R.string.dialog_save_error_occured),
     ERROR_PDF_SHARE(R.string.dialog_share_error_occured)
 }
+
+const val MINIMAL_DAY = 1
+const val MAXIMAL_DAY = 8

@@ -34,7 +34,8 @@
     <string name="till">till</string>
     <string name="from">from</string>
     <string name="dialog_information_title">Information</string>
-    <string name="minimum_day_information_text">A mealplan has minimal 1 day</string>
+    <string name="minimum_day_information_text">A meal plan has minimal 1 day</string>
+    <string name="maximal_day_information_text">A meal plan has maximal 8 days</string>
     <string name="incomplete_dish_edit_text">A dish description parameter is missing</string>
     <string name="ok">OK</string>
     <string name="update_period">Update Mealplan</string>

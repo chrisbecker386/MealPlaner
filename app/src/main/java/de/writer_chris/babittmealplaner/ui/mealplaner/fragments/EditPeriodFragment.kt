@@ -15,6 +15,8 @@ import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Period
 import de.writer_chris.babittmealplaner.data.utility.CalendarUtil
+import de.writer_chris.babittmealplaner.data.utility.MAXIMAL_DAY
+import de.writer_chris.babittmealplaner.data.utility.MINIMAL_DAY
 import de.writer_chris.babittmealplaner.databinding.FragmentEditPeriodBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModel
 import de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels.PeriodPickerViewModelFactory
@@ -136,7 +138,6 @@ class EditPeriodFragment : Fragment() {
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-
         val dpd =
             DatePickerDialog(
                 this.requireActivity(),
@@ -180,6 +181,10 @@ class EditPeriodFragment : Fragment() {
     }
 
     private fun addOneDay() {
+        if (viewModel.daysBetween.value!! >= MAXIMAL_DAY) {
+            showInformationDialogMaximalDays()
+            return
+        }
         val end = Calendar.getInstance()
         end.timeInMillis = viewModel.endDate.value?.timeInMillis
             ?: throw IllegalArgumentException("endDate is null")
@@ -194,6 +199,10 @@ class EditPeriodFragment : Fragment() {
     }
 
     private fun minusOneDay() {
+        if (viewModel.daysBetween.value!! <= MINIMAL_DAY) {
+            showInformationDialogMinimalDays()
+            return
+        }
         val start = Calendar.getInstance()
         start.timeInMillis = viewModel.startDate.value?.timeInMillis
             ?: throw IllegalArgumentException("startDate is null")
@@ -203,15 +212,11 @@ class EditPeriodFragment : Fragment() {
             ?: throw IllegalArgumentException("endDate is null")
 
         end.add(Calendar.DAY_OF_YEAR, -1)
-        if (end.timeInMillis < start.timeInMillis) {
-            showInformationDialog()
-        } else {
-            setEndDateChanged(
-                end.get(Calendar.YEAR),
-                end.get(Calendar.MONTH),
-                end.get(Calendar.DAY_OF_MONTH)
-            )
-        }
+        setEndDateChanged(
+            end.get(Calendar.YEAR),
+            end.get(Calendar.MONTH),
+            end.get(Calendar.DAY_OF_MONTH)
+        )
     }
 
     private fun navigateBack() {
@@ -231,10 +236,19 @@ class EditPeriodFragment : Fragment() {
         viewModel.deletePeriod(period)
     }
 
-    private fun showInformationDialog() {
+    private fun showInformationDialogMinimalDays() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.dialog_information_title))
             .setMessage(getString(R.string.minimum_day_information_text))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+            .show()
+    }
+
+    private fun showInformationDialogMaximalDays() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.dialog_information_title))
+            .setMessage(getString(R.string.maximal_day_information_text))
             .setCancelable(false)
             .setPositiveButton(getString(R.string.ok)) { _, _ -> }
             .show()
