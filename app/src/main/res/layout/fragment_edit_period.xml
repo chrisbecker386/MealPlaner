@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="@dimen/linear_layout_column_weight_min"
-            android:paddingRight="@dimen/width_small">
+            android:paddingEnd="@dimen/width_small">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_start_edit_period"
@@ -74,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="@dimen/linear_layout_column_weight_min"
-            android:paddingLeft="@dimen/width_small">
+            android:paddingStart="@dimen/width_small">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_end_edit_period"
