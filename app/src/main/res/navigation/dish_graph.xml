@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/dishFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishFragment"
-        android:label="@string/dish"
+        android:label="@string/title_dish"
         tools:layout="@layout/fragment_dish">
         <action
             android:id="@+id/action_dishFragment_to_dishDetailsFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/dishDetailsFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishDetailsFragment"
-        android:label="fragment_dish_detail"
+        android:label="@string/title_dish_details"
         tools:layout="@layout/fragment_dish_details">
         <argument
             android:name="args"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/dishEditFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishEditFragment"
-        android:label="@string/edit_dish_fragment"
+        android:label="@string/title_dish_edit"
         tools:layout="@layout/fragment_edit_dish">
         <argument
             android:name="args"
@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/dishImageSelectorFragment"
         android:name="de.writer_chris.babittmealplaner.ui.dish.fragments.DishImageSelectorFragment"
-        android:label="fragment_dish_image_selector"
+        android:label="@string/title_dish_image_selector"
         tools:layout="@layout/fragment_dish_image_selector">
         <argument
             android:name="args"

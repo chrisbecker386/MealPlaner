@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/periodFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.PeriodFragment"
-        android:label="fragment_period"
+        android:label="@string/title_meal_plan_period"
         tools:layout="@layout/fragment_period">
         <action
             android:id="@+id/action_periodFragment_to_mealsFromPeriodFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/mealsFromPeriodFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealsFromPeriodFragment"
-        android:label="fragment_meals_from_period"
+        android:label="@string/title_meal_plan"
         tools:layout="@layout/fragment_meals_from_period">
         <argument
             android:name="args"
@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/mealDishListFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealDishListFragment"
-        android:label="fragment_meal_dish_list"
+        android:label="@string/title_meal_plan_dish_list"
         tools:layout="@layout/fragment_meal_dish_list">
         <argument
             android:name="args"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/mealDishDetailsFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.MealDishDetailsFragment"
-        android:label="fragment_meal_dish_details"
+        android:label="@string/title_meal_plan_dish_selector"
         tools:layout="@layout/fragment_meal_dish_details">
         <argument
             android:name="args"
@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/editPeriodFragment"
         android:name="de.writer_chris.babittmealplaner.ui.mealplaner.fragments.EditPeriodFragment"
-        android:label="fragment_edit_period"
+        android:label="@string/title_meal_plan_period_edit"
         tools:layout="@layout/fragment_edit_period">
         <argument
             android:name="argsToPeriodEdit"

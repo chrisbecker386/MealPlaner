@@ -4,6 +4,14 @@
     <string name="title_dish">Dish</string>
     <string name="title_settings">Settings</string>
     <string name="title_shopping">Shopping List</string>
+    <string name="title_dish_edit">Dish Editor</string>
+    <string name="title_dish_details">Dish Details</string>
+    <string name="title_dish_image_selector">Dish Image Selector</string>
+    <string name="title_meal_plan_period">Meal Plan Period</string>
+    <string name="title_meal_plan_period_edit">Meal Plan Period Editor</string>
+    <string name="title_meal_plan">Meal Plan</string>
+    <string name="title_meal_plan_dish_list">Dish List</string>
+    <string name="title_meal_plan_dish_selector">Dish Selector</string>
     <string name="edit_dish_fragment">Dish Editor</string>
     <string name="add_dish">Add dish</string>
     <string name="new_dish_name">New Dish name</string>
@@ -66,7 +74,7 @@
     <string name="dish">dish</string>
     <string name="ingredient">ingredient</string>
     <string name="date">date</string>
-    <string name="title_meal_plan">Meal Plan</string>
+
     <string name="weekday">Weekday</string>
     <string name="email_share_meal_plan_subject">"meal plan"</string>
     <string name="email_share_meal_plan_body">Hi, I created a new meal plan. I hope you like it. You will find an pdf-File attached. It is named MealPlan.pdf .</string>
