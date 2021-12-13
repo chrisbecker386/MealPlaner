@@ -1,10 +1,17 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -36,11 +43,10 @@ class DishImageSelectorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            btnDishSearch.setOnClickListener {
-                search()
-            }
-        }
+        setListener()
+        //TODO handle internet off -> disable search + info
+        Log.d("InternetConnection", isInternetAvailable(requireContext()).toString())
+
         val adapter = DishImageListAdapter {
             val args = ArgsToDishEdit(
                 navigationArgs.args.title,
@@ -90,13 +96,41 @@ class DishImageSelectorFragment : Fragment() {
         }
     }
 
+    private fun setListener() {
+        binding.btnDishSearch.setOnClickListener {
+            if (!isTextInputEmpty()) search()
+        }
+        setActionSearchListener()
+    }
+
+    private fun setActionSearchListener() {
+        val txtInput = binding.txtInputDishImageSelectorSearch
+        txtInput.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (!isTextInputEmpty()) {
+                    search()
+                }
+            }
+            return@setOnEditorActionListener true
+        }
+    }
+
+    private fun hideSoftKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0)
+    }
+
+    private fun isTextInputEmpty(): Boolean {
+        val inputText = binding.txtInputDishImageSelectorSearch.text.toString()
+        return inputText.isBlank()
+    }
+
     private fun search() {
         val inputText = binding.txtInputDishImageSelectorSearch.text
-        if (inputText.isNullOrBlank()) {
-            return
-        }
-        if (isInputValid(inputText.toString()))
+        if (isInputValid(inputText.toString())) {
             viewModel.search(inputText.toString())
+            hideSoftKeyboard()
+        }
     }
 
     private fun isInputValid(inputText: String): Boolean {
@@ -113,8 +147,37 @@ class DishImageSelectorFragment : Fragment() {
                 }
             }
         }
-
         return true
+    }
+
+    private fun isInternetAvailable(context: Context): Boolean {
+        var result = false
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = connectivityManager.activeNetwork ?: return false
+            val actNw =
+                connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+            result = when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            connectivityManager.run {
+                connectivityManager.activeNetworkInfo?.run {
+                    result = when (type) {
+                        ConnectivityManager.TYPE_WIFI -> true
+                        ConnectivityManager.TYPE_MOBILE -> true
+                        ConnectivityManager.TYPE_ETHERNET -> true
+                        else -> false
+                    }
+
+                }
+            }
+        }
+        return result
     }
 
     override fun onDestroy() {

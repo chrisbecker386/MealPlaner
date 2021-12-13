@@ -1,18 +1,23 @@
 package de.writer_chris.babittmealplaner.ui.dish.viewModels
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.util.Log
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.network.DishPhoto
 import de.writer_chris.babittmealplaner.network.PixaBayApi
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 enum class PhotoStatus { LOADING, ERROR, DONE }
 class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
 
-    private val _status = MutableLiveData(PhotoStatus.DONE)
-    val status: LiveData<PhotoStatus> get() = _status
+    private var _status = MutableLiveData<PhotoStatus>()
+    val status: LiveData<PhotoStatus> = _status
 
-    private val _photos = MutableLiveData<List<DishPhoto>>(listOf())
+    private var _photos = MutableLiveData<List<DishPhoto>>()
     val photos: LiveData<List<DishPhoto>> get() = _photos
 
     private val _errorMessage = MutableLiveData("")
@@ -29,13 +34,15 @@ class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
                 _photos.value = PixaBayApi.retrofitService.searchForImage(searchWord).hits
                 _status.value = PhotoStatus.DONE
                 _errorMessage.value = ""
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 _status.value = PhotoStatus.ERROR
                 _photos.value = listOf()
                 _errorMessage.value = e.message
             }
         }
     }
+
 
 
 }

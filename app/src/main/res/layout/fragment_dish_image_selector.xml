@@ -16,13 +16,14 @@
     <ImageView
         android:id="@+id/img_pixa_bay_logo"
         style="@style/MealPlan.ImageView"
-        android:layout_height="@dimen/width_big"
         android:layout_width="0dp"
+        android:layout_height="@dimen/width_big"
         android:src="@drawable/ic_pixa_bay_logo"
-        app:layout_constraintTop_toBottomOf="@id/txt_pixa_bay_presenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-         />
+        app:layout_constraintTop_toBottomOf="@id/txt_pixa_bay_presenter"
+
+        />
 
     <EditText
         android:id="@+id/txt_input_dish_image_selector_search"
@@ -30,13 +31,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/name_of_your_dish"
-        android:imeOptions="actionDone"
+        android:imeOptions="actionSearch"
         android:inputType="text"
-        android:nextFocusDown="@id/btn_dish_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_pixa_bay_logo"
         tools:text="nice picture" />
 
+    <!--
+
+
+       -->
     <Button
         android:id="@+id/btn_dish_search"
         style="@style/MealPlan.Button"
