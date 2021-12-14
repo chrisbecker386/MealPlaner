@@ -10,8 +10,8 @@
     <string name="title_meal_plan_period">Meal Plan Period</string>
     <string name="title_meal_plan_period_edit">Meal Plan Period Editor</string>
     <string name="title_meal_plan">Meal Plan</string>
-    <string name="title_meal_plan_dish_list">Dish List</string>
-    <string name="title_meal_plan_dish_selector">Dish Selector</string>
+    <string name="title_meal_plan_dish_list">Dish Selection</string>
+    <string name="title_meal_plan_dish_selector">Dish Selection Details</string>
     <string name="edit_dish_fragment">Dish Editor</string>
     <string name="add_dish">Add dish</string>
     <string name="new_dish_name">New Dish name</string>
