@@ -1,15 +1,10 @@
 package de.writer_chris.babittmealplaner.ui.dish.viewModels
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.network.DishPhoto
 import de.writer_chris.babittmealplaner.network.PixaBayApi
 import kotlinx.coroutines.launch
-import java.net.UnknownHostException
 
 enum class PhotoStatus { LOADING, ERROR, DONE }
 class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
@@ -23,6 +18,16 @@ class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
     private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> get() = _errorMessage
 
+    fun setNoInternetConnectivity() {
+        _photos.value = listOf()
+        _status.value = PhotoStatus.ERROR
+        _errorMessage.value = "no internet connection"
+    }
+
+    fun setHasInternetConnectivity() {
+        _errorMessage.value = ""
+    }
+
     fun search(searchWord: String) {
         getDishPhotos(searchWord)
     }
@@ -34,17 +39,13 @@ class DishImageSelectorViewModel(repository: Repository) : ViewModel() {
                 _photos.value = PixaBayApi.retrofitService.searchForImage(searchWord).hits
                 _status.value = PhotoStatus.DONE
                 _errorMessage.value = ""
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 _status.value = PhotoStatus.ERROR
                 _photos.value = listOf()
                 _errorMessage.value = e.message
             }
         }
     }
-
-
-
 }
 
 class DishImageSelectorViewModelFactory(

@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/txt_error_message"
-        style="@style/MealPlan.Text.Headline1"
+        style="@style/MealPlan.Text.Headline1.Bold"
         app:layout_constraintBottom_toTopOf="@+id/img_view_dish_image_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
