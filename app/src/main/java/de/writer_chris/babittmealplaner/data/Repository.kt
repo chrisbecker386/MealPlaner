@@ -82,38 +82,6 @@ class Repository(context: Context) {
         }
     }
 
-    suspend fun getEarliestMealInPeriod(periodId: Int): Long {
-        var res: Long
-        withContext(Dispatchers.IO) {
-            res = dishDao.getEarliestMealInPeriod(periodId)
-        }
-        return res
-    }
-
-    suspend fun getCountOfMeals(periodId: Int): Int {
-        var res: Int
-        withContext(Dispatchers.IO) {
-            res = dishDao.getCountOfMeals(periodId)
-        }
-        return res
-    }
-
-    suspend fun getLatestMealInPeriod(periodId: Int): Long {
-        var res: Long
-        withContext(Dispatchers.IO) {
-            res = dishDao.getLatestMealInPeriod(periodId)
-
-        }
-        return res
-    }
-
-    fun getAllMeals(): Flow<List<Meal>> = dishDao.getAllMeals()
-
-    fun getMealsFromPeriod(periodId: Int): Flow<List<Meal>> = dishDao.getMealsFromPeriod(periodId)
-
-    fun getMealsOfDay(day: Long): Flow<List<Meal>> = dishDao.getMealsOfDay(day)
-
-
     //Period
     suspend fun insertPeriod(period: Period): Int {
         var periodId: Int
@@ -138,21 +106,6 @@ class Repository(context: Context) {
     fun getAllPeriods(): Flow<List<Period>> = dishDao.getAllPeriods()
 
     fun getPeriod(periodId: Int): Flow<Period> = dishDao.getPeriod(periodId)
-
-    suspend fun getPeriodId(startDate: Long, endDate: Long): Int {
-        var res: Int
-        withContext(Dispatchers.IO) {
-            res = dishDao.getPeriodId(startDate, endDate)
-        }
-        return res
-    }
-
-    fun getPeriodIdFlow(startDate: Long, endDate: Long) =
-        dishDao.getPeriodIdFlow(startDate, endDate)
-
-    suspend fun getLatestPeriodId() = dishDao.getLatestPeriodId()
-
-    fun getMealAndDishAll() = dishDao.getMealAndDishAll()
 
     fun retrieveMealsWithDishes(periodId: Int) = dishDao.retrieveMealsWithDishes(periodId)
 
