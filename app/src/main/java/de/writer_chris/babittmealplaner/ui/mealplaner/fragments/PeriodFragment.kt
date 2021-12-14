@@ -39,10 +39,6 @@ class PeriodFragment : Fragment() {
         bind()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -51,8 +47,7 @@ class PeriodFragment : Fragment() {
 
     private fun bind() {
         (activity as AppCompatActivity).supportActionBar?.let {
-            val bar = it
-            bar.setDisplayHomeAsUpEnabled(false)
+            it.setDisplayHomeAsUpEnabled(false)
         }
         val adapter = getPeriodAdapter()
         setRecyclerView(adapter)
