@@ -43,11 +43,6 @@ class DishDetailsFragment : Fragment() {
         setDish()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.app_bar_recipe, menu)
-    }
-
     override fun onDestroy() {
         _binding = null
         super.onDestroy()

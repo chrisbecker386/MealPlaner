@@ -56,7 +56,7 @@
         <entry key="app/src/main/res/layout/item_meal_dish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_period.xml" value="0.25" />
         <entry key="app/src/main/res/layout/pdf_view.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/app_bar_mealplaner.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/menu/app_bar_mealplaner.xml" value="0.1" />
         <entry key="app/src/main/res/menu/app_bar_recipe.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/app_bar_topic_menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
