@@ -34,22 +34,23 @@ class DishEditViewModel(private val repository: Repository) : ViewModel() {
     private fun updateDish(dish: Dish, context: Context) {
         CoroutineScope(IO).launch {
             repository.updateDish(dish)
-            val bitmap = DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_NAME.fileString)
-            if (bitmap != null) {
-                DataUtil.saveDishPictureToInternalStorage(
-                    context, dish.dishId.toString(),
-                    bitmap
-                )
-            }
-            DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_NAME.fileString)
         }
+        val bitmap = DataUtil.loadDishPictureFromInternalStorage(context, TEMPORAL_NAME.fileString)
+        if (bitmap != null) {
+            DataUtil.saveDishPictureToInternalStorage(
+                context, dish.dishId.toString(),
+                bitmap
+            )
+        }
+        DataUtil.deletePhotoFromInternalStorage(context, TEMPORAL_NAME.fileString)
     }
 
     private fun deleteDish(dish: Dish, context: Context) {
         CoroutineScope(IO).launch {
             repository.deleteDish(dish)
-            DataUtil.deletePhotoFromInternalStorage(context, dish.dishId.toString())
+
         }
+        DataUtil.deletePhotoFromInternalStorage(context, dish.dishId.toString())
     }
 
     fun retrieve(id: Int): LiveData<Dish> {

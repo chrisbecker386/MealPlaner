@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.ItemDishBinding
@@ -35,20 +36,28 @@ class DishListAdapter(
             binding.apply {
                 txtDishNameDishItem.text = dish.dishName
 
-
-                imgDishItem.setImageBitmap(
-                    DataUtil.loadDishPictureFromInternalStorage(
-                        context,
-                        dish.dishId.toString()
+                if (DataUtil.isFileExists(context, dish.dishId.toString())) {
+                    imgDishItem.setImageBitmap(
+                        DataUtil.loadDishPictureFromInternalStorage(
+                            context,
+                            dish.dishId.toString()
+                        )
                     )
-                )
-
+                } else {
+                    imgDishItem.setImageResource(R.drawable.ic_broken_image_96)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
-        return DishViewHolder(ItemDishBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return DishViewHolder(
+            ItemDishBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: DishViewHolder, position: Int) {

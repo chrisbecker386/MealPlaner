@@ -1,9 +1,8 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,14 +32,32 @@ class DishFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentDishBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DishListAdapter(
+        bind()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun bind() {
+        (activity as AppCompatActivity).supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(false)
+        }
+        val adapter = getDishListAdapter()
+        setRecyclerView(adapter)
+        initObserver(adapter)
+        btnAddDishListener()
+    }
+
+    private fun getDishListAdapter(): DishListAdapter {
+        return DishListAdapter(
             requireContext(),
             {
                 val args = ArgsToDishDetails(
@@ -59,20 +76,27 @@ class DishFragment : Fragment() {
                 )
                 navToEditDish(args)
             })
+    }
 
-        binding.dishRecyclerView.adapter = adapter
+    private fun setRecyclerView(adapter: DishListAdapter) {
+        binding.dishRecyclerView.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(this.context)
+        }
+    }
+
+    private fun initObserver(adapter: DishListAdapter) {
         viewModel.allDishes.observe(this.viewLifecycleOwner) { dishes ->
             dishes.let {
                 adapter.submitList(it)
             }
         }
-        binding.dishRecyclerView.layoutManager = LinearLayoutManager(this.context)
+    }
 
-        binding.btnAddDish.apply {
-            setOnClickListener {
-                val args = ArgsToDishEdit(getString(R.string.add_dish), -1, null, null, null)
-                navToEditDish(args)
-            }
+    private fun btnAddDishListener() {
+        binding.btnAddDish.setOnClickListener {
+            val args = ArgsToDishEdit(getString(R.string.add_dish), -1, null, null, null)
+            navToEditDish(args)
         }
     }
 
@@ -88,12 +112,6 @@ class DishFragment : Fragment() {
         this.findNavController().navigate(action)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    //deletes a TempFile, that maybe not was erased
     private fun deleteTempFile() {
         if (DataUtil.isFileExists(requireContext(), TEMPORAL_NAME.fileString)) {
             DataUtil.deletePhotoFromInternalStorage(requireContext(), TEMPORAL_NAME.fileString)
