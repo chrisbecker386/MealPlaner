@@ -69,7 +69,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-
     <Button
         android:id="@+id/btn_dish_save"
         style="@style/MealPlan.Button"
