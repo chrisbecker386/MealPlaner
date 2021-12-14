@@ -35,13 +35,11 @@ class PeriodFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
         bind()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
