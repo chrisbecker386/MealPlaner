@@ -42,11 +42,23 @@ class DishImageSelectorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListener()
-        //TODO handle internet off -> disable search + info
-        Log.d("InternetConnection", isInternetAvailable().toString())
+        bind()
+    }
 
-        val adapter = DishImageListAdapter {
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    private fun bind() {
+        val adapter = getDishImageListAdapter()
+        setRecyclerView(adapter)
+        initObserver(adapter)
+        setListener()
+    }
+
+    private fun getDishImageListAdapter(): DishImageListAdapter {
+        return DishImageListAdapter {
             val args = ArgsToDishEdit(
                 navigationArgs.args.title,
                 navigationArgs.args.dishId,
@@ -56,12 +68,28 @@ class DishImageSelectorFragment : Fragment() {
             )
             navToEditDish(args)
         }
+    }
+
+    private fun setRecyclerView(adapter: DishImageListAdapter) {
         binding.recyclerViewImageSelector.adapter = adapter
+    }
+
+    //Observer
+    private fun initObserver(adapter: DishImageListAdapter) {
+        initObserverPhotos(adapter)
+        initObserverErrorMessage()
+        initObserverStatus()
+    }
+
+    private fun initObserverPhotos(adapter: DishImageListAdapter) {
         viewModel.photos.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
             }
         }
+    }
+
+    private fun initObserverErrorMessage() {
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 binding.apply {
@@ -72,22 +100,22 @@ class DishImageSelectorFragment : Fragment() {
                 binding.txtErrorMessage.visibility = View.GONE
             }
         }
+    }
 
+    private fun initObserverStatus() {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
-                //show errorPicture
                 PhotoStatus.ERROR -> {
                     binding.imgViewDishImageSelector.visibility = View.VISIBLE
                     binding.recyclerViewImageSelector.visibility = View.GONE
                     binding.imgViewDishImageSelector.setImageResource(R.drawable.ic_broken_internet)
                 }
-                //show loading Animation
+
                 PhotoStatus.LOADING -> {
                     binding.imgViewDishImageSelector.visibility = View.VISIBLE
                     binding.recyclerViewImageSelector.visibility = View.GONE
                     binding.imgViewDishImageSelector.setImageResource(R.drawable.loading_animation)
                 }
-                // give the pics binding.recyclerViewImageSelector
                 PhotoStatus.DONE -> {
                     binding.recyclerViewImageSelector.visibility = View.VISIBLE
                     binding.imgViewDishImageSelector.visibility = View.GONE
@@ -96,12 +124,16 @@ class DishImageSelectorFragment : Fragment() {
         }
     }
 
-
+    //Listner
     private fun setListener() {
+        setBtnSearchListener()
+        setActionSearchListener()
+    }
+
+    private fun setBtnSearchListener() {
         binding.btnDishSearch.setOnClickListener {
             if (!isTextInputEmpty()) search()
         }
-        setActionSearchListener()
     }
 
     private fun setActionSearchListener() {
@@ -116,16 +148,7 @@ class DishImageSelectorFragment : Fragment() {
         }
     }
 
-    private fun hideSoftKeyboard() {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
-    }
-
-    private fun isTextInputEmpty(): Boolean {
-        val inputText = binding.txtInputDishImageSelectorSearch.text.toString()
-        return inputText.isBlank()
-    }
-
+    //Helper Methods
     private fun search() {
         if (!isInternetAvailable()) {
             viewModel.setNoInternetConnectivity()
@@ -137,6 +160,11 @@ class DishImageSelectorFragment : Fragment() {
             viewModel.search(inputText.toString())
             hideSoftKeyboard()
         }
+    }
+
+    private fun isTextInputEmpty(): Boolean {
+        val inputText = binding.txtInputDishImageSelectorSearch.text.toString()
+        return inputText.isBlank()
     }
 
     private fun isInputValid(inputText: String): Boolean {
@@ -160,7 +188,6 @@ class DishImageSelectorFragment : Fragment() {
         var result: Boolean
         val connectivityManager =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
         val networkCapabilities = connectivityManager.activeNetwork ?: return false
         val actNw =
             connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
@@ -170,13 +197,12 @@ class DishImageSelectorFragment : Fragment() {
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }
-
         return result
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    private fun hideSoftKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     private fun showInformationDialog() {
