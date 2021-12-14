@@ -20,7 +20,7 @@ interface DishDao {
     suspend fun deleteDish(dish: Dish)
 
     @Transaction
-    @Query("SELECT * FROM dish ORDER BY dish_name DESC")
+    @Query("SELECT * FROM dish ORDER BY dish_name ASC")
     fun getAllDishes(): Flow<List<Dish>>
 
     @Transaction
