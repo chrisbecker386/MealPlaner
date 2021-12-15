@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/dishGraph">
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_shopping"-->
-<!--        android:name="de.writer_chris.babittmealplaner.ui.shoppinglist.ShoppingFragment"-->
-<!--        android:label="@string/title_shopping"-->
-<!--        tools:layout="@layout/fragment_shopping" />-->
+    <fragment
+        android:id="@+id/information_fragment"
+        android:name="de.writer_chris.babittmealplaner.ui.information.fragments.InformationFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_information" />
 
-    <include
-        app:graph="@navigation/meal_planer_graph" />
-    <include
-        app:graph="@navigation/dish_graph" />
+    <include app:graph="@navigation/meal_planer_graph" />
+    <include app:graph="@navigation/dish_graph" />
 </navigation>

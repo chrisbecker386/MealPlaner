@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.mealPlanerGraph,
-                R.id.dishGraph
+                R.id.dishGraph,
+                R.id.information_fragment
             )
         )
 
@@ -77,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
 }

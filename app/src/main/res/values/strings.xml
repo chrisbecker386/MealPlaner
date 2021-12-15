@@ -91,5 +91,11 @@
     <string name="name_of_your_dish">name of your dish</string>
     <string name="plus_a_day">Plus a day</string>
     <string name="minus_a_day">Minus a day</string>
+    <string name="info_app">App</string>
+    <string name="info_version">Version</string>
+    <string name="app_author">Christopher Becker</string>
+    <string name="info_author">Author</string>
+    <string name="title_info">Info</string>
+    <string name="info_support">supported by</string>
 
 </resources>

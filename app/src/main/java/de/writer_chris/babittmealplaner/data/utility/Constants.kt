@@ -42,3 +42,6 @@ enum class ErrorMessage(val resId: Int) {
 
 const val MINIMAL_DAY = 1
 const val MAXIMAL_DAY = 8
+
+const val PIXA_BAY_BASE_URL = "https://pixabay.com/"
+
