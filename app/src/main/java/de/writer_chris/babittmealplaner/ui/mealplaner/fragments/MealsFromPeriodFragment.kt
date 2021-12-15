@@ -3,7 +3,6 @@ package de.writer_chris.babittmealplaner.ui.mealplaner.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.ListView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -28,7 +27,7 @@ import java.io.File
 
 
 class MealsFromPeriodFragment : Fragment() {
-    private lateinit var listView: ListView
+
     private val navigationArgs: MealsFromPeriodFragmentArgs by navArgs()
     private val viewModel: MealsFromPeriodViewModel by viewModels {
         MealsFromPeriodViewModelFactory(Repository(requireContext()), navigationArgs.args.periodId)

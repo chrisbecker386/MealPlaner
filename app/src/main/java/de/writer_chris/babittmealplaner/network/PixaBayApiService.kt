@@ -3,13 +3,11 @@ package de.writer_chris.babittmealplaner.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.writer_chris.babittmealplaner.BuildConfig
+import de.writer_chris.babittmealplaner.data.utility.PIXA_BAY_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-
-private const val BASE_URL = "https://pixabay.com/"
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
@@ -24,7 +22,7 @@ interface PixaBayApiService {
 
 private val retrofit: Retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
+    .baseUrl(PIXA_BAY_BASE_URL)
     .build()
 
 object PixaBayApi {
