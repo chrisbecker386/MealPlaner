@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BabittMealPlaner</string>
+    <string name="app_name">Babitt's Meal Plan</string>
     <string name="title_meal">Meal Planer</string>
     <string name="title_dish">Dish</string>
     <string name="title_settings">Settings</string>
