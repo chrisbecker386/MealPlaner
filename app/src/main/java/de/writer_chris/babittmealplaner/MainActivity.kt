@@ -90,8 +90,6 @@ class MainActivity : AppCompatActivity() {
         val name = getString(R.string.channel_name)
         val descriptionText = getString(R.string.channel_description)
         val importance = NotificationManager.IMPORTANCE_HIGH
-
-
         var channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
             lightColor = Color.WHITE
