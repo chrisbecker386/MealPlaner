@@ -45,3 +45,6 @@ const val MAXIMAL_DAY = 8
 
 const val PIXA_BAY_BASE_URL = "https://pixabay.com/"
 
+const val CHANNEL_ID = "MealPlanChannelID"
+const val NOTIFICATION_ID =0
+

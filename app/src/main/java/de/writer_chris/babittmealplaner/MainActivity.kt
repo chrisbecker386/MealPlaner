@@ -1,6 +1,10 @@
 package de.writer_chris.babittmealplaner
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import de.writer_chris.babittmealplaner.data.utility.CHANNEL_ID
 import de.writer_chris.babittmealplaner.data.utility.PermissionCode
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
@@ -41,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+      createNotificationChannel()
     }
 
 
@@ -80,4 +86,19 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun createNotificationChannel() {
+        val name = getString(R.string.channel_name)
+        val descriptionText = getString(R.string.channel_description)
+        val importance = NotificationManager.IMPORTANCE_HIGH
+
+
+        var channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
+            lightColor = Color.WHITE
+            enableLights(true)
+        }
+
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
 }
