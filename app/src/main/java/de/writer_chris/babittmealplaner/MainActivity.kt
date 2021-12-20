@@ -16,7 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import de.writer_chris.babittmealplaner.data.utility.CHANNEL_ID
 import de.writer_chris.babittmealplaner.data.utility.PermissionCode
-import de.writer_chris.babittmealplaner.data.utility.PrePopulateDatabase
+import de.writer_chris.babittmealplaner.data.utility.PrePopulateApp
 import de.writer_chris.babittmealplaner.data.utility.SharePrefState.*
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //TODO create database entries and pictures
-        PrePopulateDatabase.prePopulateDatabase(this)
+        PrePopulateApp.prePopulateApp(this)
 
         sharedPref.edit().apply {
             putBoolean(

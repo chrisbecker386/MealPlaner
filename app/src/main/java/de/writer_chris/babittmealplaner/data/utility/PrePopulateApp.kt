@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class PrePopulateDatabase() {
+class PrePopulateApp() {
     companion object {
-        fun prePopulateDatabase(context: Context) {
+        fun prePopulateApp(context: Context) {
             val repo = Repository(context)
             insertDish(repo)
             insertDishPictures(context)
