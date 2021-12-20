@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
+import de.writer_chris.babittmealplaner.data.utility.CalendarUtil.Companion.getCalendarDate
+import de.writer_chris.babittmealplaner.data.utility.CalendarUtil.Companion.getNormalizedCalender
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -136,15 +138,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         _endDate.value = getNormalizedCalender(calendar)
     }
 
-    private fun getCalendarDate(timeInMillis: Long?, additionalDays: Int): Calendar {
-        val cal = Calendar.getInstance()
-        if (timeInMillis != null) {
-            cal.timeInMillis = timeInMillis
-        }
-        cal.add(Calendar.DAY_OF_YEAR, additionalDays)
-        return getNormalizedCalender(cal)
-    }
-
     private fun getDayDiff(lowerValue: Long, higherValue: Long): Int {
         val diffMillis = higherValue.minus(lowerValue)
         val cal = Calendar.getInstance()
@@ -152,13 +145,6 @@ class PeriodPickerViewModel(private val repository: Repository) : ViewModel() {
         return cal.get(Calendar.DAY_OF_YEAR)
     }
 
-    private fun getNormalizedCalender(calendar: Calendar): Calendar {
-        calendar.set(Calendar.MILLISECOND, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        return calendar
-    }
 
     fun getStart(): Calendar {
         return startDate.value ?: throw IllegalArgumentException("startDate value null")

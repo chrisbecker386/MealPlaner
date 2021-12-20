@@ -16,6 +16,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import de.writer_chris.babittmealplaner.data.utility.CHANNEL_ID
 import de.writer_chris.babittmealplaner.data.utility.PermissionCode
+import de.writer_chris.babittmealplaner.data.utility.PrePopulateDatabase
+import de.writer_chris.babittmealplaner.data.utility.SharePrefState.*
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,9 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        configureSharedPreference()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val navView: BottomNavigationView = binding.navView
         val navHostFragment =
@@ -46,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-      createNotificationChannel()
+        createNotificationChannel()
     }
 
 
@@ -98,5 +101,30 @@ class MainActivity : AppCompatActivity() {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
+    }
+
+    private fun configureSharedPreference() {
+        val sharedPref =
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        val prefState = sharedPref.getBoolean(
+            APP_START_REGULAR.key,
+            APP_START_FIRST_TIME.value
+        )
+        if (prefState == APP_START_REGULAR.value) {
+            return
+        }
+
+
+        //TODO create database entries and pictures
+        PrePopulateDatabase.prePopulateDatabase(this)
+
+        sharedPref.edit().apply {
+            putBoolean(
+                APP_START_REGULAR.key,
+                APP_START_REGULAR.value
+            )
+            apply()
+        }
     }
 }
