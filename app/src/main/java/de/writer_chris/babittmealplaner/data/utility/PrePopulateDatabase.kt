@@ -1,7 +1,9 @@
 package de.writer_chris.babittmealplaner.data.utility
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.icu.util.Calendar
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.Meal
 import de.writer_chris.babittmealplaner.data.entities.Period
@@ -16,8 +18,10 @@ class PrePopulateDatabase() {
         fun prePopulateDatabase(context: Context) {
             val repo = Repository(context)
             insertDish(repo)
+            insertDishPictures(context)
             insertPeriod(repo)
             insertMeals(repo)
+
         }
 
         private fun insertDish(repo: Repository) {
@@ -26,7 +30,20 @@ class PrePopulateDatabase() {
                     repo.insertDish(it)
                 }
             }
-            //TODO and copy pictures for the dishes
+        }
+
+        private fun insertDishPictures(context: Context) {
+            DataUtil.saveDishPictureToInternalStorage(
+                context,
+                "1",
+                BitmapFactory.decodeResource(context.resources, R.drawable.pic1)
+            )
+            DataUtil.saveDishPictureToInternalStorage(
+                context,
+                "2",
+                BitmapFactory.decodeResource(context.resources, R.drawable.pic2)
+            )
+
         }
 
 
@@ -56,7 +73,6 @@ class PrePopulateDatabase() {
                                 periodId = 1
                             )
                         )
-
                     }
                     day.add(Calendar.DATE, 1)
                 }
