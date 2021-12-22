@@ -1,6 +1,7 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
@@ -182,11 +183,11 @@ class DishEditFragment : Fragment() {
 
     //helper methods
     private fun getNameString(): String {
-        return binding.txtInputEditDishName.text.toString()
+        return prepString(binding.txtInputEditDishName.text.toString())
     }
 
     private fun getDescriptionString(): String {
-        return binding.txtInputEditDishDescription.text.toString()
+        return prepString(binding.txtInputEditDishDescription.text.toString())
     }
 
     private fun getDurationString(): String {
@@ -207,6 +208,12 @@ class DishEditFragment : Fragment() {
             showIncompleteConformationDialog()
             false
         }
+    }
+
+    private fun prepString(value: String): String {
+        val charArr = value.trim().toCharArray()
+        charArr[0] = charArr[0].uppercaseChar()
+        return String(charArr)
     }
 
     private fun getParameterDish(): Dish {
