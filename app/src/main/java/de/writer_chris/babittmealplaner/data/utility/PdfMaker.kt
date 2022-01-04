@@ -14,7 +14,6 @@ class PdfMaker {
             view: View?,
             isDownload: Boolean
         ): Boolean {
-
             val document = PdfDocument()
 
             val pageInfo: PdfDocument.PageInfo =
