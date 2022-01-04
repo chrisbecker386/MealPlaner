@@ -21,10 +21,6 @@ import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishEditViewModelFact
 
 
 class DishEditFragment : Fragment() {
-    //TODO  *** add ingredient
-    //TODO  if ingredient not exists add it with a unitType
-    //TODO  show a list of all ingredients
-
     private val viewModel: DishEditViewModel by viewModels {
         DishEditViewModelFactory(Repository(requireContext()))
     }
@@ -183,15 +179,28 @@ class DishEditFragment : Fragment() {
 
     //helper methods
     private fun getNameString(): String {
-        return prepString(binding.txtInputEditDishName.text.toString())
+        return if (binding.txtInputEditDishName.text?.isNotBlank() == true) {
+            prepString(binding.txtInputEditDishName.text.toString())
+        } else {
+            ""
+        }
     }
 
     private fun getDescriptionString(): String {
-        return prepString(binding.txtInputEditDishDescription.text.toString())
+        return if (binding.txtInputEditDishDescription.text?.isNotBlank() == true) {
+            prepString(binding.txtInputEditDishDescription.text.toString())
+        } else {
+            ""
+        }
+
     }
 
     private fun getDurationString(): String {
-        return binding.txtInputEditDishDuration.text.toString()
+        return if (binding.txtInputEditDishDuration.text?.isNotBlank() == true) {
+            binding.txtInputEditDishDuration.text.toString()
+        } else {
+            ""
+        }
     }
 
     private fun getDurationLong(): Long {
