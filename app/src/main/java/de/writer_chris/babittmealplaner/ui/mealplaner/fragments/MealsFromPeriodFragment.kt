@@ -184,11 +184,21 @@ class MealsFromPeriodFragment : Fragment() {
     }
 
     private fun getPeriodToString(): String {
-
-        return CalendarUtil.longToDate(viewModel.getDayMealsAndDish()[0].date).replace('.', '_') +
-                "-" +
-                CalendarUtil.longToDate(viewModel.getDayMealsAndDish().last().date)
-                    .replace('.', '_')
+        val first = CalendarUtil.longToDate(viewModel.getDayMealsAndDish()[0].date)
+        val last = CalendarUtil.longToDate(viewModel.getDayMealsAndDish().last().date)
+        with(first) {
+            return when {
+                contains('.') -> {
+                    first.replace('.', '_') +
+                            "-" + last.replace('.', '_')
+                }
+                contains('/') -> {
+                    first.replace('/', '_') +
+                            "-" + last.replace('/', '_')
+                }
+                else -> ""
+            }
+        }
     }
 
     private fun showSaveErrorDialog(errorMessage: ErrorMessage) {
@@ -203,14 +213,15 @@ class MealsFromPeriodFragment : Fragment() {
     private fun emitNotification() {
         val intent = Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)
         val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, 0)
-        val builder = NotificationCompat.Builder(requireActivity().applicationContext, CHANNEL_ID)
-            .setContentTitle(getString(R.string.title_notification_meal_plan_saved_to_download))
-            .setContentText(getString(R.string.text_meal_plan_saved_to_download))
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .build()
+        val builder =
+            NotificationCompat.Builder(requireActivity().applicationContext, CHANNEL_ID)
+                .setContentTitle(getString(R.string.title_notification_meal_plan_saved_to_download))
+                .setContentText(getString(R.string.text_meal_plan_saved_to_download))
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
 
         val notificationManager = NotificationManagerCompat.from(requireContext())
         notificationManager.notify(NOTIFICATION_ID, builder)

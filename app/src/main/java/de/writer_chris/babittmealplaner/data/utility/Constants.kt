@@ -20,7 +20,7 @@ enum class FileName(val fileString: String) {
     TEMPORAL_NAME("temp"),
     INTERNAL_PDF_NAME("MealPlan.pdf"),
     EXTERNAL_PDF_NAME("MealPlan"),
-    PDF("pdf"),
+    PDF(".pdf"),
     JPG("jpg")
 }
 

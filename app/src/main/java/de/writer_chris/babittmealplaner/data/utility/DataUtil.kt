@@ -6,9 +6,10 @@ import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
+import androidx.core.net.toUri
 import de.writer_chris.babittmealplaner.data.utility.FileName.*
 import java.io.File
 import java.io.IOException
@@ -87,8 +88,6 @@ class DataUtil {
             }
         }
 
-        // Checks if a volume containing external storage is available
-        // for read and write.
         private fun isExternalStorageWritable(): Boolean {
             return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
         }
@@ -101,26 +100,38 @@ class DataUtil {
             handlePermissionWrite(context)
 
             if (!isExternalStorageWritable()) {
-                Log.d("Save", "External storage is not writable")
                 return false
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val path = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
-            val path = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-
-            val contentValues = ContentValues().apply {
-                put(MediaStore.Downloads.DISPLAY_NAME, filename)
-                put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
-            }
-            return try {
-                context.contentResolver.insert(path, contentValues)?.also { uri ->
-                    context.contentResolver.openOutputStream(uri).use { out ->
-                        pdf.writeTo(out)
-                    }
-                } ?: throw IOException("Couldn't save file")
-                true
-            } catch (e: IOException) {
-                e.printStackTrace()
-                false
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.Downloads.DISPLAY_NAME, filename)
+                    put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
+                }
+                return try {
+                    context.contentResolver.insert(path, contentValues)?.also { uri ->
+                        context.contentResolver.openOutputStream(uri).use { out ->
+                            pdf.writeTo(out)
+                        }
+                    } ?: throw IOException("Couldn't save file")
+                    true
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    false
+                }
+            } else {
+                val path =
+                    Environment.getExternalStorageDirectory().path + "/" + Environment.DIRECTORY_DOWNLOADS + "/" + filename
+                val uri = File(path).toUri()
+                return try {
+                    context.contentResolver.openOutputStream(uri)
+                        .use { pdf.writeTo(it) }
+                    true
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    false
+                }
             }
         }
 
