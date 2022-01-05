@@ -47,8 +47,8 @@ class DishImageListAdapter(private val navigateToDishEditFragment: () -> Unit) :
             binding.apply {
                 val imgUri = dishPhoto.previewURL.toUri().buildUpon().scheme("https").build()
                 val request = ImageRequest.Builder(context).data(imgUri).target(
-                    onStart = { _ -> imgViewDishImage.setImageResource(R.drawable.loading_animation) },
-                    onError = { _ -> imgViewDishImage.setImageResource(R.drawable.ic_broken_image_96) },
+                    onStart = { imgViewDishImage.setImageResource(R.drawable.loading_animation) },
+                    onError = { imgViewDishImage.setImageResource(R.drawable.ic_broken_image_96) },
                     onSuccess = { result ->
                         imgViewDishImage.load(result)
                         imgViewDishImage.setOnClickListener {

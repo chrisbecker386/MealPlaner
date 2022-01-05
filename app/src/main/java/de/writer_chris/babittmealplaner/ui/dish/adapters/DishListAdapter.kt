@@ -44,7 +44,7 @@ class DishListAdapter(
                         )
                     )
                 } else {
-                    imgDishItem.setImageResource(R.drawable.ic_broken_image_96)
+                    imgDishItem.setImageResource(R.drawable.ic_dining_24)
                 }
             }
         }

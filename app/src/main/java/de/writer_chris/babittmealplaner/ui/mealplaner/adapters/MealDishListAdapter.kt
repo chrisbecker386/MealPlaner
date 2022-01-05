@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import de.writer_chris.babittmealplaner.R
 import de.writer_chris.babittmealplaner.data.entities.Dish
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
 import de.writer_chris.babittmealplaner.databinding.ItemDishBinding
@@ -33,12 +34,23 @@ class MealDishListAdapter(
         fun bind(context: Context, dish: Dish) {
             binding.apply {
                 txtDishNameDishItem.text = dish.dishName
-                imgDishItem.setImageBitmap(
-                    DataUtil.loadDishPictureFromInternalStorage(
-                        context,
-                        dish.dishId.toString()
+
+//                imgDishItem.setImageBitmap(
+//                    DataUtil.loadDishPictureFromInternalStorage(
+//                        context,
+//                        dish.dishId.toString()
+//                    )
+//                )
+                if (DataUtil.isFileExists(context, dish.dishId.toString())) {
+                    imgDishItem.setImageBitmap(
+                        DataUtil.loadDishPictureFromInternalStorage(
+                            context,
+                            dish.dishId.toString()
+                        )
                     )
-                )
+                } else {
+                    imgDishItem.setImageResource(R.drawable.ic_dining_24)
+                }
             }
         }
     }

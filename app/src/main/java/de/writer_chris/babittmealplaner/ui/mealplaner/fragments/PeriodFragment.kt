@@ -45,9 +45,7 @@ class PeriodFragment : Fragment() {
 
 
     private fun bind() {
-        (activity as AppCompatActivity).supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(false)
-        }
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val adapter = getPeriodAdapter()
         setRecyclerView(adapter)
         initObserver(adapter)

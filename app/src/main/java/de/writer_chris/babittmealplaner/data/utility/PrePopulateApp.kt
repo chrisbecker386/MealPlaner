@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class PrePopulateApp() {
+class PrePopulateApp {
     companion object {
         fun prePopulateApp(context: Context) {
             val repo = Repository(context)

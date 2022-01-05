@@ -1,10 +1,10 @@
 package de.writer_chris.babittmealplaner.data
 
 import androidx.room.*
-import de.writer_chris.babittmealplaner.data.entities.*
-import de.writer_chris.babittmealplaner.data.entities.relations.DishWithMeals
+import de.writer_chris.babittmealplaner.data.entities.Dish
+import de.writer_chris.babittmealplaner.data.entities.Meal
+import de.writer_chris.babittmealplaner.data.entities.Period
 import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 
 @Dao

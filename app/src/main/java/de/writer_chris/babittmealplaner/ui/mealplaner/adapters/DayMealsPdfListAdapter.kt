@@ -2,15 +2,13 @@ package de.writer_chris.babittmealplaner.ui.mealplaner.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import de.writer_chris.babittmealplaner.databinding.ItemMealDayPdfBinding
 import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
 
-class DayMealsPdfListAdapter() :
+class DayMealsPdfListAdapter :
     ListAdapter<DayMealsAndDish, DayMealsPdfListAdapter.DayMealsAndDishViewHolder>(
         DiffCallback
     ) {

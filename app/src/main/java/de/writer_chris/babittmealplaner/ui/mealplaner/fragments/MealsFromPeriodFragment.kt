@@ -133,7 +133,7 @@ class MealsFromPeriodFragment : Fragment() {
     }
 
     private fun getTimePeriodString(period: List<DayMealsAndDish>): String {
-        return CalendarUtil.longToDate(period.get(0).date) + " - " + CalendarUtil.longToDate(
+        return CalendarUtil.longToDate(period[0].date) + " - " + CalendarUtil.longToDate(
             period.last().date
         )
     }

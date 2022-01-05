@@ -1,7 +1,9 @@
 package de.writer_chris.babittmealplaner.ui.dish.fragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +14,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishDetails
 import de.writer_chris.babittmealplaner.data.parcels.ArgsToDishEdit
 import de.writer_chris.babittmealplaner.data.utility.DataUtil
-import de.writer_chris.babittmealplaner.data.utility.FileName.*
+import de.writer_chris.babittmealplaner.data.utility.FileName.TEMPORAL_NAME
 import de.writer_chris.babittmealplaner.databinding.FragmentDishBinding
 import de.writer_chris.babittmealplaner.ui.dish.adapters.DishListAdapter
 import de.writer_chris.babittmealplaner.ui.dish.viewModels.DishViewModel
@@ -47,9 +49,7 @@ class DishFragment : Fragment() {
     }
 
     private fun bind() {
-        (activity as AppCompatActivity).supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(false)
-        }
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         val adapter = getDishListAdapter()
         setRecyclerView(adapter)
         initObserver(adapter)

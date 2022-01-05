@@ -6,7 +6,7 @@ import de.writer_chris.babittmealplaner.data.Repository
 import java.lang.IllegalArgumentException
 
 
-class DishViewModel(private val repository: Repository) : ViewModel() {
+class DishViewModel(repository: Repository) : ViewModel() {
     val allDishes: LiveData<List<Dish>> = repository.getAllDishes().asLiveData()
 }
 

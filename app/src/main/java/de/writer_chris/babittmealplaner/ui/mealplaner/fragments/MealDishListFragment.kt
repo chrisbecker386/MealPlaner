@@ -43,7 +43,7 @@ class MealDishListFragment : Fragment() {
         var mealId = -1
         mealId = navigationArgs.args.mealId
 
-        val adapter = MealDishListAdapter(requireContext(), { it ->
+        val adapter = MealDishListAdapter(requireContext(), {
             val action =
                 MealDishListFragmentDirections.actionMealDishListFragmentToMealDishDetailsFragment(
                     ArgsToDishDetails(

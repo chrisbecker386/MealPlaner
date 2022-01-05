@@ -72,12 +72,17 @@ class DayMealItemListAdapter(
                     txtDishName.text = mealAndDish.dish?.dishName
                     txtDishDuration.text =
                         context.getString(R.string.min, mealAndDish.dish?.duration.toString())
-                    imgBtnDish.setImageBitmap(
-                        DataUtil.loadDishPictureFromInternalStorage(
-                            context,
-                            mealAndDish.dish?.dishId.toString()
+                    //TODO set alternative icon
+                    if (DataUtil.isFileExists(context, mealAndDish.dish?.dishId.toString())) {
+                        imgBtnDish.setImageBitmap(
+                            DataUtil.loadDishPictureFromInternalStorage(
+                                context,
+                                mealAndDish.dish?.dishId.toString()
+                            )
                         )
-                    )
+                    } else {
+                        imgBtnDish.setImageResource(R.drawable.ic_meal_24)
+                    }
                     itemMealDish.setOnClickListener {
                         onItemRead(
                             arrayOf(

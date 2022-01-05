@@ -1,5 +1,6 @@
 package de.writer_chris.babittmealplaner.ui.information.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ class InformationListAdapter(private val data: List<Information>) : BaseAdapter(
 
     override fun getItemId(position: Int): Long = position.toLong()
 
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val binding =
             ItemInformationBinding.inflate(LayoutInflater.from(parent?.context), parent, false)

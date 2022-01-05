@@ -36,9 +36,7 @@ class InformationFragment : Fragment() {
     }
 
     private fun bind() {
-        (activity as AppCompatActivity).supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(false)
-        }
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         setListView()
         setClickListener()
     }

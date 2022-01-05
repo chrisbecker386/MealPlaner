@@ -29,7 +29,7 @@ class AppRoomDatabaseTest : TestCase() {
     fun testInsertAnEntryAndReadItInDb() = runBlocking {
         val dish = Dish(dishName = "Soup")
         dao.insertDish(dish)
-        var result = dao.getDishWithoutFlow(dish.dishName)
+        val result = dao.getDishWithoutFlow(dish.dishName)
 
         assertThat(result.dishName == dish.dishName).isTrue()
     }
