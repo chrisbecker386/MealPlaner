@@ -10,6 +10,6 @@ I will add more features in the future like:
 - generate shopping list
 - share the mealplan from user to user
 - share receipes from user to user
-...
+- and more
 
-For now this is my mvp.
+For now this is the mvp.
