@@ -3,7 +3,8 @@ package de.writer_chris.babittmealplaner.data.utility
 import android.content.Context
 import android.graphics.pdf.PdfDocument
 import android.view.View
-import de.writer_chris.babittmealplaner.data.utility.FileName.*
+import de.writer_chris.babittmealplaner.data.utility.FileName.EXTERNAL_PDF_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.PDF
 
 class PdfMaker {
     companion object {
@@ -54,7 +55,5 @@ class PdfMaker {
                 }
             }
         }
-
-
     }
 }
