@@ -14,5 +14,3 @@ data class Dish(
     val duration: Long = 0,
     val description: String = ""
 )
-
-//TODO create an TimeFormatter extension
