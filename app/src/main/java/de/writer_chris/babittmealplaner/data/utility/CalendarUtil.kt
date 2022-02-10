@@ -6,10 +6,9 @@ import android.icu.util.Calendar
 
 class CalendarUtil {
     companion object {
-        fun longToWeekday(timeInMillis: Long): String {
-            val cal = longToCalendar(timeInMillis)
-            return calendarToWeekday(cal)
-        }
+        private val sdf = SimpleDateFormat("EEEE")
+
+        fun longToWeekday(timeInMillis: Long) = calendarToWeekday(longToCalendar(timeInMillis))
 
         fun longToDate(timeInMillis: Long): String {
             val cal = longToCalendar(timeInMillis)
@@ -17,7 +16,6 @@ class CalendarUtil {
         }
 
         fun calendarToWeekday(cal: Calendar): String {
-            val sdf = SimpleDateFormat("EEEE")
             return sdf.format(cal).toString()
         }
 
@@ -43,6 +41,5 @@ class CalendarUtil {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             return calendar
         }
-
     }
 }
