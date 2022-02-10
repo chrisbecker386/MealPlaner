@@ -21,7 +21,6 @@ class PrePopulateApp {
             insertDishPictures(context)
             insertPeriod(repo)
             insertMeals(repo)
-
         }
 
         private fun insertDish(repo: Repository) {
@@ -43,15 +42,12 @@ class PrePopulateApp {
                 "2",
                 BitmapFactory.decodeResource(context.resources, R.drawable.pic2)
             )
-
         }
-
 
         private fun insertPeriod(repo: Repository) {
             val cal = Calendar.getInstance()
             val start = getNormalizedCalender(cal).timeInMillis
             val end = getCalendarDate(cal.timeInMillis, 6).timeInMillis
-
             CoroutineScope(IO).launch {
                 repo.insertPeriod(
                     Period(1, start, end)
@@ -79,6 +75,4 @@ class PrePopulateApp {
             }
         }
     }
-
-
 }
