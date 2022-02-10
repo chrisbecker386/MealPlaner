@@ -1,20 +1,18 @@
 package de.writer_chris.babittmealplaner.ui.mealplaner.viewmodels
 
-import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import de.writer_chris.babittmealplaner.data.Repository
 import de.writer_chris.babittmealplaner.data.entities.relations.MealAndDish
 import de.writer_chris.babittmealplaner.ui.mealplaner.models.DayMealsAndDish
-import java.util.jar.Manifest
 
 class MealsFromPeriodViewModel(
     private val repository: Repository,
     periodId: Int
 ) :
     ViewModel() {
-
-
 
     private var _mealsAndDishes: LiveData<List<MealAndDish>> = retrieveMealsWithDishes(periodId)
     val mealsAndDishes get() = _mealsAndDishes
