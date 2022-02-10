@@ -7,17 +7,18 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import de.writer_chris.babittmealplaner.data.utility.CHANNEL_ID
 import de.writer_chris.babittmealplaner.data.utility.PermissionCode
 import de.writer_chris.babittmealplaner.data.utility.PrePopulateApp
-import de.writer_chris.babittmealplaner.data.utility.SharePrefState.*
+import de.writer_chris.babittmealplaner.data.utility.SharePrefState.APP_START_FIRST_TIME
+import de.writer_chris.babittmealplaner.data.utility.SharePrefState.APP_START_REGULAR
 import de.writer_chris.babittmealplaner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -88,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun createNotificationChannel() {
         val name = getString(R.string.channel_name)
         val descriptionText = getString(R.string.channel_description)
@@ -114,11 +114,7 @@ class MainActivity : AppCompatActivity() {
         if (prefState == APP_START_REGULAR.value) {
             return
         }
-
-
-        //TODO create database entries and pictures
         PrePopulateApp.prePopulateApp(this)
-
         sharedPref.edit().apply {
             putBoolean(
                 APP_START_REGULAR.key,
