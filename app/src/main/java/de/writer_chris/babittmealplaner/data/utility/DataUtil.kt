@@ -10,87 +10,74 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.net.toUri
-import de.writer_chris.babittmealplaner.data.utility.FileName.*
+import de.writer_chris.babittmealplaner.data.utility.FileName.INTERNAL_PDF_NAME
+import de.writer_chris.babittmealplaner.data.utility.FileName.JPG
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 
 class DataUtil {
     companion object {
 
-        fun deletePhotoFromInternalStorage(context: Context, filename: String): Boolean {
-            return try {
-                context.deleteFile("$filename.${JPG.fileString}")
-                true
-            } catch (e: Exception) {
-                e.printStackTrace()
-                false
-            }
+        fun deletePhotoFromInternalStorage(context: Context, filename: String) = try {
+            context.deleteFile("$filename.${JPG.fileString}")
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
 
-        fun loadDishPictureFromInternalStorage(context: Context, filename: String): Bitmap? {
-            return try {
-                val files = context.filesDir.listFiles()
-                    .filter { it.canRead() && it.isFile && it.name == "$filename.${JPG.fileString}" }
-                    .map {
-                        val bytes = it.readBytes()
-                        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    }
-                files[0]
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
+        fun loadDishPictureFromInternalStorage(context: Context, filename: String) = try {
+            val files = context.filesDir.listFiles()
+                .filter { it.canRead() && it.isFile && it.name == "$filename.${JPG.fileString}" }
+                .map {
+                    val bytes = it.readBytes()
+                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                }
+            files[0]
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
 
-        fun isFileExists(context: Context, filename: String): Boolean {
-            return try {
-                val file = File(context.filesDir, "$filename.${JPG.fileString}")
-                file.exists()
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                false
-            }
+        fun isFileExists(context: Context, filename: String) = try {
+            val file = File(context.filesDir, "$filename.${JPG.fileString}")
+            file.exists()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
 
         fun saveDishPictureToInternalStorage(
             context: Context,
             filename: String,
             bmp: Bitmap
-        ): Boolean {
-            return try {
-                context.openFileOutput("$filename.${JPG.fileString}", MODE_PRIVATE).use { stream ->
-                    if (!bmp.compress(
-                            Bitmap.CompressFormat.JPEG, 95, stream
-                        )
-                    ) {
-                        throw IOException("Couldn't save bitmap")
-                    }
+        ) = try {
+            context.openFileOutput("$filename.${JPG.fileString}", MODE_PRIVATE).use { stream ->
+                if (!bmp.compress(
+                        Bitmap.CompressFormat.JPEG, 95, stream
+                    )
+                ) {
+                    throw IOException("Couldn't save bitmap")
                 }
-                true
-            } catch (e: IOException) {
-                e.printStackTrace()
-                false
             }
+            true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
         }
 
-        fun savePdfToInternalStorage(context: Context, pdf: PdfDocument): Boolean {
-
-            return try {
-                context.openFileOutput(INTERNAL_PDF_NAME.fileString, MODE_PRIVATE).use {
-                    pdf.writeTo(it)
-                }
-                true
-            } catch (e: IOException) {
-                e.printStackTrace()
-                false
+        fun savePdfToInternalStorage(context: Context, pdf: PdfDocument) = try {
+            context.openFileOutput(INTERNAL_PDF_NAME.fileString, MODE_PRIVATE).use {
+                pdf.writeTo(it)
             }
+            true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
         }
 
-        private fun isExternalStorageWritable(): Boolean {
-            return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
-        }
+        private fun isExternalStorageWritable() =
+            Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 
         fun writePdfToDownloads(
             context: Context,
@@ -140,13 +127,5 @@ class DataUtil {
                 Permissions.permissionRequestWriteExternal(context)
             }
         }
-
-        private fun handlePermissionRead(context: Context) {
-            if (!Permissions.hasReadPermission(context)) {
-                Permissions.permissionRequestReadExternal(context)
-            }
-        }
     }
 }
-
-
